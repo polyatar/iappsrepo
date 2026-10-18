@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="title">JSON Парсер | IAppsRepo</title>
+    <title data-i18n="title">RepoTools | iApps</title>
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <link rel="icon" type="image/png" href="../Images/Profile.PNG">
+    <link rel="apple-touch-icon" href="../Images/Profile.PNG">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -40,6 +43,10 @@
         .lang-btn { position: relative; color: var(--text-muted); }
         .lang-btn:hover { color: var(--accent); }
         .lang-code { position: absolute; right: 5px; bottom: 4px; font-size: 0.5rem; font-weight: 800; line-height: 1; color: var(--accent); pointer-events: none; }
+        .page-title { max-width: 1000px; margin: 0 auto 1.5rem; font-size: clamp(1.5rem, 4vw, 2.25rem); font-weight: 800; letter-spacing: -0.02em; }
+        .tool { max-width: 1000px; margin: 0 auto 2.5rem; }
+        .tool__title { font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; }
+        .tool .container { max-width: none; }
         .container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
@@ -81,7 +88,7 @@
 </head>
 <body>
     <div class="header">
-        <a href="../index.html" class="back">
+        <a href="../" class="back">
             <svg width="20" height="20" viewBox="0 0 24 24"><path d="M7.828 11H20v2H7.828l5.364 5.364-1.414 1.414L4 12l7.778-7.778 1.414 1.414z"/></svg>
             <span data-i18n="back">Назад</span>
         </a>
@@ -94,6 +101,10 @@
         </div>
     </div>
 
+    <h1 class="page-title" data-i18n="pageTitle">🛠️ RepoTools</h1>
+
+    <section class="tool">
+        <h2 class="tool__title" data-i18n="tool">JSON Парсер</h2>
     <div class="container">
         <div class="card">
             <h2 class="card__title" data-i18n="upload">📁 Загрузка JSON</h2>
@@ -108,14 +119,15 @@
             <pre class="json-box" id="jsonBox"></pre>
         </div>
     </div>
+    </section>
 
     <script>
         // Language (shared with the main site via localStorage)
         const DICT = {
-            ru: { title: 'JSON Парсер | IAppsRepo', back: 'Назад', upload: '📁 Загрузка JSON', choose: 'Выбрать файл',
+            ru: { title: 'RepoTools | iApps', pageTitle: '🛠️ RepoTools', tool: 'JSON Парсер', back: 'Назад', upload: '📁 Загрузка JSON', choose: 'Выбрать файл',
                   parse: '⬇️ Парсить и скачать', preview: '👁️ Предпросмотр', aria: 'Сменить язык',
                   errParse: 'Ошибка парсинга JSON', errField: 'Загрузите JSON с полем appRepositories' },
-            en: { title: 'JSON Parser | IAppsRepo', back: 'Back', upload: '📁 Upload JSON', choose: 'Choose file',
+            en: { title: 'RepoTools | iApps', pageTitle: '🛠️ RepoTools', tool: 'JSON Parser', back: 'Back', upload: '📁 Upload JSON', choose: 'Choose file',
                   parse: '⬇️ Parse and download', preview: '👁️ Preview', aria: 'Change language',
                   errParse: 'JSON parsing error', errField: 'Upload a JSON file with an appRepositories field' }
         };

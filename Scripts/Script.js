@@ -26,10 +26,12 @@ function updateThemeIcon() {
 }
 
 themeToggle.addEventListener('click', toggleTheme);
-mobileThemeToggle.addEventListener('click', () => {
-    toggleTheme();
-    closeMobileMenu();
-});
+if (mobileThemeToggle) {
+    mobileThemeToggle.addEventListener('click', () => {
+        toggleTheme();
+        closeMobileMenu();
+    });
+}
 
 const avatarBtn = document.getElementById('avatarBtn');
 const closeMenuBtn = document.getElementById('closeMenu');
