@@ -10,7 +10,11 @@ let selectedCategory = '';
 const maxVisiblePages = 5;
 
 // переводы: словарь живёт в index.html (window.i18n); русский текст — запасной вариант
-const T = (key, fallback) => (window.i18n ? window.i18n.t(key) : fallback);
+const T = (key, fallback) => {
+    if (!window.i18n) return fallback;
+    const value = window.i18n.t(key);
+    return value === key ? fallback : value;
+};
 let loadFailed = false;
 
 fetch('Repo.json')
@@ -282,22 +286,35 @@ function formatDate(dateStr) {
     return date.toLocaleDateString(T('date.locale', 'ru-RU'), { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
-function getCategoryEmoji(appName) {
-    const categories = {
-        'Social': '💬', 'Music': '🎵', 'Video': '🎬', 'Design': '🎨',
-        'Network': '🌍', 'Study': '📚', 'Office': '📋', 'Games': '🎮',
-        'Kids': '👶', 'Life': '💪', 'Other': '📦'
-    };
-    for (const [cat, emoji] of Object.entries(categories)) {
-        if (appName.toLowerCase().includes(`#${cat.toLowerCase()}`)) return { name: T('cat.' + cat, cat), emoji };
+// все теги вида #Games #Social в названии приложения (у приложения может быть несколько категорий)
+const CATEGORY_EMOJI = {
+    Russia: '🇷🇺', Social: '💬', Music: '🎵', Video: '🎬', Design: '🎨', Network: '🌍', Study: '📚',
+    Office: '📋', Games: '🎮', Kids: '👶', Life: '💪', Money: '💰', Travel: '✈️', Themes: '🖼️', Other: '📦'
+};
+const CATEGORY_ALIASES = { networke: 'Network' };
+
+function getAppCategories(appName) {
+    const found = [];
+    const seen = new Set();
+    const re = /#([A-Za-z0-9_]+)/g;
+    let match;
+    while ((match = re.exec(appName)) !== null) {
+        const raw = match[1];
+        const known = CATEGORY_ALIASES[raw.toLowerCase()]
+            || Object.keys(CATEGORY_EMOJI).find(k => k.toLowerCase() === raw.toLowerCase());
+        const key = known || raw;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        found.push({ key, name: T('cat.' + key, key), emoji: CATEGORY_EMOJI[key] || '🏷️' });
     }
-    return { name: T('cat.Other', 'Other'), emoji: '📦' };
+    if (!found.length) found.push({ key: 'Other', name: T('cat.Other', 'Other'), emoji: '📦' });
+    return found;
 }
 
 function renderAppModal(app) {
     const cleanedAppName = app.appName.split('\n')[0];
     const versionInfo = parseAppVersion(app.appVersion);
-    const category = getCategoryEmoji(app.appName);
+    const categories = getAppCategories(app.appName);
     
     appModalTitle.textContent = cleanedAppName;
     appModalBody.innerHTML = `
@@ -306,7 +323,7 @@ function renderAppModal(app) {
                 <img class="app-detail__icon" src="${app.appImage}" alt="${cleanedAppName}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%236366f1%22 width=%22100%22 height=%22100%22 rx=%2220%22/><text x=%2250%22 y=%2255%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22white%22>📱</text></svg>'">
                 <div class="app-detail__info">
                     <h2 class="app-detail__name">${cleanedAppName}</h2>
-                    <span class="app-detail__category">${category.emoji} ${category.name}</span>
+                    <div class="app-detail__categories">${categories.map(c => `<span class="app-detail__category">${c.emoji} ${c.name}</span>`).join('')}</div>
                 </div>
             </div>
             <div class="app-detail__meta">

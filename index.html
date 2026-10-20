@@ -8,7 +8,7 @@
     <title data-i18n="page.title">iApps - Сертификат разработчика Apple и приложения для iPhone</title>
     <link rel="icon" type="image/png" href="Images/Profile.PNG">
     <link rel="apple-touch-icon" href="Images/Profile.PNG">
-    <link rel="stylesheet" href="Styles/Style.css?v=12">
+    <link rel="stylesheet" href="Styles/Style.css?v=13">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -208,6 +208,10 @@
         .mobile-menu__link--cta .mobile-menu__link-arrow { fill: #fff; opacity: 0.9; }
         .mobile-menu__nav { padding-bottom: 0; }
         @media (max-width: 480px) { .mobile-menu__info { min-height: 48px; } }
+    </style>
+
+    <style id="categories-styles">
+        .app-detail__categories { display: flex; flex-wrap: wrap; gap: 0.5rem; }
     </style>
 </head>
 <body>
@@ -632,7 +636,7 @@
                 </button>
                 <div class="category-bar__scroll" role="group" aria-label="Категории" data-i18n-attr="aria-label:aria.categories">
                     <button type="button" class="cat-chip is-active" data-value="" aria-pressed="true"><span class="cat-chip__emoji">🌐</span><span data-i18n="common.all">Все</span></button>
-                    <button type="button" class="cat-chip" data-value="Russia" aria-pressed="false"><span class="cat-chip__emoji">🇷🇺</span><span data-i18n="cat.Russia">Банки и удаленные прил.</span></button>
+                    <button type="button" class="cat-chip" data-value="Russia" aria-pressed="false"><span class="cat-chip__emoji">🇷🇺</span><span data-i18n="cat.Russia">Удаленные из App Store</span></button>
                     <button type="button" class="cat-chip" data-value="Social" aria-pressed="false"><span class="cat-chip__emoji">💬</span><span data-i18n="cat.Social">Соц.сети</span></button>
                     <button type="button" class="cat-chip" data-value="Music" aria-pressed="false"><span class="cat-chip__emoji">🎵</span><span data-i18n="cat.Music">Музыка</span></button>
                     <button type="button" class="cat-chip" data-value="Video" aria-pressed="false"><span class="cat-chip__emoji">🎬</span><span data-i18n="cat.Video">Видео</span></button>
@@ -683,7 +687,7 @@
                     <h4 class="settings-section__title" data-i18n="category.title">📂 Категория</h4>
                     <div class="category-grid">
                         <label class="category-chip"><input type="radio" name="categoryApps" value="" checked><span>🌐</span><span data-i18n="common.all">Все</span></label>
-                        <label class="category-chip"><input type="radio" name="categoryApps" value="Russia"><span>🇷🇺</span><span data-i18n="cat.Russia">Банки и удаленные прил.</span></label>
+                        <label class="category-chip"><input type="radio" name="categoryApps" value="Russia"><span>🇷🇺</span><span data-i18n="cat.Russia">Удаленные из App Store</span></label>
                         <label class="category-chip"><input type="radio" name="categoryApps" value="Social"><span>💬</span><span data-i18n="cat.Social">Соц.сети</span></label>
                         <label class="category-chip"><input type="radio" name="categoryApps" value="Music"><span>🎵</span><span data-i18n="cat.Music">Музыка</span></label>
                         <label class="category-chip"><input type="radio" name="categoryApps" value="Video"><span>🎬</span><span data-i18n="cat.Video">Видео</span></label>
@@ -799,7 +803,7 @@
   "apps.title": "Каталог приложений",
   "apps.subtitle": "Найдите нужное приложение среди нашей коллекции",
   "common.all": "Все",
-  "cat.Russia": "Банки и удаленные прил.",
+  "cat.Russia": "Удаленные из App Store",
   "cat.Social": "Соц.сети",
   "cat.Music": "Музыка",
   "cat.Video": "Видео",
@@ -811,6 +815,9 @@
   "cat.Kids": "Дети",
   "cat.Life": "Здоровье",
   "cat.Other": "Другое",
+  "cat.Money": "Финансы",
+  "cat.Travel": "Путешествия",
+  "cat.Themes": "Темы",
   "filters.title": "⚙️ Фильтры",
   "sort.title": "↕️ Сортировка",
   "sort.new": "Новые",
@@ -903,7 +910,7 @@
   "apps.title": "App Catalog",
   "apps.subtitle": "Find the app you need in our collection",
   "common.all": "All",
-  "cat.Russia": "Banks & removed apps",
+  "cat.Russia": "Removed from App Store",
   "cat.Social": "Social",
   "cat.Music": "Music",
   "cat.Video": "Video",
@@ -915,6 +922,9 @@
   "cat.Kids": "Kids",
   "cat.Life": "Health",
   "cat.Other": "Other",
+  "cat.Money": "Finance",
+  "cat.Travel": "Travel",
+  "cat.Themes": "Themes",
   "filters.title": "⚙️ Filters",
   "sort.title": "↕️ Sorting",
   "sort.new": "Newest",
@@ -993,8 +1003,8 @@
     if (btn) btn.addEventListener('click', () => window.i18n.toggle());
 })();
 </script>
-    <script src="Scripts/Script.js?v=12"></script>
-    <script src="Scripts/Repository.js?v=12"></script>
+    <script src="Scripts/Script.js?v=13"></script>
+    <script src="Scripts/Repository.js?v=13"></script>
     <script>
 (function () {
 

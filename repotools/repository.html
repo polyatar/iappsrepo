@@ -2,209 +2,738 @@
 <html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title data-i18n="title">RepoTools | iApps</title>
     <meta name="robots" content="noindex, nofollow, noarchive">
     <link rel="icon" type="image/png" href="../Images/Profile.PNG">
     <link rel="apple-touch-icon" href="../Images/Profile.PNG">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root { --font: 'Inter', -apple-system, sans-serif; }
+        :root {
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+            --gradient: linear-gradient(90deg, #8b5cf6 0%, #3b82f6 100%);
+            --radius: 20px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
         [data-theme="dark"] {
-            --bg: #0a0a0f; --bg-card: rgba(26,26,36,0.9); --border: rgba(255,255,255,0.08);
-            --text: #fff; --text-muted: rgba(255,255,255,0.5); --accent: #6366f1;
+            --bg: #0a0a0f; --bg-card: rgba(26, 26, 36, 0.9); --bg-soft: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.08); --border-hover: rgba(255, 255, 255, 0.18);
+            --text: #fff; --text-secondary: rgba(255, 255, 255, 0.72); --text-muted: rgba(255, 255, 255, 0.5);
+            --accent: #8b5cf6; --accent-soft: #c4b5fd; --accent-glow: rgba(139, 92, 246, 0.4);
+            --code-bg: #08080c; --code-ink: #eef2f7; --danger: #ff7a70; --ok: #4ade80;
+            --mark: rgba(250, 204, 21, 0.28); --mark-active: rgba(250, 204, 21, 0.7);
+            --glow-a: rgba(139, 92, 246, 0.18); --glow-b: rgba(59, 130, 246, 0.14);
         }
         [data-theme="light"] {
-            --bg: #f8fafc; --bg-card: rgba(255,255,255,0.95); --border: rgba(0,0,0,0.08);
-            --text: #0f172a; --text-muted: #64748b; --accent: #6366f1;
+            --bg: #f8fafc; --bg-card: rgba(255, 255, 255, 0.96); --bg-soft: rgba(15, 23, 42, 0.04);
+            --border: rgba(15, 23, 42, 0.09); --border-hover: rgba(15, 23, 42, 0.2);
+            --text: #0f172a; --text-secondary: #334155; --text-muted: #64748b;
+            --accent: #7c3aed; --accent-soft: #6d28d9; --accent-glow: rgba(124, 58, 237, 0.3);
+            --code-bg: #f1f5f9; --code-ink: #0f172a; --danger: #dc2626; --ok: #16a34a;
+            --mark: rgba(250, 204, 21, 0.4); --mark-active: rgba(245, 158, 11, 0.65);
+            --glow-a: rgba(139, 92, 246, 0.12); --glow-b: rgba(59, 130, 246, 0.1);
         }
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { color-scheme: dark; }
+        html[data-theme="light"] { color-scheme: light; }
         body {
-            font-family: var(--font);
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            padding: clamp(1rem, 5vw, 3rem);
-            transition: all 0.3s;
+            font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh;
+            padding: clamp(1rem, 4vw, 2.5rem); padding-bottom: 4rem; transition: background var(--transition), color var(--transition);
+            -webkit-font-smoothing: antialiased;
         }
-        .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
-        .back { display: flex; align-items: center; gap: 0.5rem; color: var(--text-muted); font-weight: 500; transition: color 0.2s; }
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+            background: radial-gradient(60rem 40rem at 85% -10%, var(--glow-a), transparent 60%), radial-gradient(50rem 40rem at -10% 110%, var(--glow-b), transparent 60%);
+        }
+        button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+        a { color: inherit; }
+        .shell { max-width: 1180px; margin: 0 auto; }
+
+        /* header */
+        .top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.75rem; }
+        .back { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-muted); font-weight: 500; text-decoration: none; transition: color var(--transition); }
         .back:hover { color: var(--accent); }
         .back svg { fill: currentColor; }
-        .theme-btn {
-            width: 44px; height: 44px; border-radius: 12px; background: var(--bg-card);
-            border: 1px solid var(--border); display: flex; align-items: center; justify-content: center;
-            font-size: 1.25rem; cursor: pointer; transition: all 0.2s;
-        }
-        .theme-btn:hover { border-color: var(--accent); }
         .actions { display: flex; gap: 0.5rem; }
-        .lang-btn { position: relative; color: var(--text-muted); }
-        .lang-btn:hover { color: var(--accent); }
+        .icon-btn { position: relative; width: 44px; height: 44px; border-radius: 12px; background: var(--bg-card); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: var(--text-muted); transition: all var(--transition); }
+        .icon-btn:hover { border-color: var(--accent); color: var(--accent); }
         .lang-code { position: absolute; right: 5px; bottom: 4px; font-size: 0.5rem; font-weight: 800; line-height: 1; color: var(--accent); pointer-events: none; }
-        .page-title { max-width: 1000px; margin: 0 auto 1.5rem; font-size: clamp(1.5rem, 4vw, 2.25rem); font-weight: 800; letter-spacing: -0.02em; }
-        .tool { max-width: 1000px; margin: 0 auto 2.5rem; }
-        .tool__title { font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; }
-        .tool .container { max-width: none; }
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
-            gap: 1.5rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 2rem;
-            backdrop-filter: blur(20px);
-        }
-        .card__title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; text-align: center; }
-        .btn {
-            display: flex; align-items: center; justify-content: center; width: 100%;
-            padding: 1rem; font-size: 1rem; font-weight: 600; border-radius: 12px;
-            background: linear-gradient(135deg, #6366f1, #a855f7); color: #fff;
-            cursor: pointer; transition: all 0.2s; margin-bottom: 1rem; position: relative; overflow: hidden;
-        }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(99,102,241,0.4); }
-        .btn:last-child { margin-bottom: 0; }
+        .page-title { font-size: clamp(1.75rem, 4.5vw, 2.5rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1.25rem; }
+
+        /* tool switcher */
+        .tool-tabs { display: flex; gap: 0.375rem; padding: 0.375rem; margin-bottom: 1.5rem; max-width: 100%; width: max-content; overflow-x: auto; scrollbar-width: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 9999px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .tool-tabs::-webkit-scrollbar { display: none; }
+        .tool-tab { flex: 0 0 auto; padding: 0.7rem 1.25rem; border-radius: 9999px; font-size: 0.9375rem; font-weight: 700; color: var(--text-secondary); white-space: nowrap; transition: all var(--transition); }
+        .tool-tab:hover { color: var(--text); }
+        .tool-tab[aria-selected="true"] { background: var(--gradient); color: #fff; box-shadow: 0 8px 24px var(--accent-glow); }
+        .tool[hidden] { display: none; }
+
+        /* cards & controls */
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 1.25rem; align-items: start; }
+        .card__body { padding: 1.5rem; display: grid; gap: 1rem; }
+        .card__title { font-size: 1.125rem; font-weight: 700; }
+        .hint { font-size: 0.875rem; color: var(--text-muted); line-height: 1.5; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 44px; padding: 0.7rem 1.25rem; border-radius: 12px; font-size: 0.9375rem; font-weight: 700; border: 1px solid var(--border); background: var(--bg-soft); color: var(--text); transition: all var(--transition); position: relative; overflow: hidden; }
+        .btn:hover { border-color: var(--accent); transform: translateY(-1px); }
+        .btn:active { transform: scale(0.98); }
+        .btn--primary { background: var(--gradient); border-color: transparent; color: #fff; box-shadow: 0 6px 20px var(--accent-glow); }
+        .btn--primary:hover { box-shadow: 0 10px 30px var(--accent-glow); border-color: transparent; }
+        .btn--sm { min-height: 38px; padding: 0.5rem 0.9rem; font-size: 0.875rem; }
         .btn input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-        .json-box {
-            display: none; background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
-            padding: 1rem; max-height: 50vh; overflow: auto; font-family: 'SF Mono', monospace;
-            font-size: 0.8125rem; line-height: 1.7; white-space: pre-wrap; word-break: break-word;
+        .input, .select { width: 100%; min-height: 44px; padding: 0 0.9rem; border-radius: 12px; background: var(--bg-soft); border: 1px solid var(--border); color: var(--text); font: inherit; font-size: 0.9375rem; transition: border-color var(--transition), box-shadow var(--transition); }
+        .input:focus, .select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+        .select { cursor: pointer; }
+        .select option { background: #1a1a24; color: #fff; }
+        [data-theme="light"] .select option { background: #fff; color: #0f172a; }
+        .status { min-width: 0; font-size: 0.8125rem; color: var(--text-muted); text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .status.error { color: var(--danger); }
+        .status.ok { color: var(--ok); }
+
+        /* parser */
+        .json-box { background: var(--code-bg); border: 1px solid var(--border); border-radius: 14px; padding: 1rem; min-height: 14rem; max-height: 55vh; overflow: auto; font-family: var(--mono); font-size: 0.8125rem; line-height: 1.7; white-space: pre-wrap; word-break: break-word; color: var(--code-ink); }
+        .json-box.empty { color: var(--text-muted); display: flex; align-items: center; justify-content: center; text-align: center; }
+        .json-key { color: #f472b6; } .json-string { color: #7dd3fc; } .json-boolean { color: #c4b5fd; } .json-number { color: #4ade80; }
+        [data-theme="light"] .json-key { color: #be185d; } [data-theme="light"] .json-string { color: #0369a1; } [data-theme="light"] .json-boolean { color: #6d28d9; } [data-theme="light"] .json-number { color: #15803d; }
+        .card__head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.9rem 1.25rem; border-bottom: 1px solid var(--border); min-height: 52px; }
+        .card__head .card__title { font-size: 0.9375rem; }
+
+        /* converter */
+        .toolbar { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .toolbar h2 { font-size: 1.375rem; font-weight: 800; letter-spacing: -0.02em; }
+        .toolbar p { margin-top: 0.25rem; font-size: 0.875rem; color: var(--text-muted); }
+        .toolbar__actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .searchbar { display: grid; grid-template-columns: minmax(160px, 1fr) auto auto auto; align-items: center; gap: 0.5rem; padding: 0.625rem; margin-bottom: 1rem; }
+        .search-count { min-width: 5.5rem; text-align: center; font-size: 0.8125rem; color: var(--text-muted); white-space: nowrap; }
+        .workspace { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+        .pane { min-width: 0; display: flex; flex-direction: column; overflow: hidden; }
+        .code { position: relative; flex: 1; min-height: 440px; background: var(--code-bg); }
+        .code__mirror, .code textarea {
+            position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; padding: 1rem; border: 0; border-radius: 0;
+            font: 13.5px/1.6 var(--mono); letter-spacing: 0; tab-size: 2; white-space: pre-wrap; overflow-wrap: break-word; word-break: normal;
+            overflow: auto; scrollbar-gutter: stable; scrollbar-width: thin; scrollbar-color: var(--border-hover) transparent;
         }
-        .json-box.active { display: block; }
-        .json-key { color: #f472b6; }
-        .json-string { color: #a5d6ff; }
-        .json-boolean { color: #c4b5fd; }
-        .json-number { color: #86efac; }
-        ::-webkit-scrollbar { width: 8px; }
+        .code__mirror { color: transparent; overflow: hidden; pointer-events: none; }
+        .code textarea { resize: none; outline: none; background: transparent; color: var(--code-ink); caret-color: var(--accent); }
+        .code textarea::placeholder { color: var(--text-muted); }
+        .code__mirror::-webkit-scrollbar, .code textarea::-webkit-scrollbar { width: 8px; height: 8px; }
+        .code textarea::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 4px; }
+        .code mark { color: transparent; background: var(--mark); border-radius: 3px; }
+        .code mark.is-active { background: var(--mark-active); }
+        .options { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; padding: 0.875rem 1.25rem; border-top: 1px solid var(--border); font-size: 0.875rem; color: var(--text-secondary); }
+        .check { display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; user-select: none; }
+        .check input { width: 18px; height: 18px; accent-color: var(--accent); }
+        code.inline { font-family: var(--mono); font-size: 0.8125rem; padding: 0.1rem 0.4rem; border-radius: 6px; background: var(--bg-soft); border: 1px solid var(--border); }
+
+        /* unix time */
+        .epoch-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+        .field { display: grid; gap: 0.375rem; }
+        .field > span { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); }
+        .result { min-height: 44px; display: flex; align-items: center; overflow-x: auto; padding: 0.6rem 0.9rem; background: var(--code-bg); border: 1px solid var(--border); border-radius: 12px; font: 0.8125rem/1.45 var(--mono); color: var(--code-ink); white-space: nowrap; scrollbar-width: none; }
+        .inline-form { display: grid; grid-template-columns: minmax(0, 1fr) 150px; gap: 0.5rem; }
+        .copyable { cursor: copy; transition: border-color var(--transition); }
+        .copyable:hover { border-color: var(--accent); }
+
+        .toast { position: fixed; left: 50%; bottom: 1.5rem; transform: translate(-50%, 140%); padding: 0.75rem 1.25rem; border-radius: 12px; background: var(--bg-card); border: 1px solid var(--border-hover); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35); font-size: 0.875rem; font-weight: 600; opacity: 0; transition: all var(--transition); z-index: 50; pointer-events: none; }
+        .toast.visible { transform: translate(-50%, 0); opacity: 1; }
+
+        @media (max-width: 860px) {
+            .workspace { grid-template-columns: 1fr; }
+            .code { min-height: 320px; }
+            .searchbar { grid-template-columns: 1fr 1fr; }
+            .searchbar .input, .search-count { grid-column: 1 / -1; }
+            .epoch-grid, .inline-form { grid-template-columns: 1fr; }
+            .toolbar__actions { width: 100%; }
+            .toolbar__actions .btn { flex: 1 1 auto; }
+        }
+        @media (max-width: 520px) {
+            .tool-tabs { width: 100%; }
+            .tool-tab { padding: 0.65rem 1rem; font-size: 0.875rem; }
+        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
     </style>
 </head>
 <body>
-    <div class="header">
+<div class="shell">
+    <header class="top">
         <a href="../" class="back">
-            <svg width="20" height="20" viewBox="0 0 24 24"><path d="M7.828 11H20v2H7.828l5.364 5.364-1.414 1.414L4 12l7.778-7.778 1.414 1.414z"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.828 11H20v2H7.828l5.364 5.364-1.414 1.414L4 12l7.778-7.778 1.414 1.414z"/></svg>
             <span data-i18n="back">Назад</span>
         </a>
         <div class="actions">
-            <button class="theme-btn" id="themeBtn">🌙</button>
-            <button class="theme-btn lang-btn" id="langBtn" type="button" aria-label="Сменить язык">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-2.29-2.333A17.9 17.9 0 0 1 8.027 13H4.062a8.008 8.008 0 0 0 5.648 6.667zM10.03 13c.151 2.439.848 4.73 1.97 6.752A15.905 15.905 0 0 0 13.97 13h-3.94zm9.908 0h-3.965a17.9 17.9 0 0 1-1.683 6.667A8.008 8.008 0 0 0 19.938 13zM4.062 11h3.965A17.9 17.9 0 0 1 9.71 4.333 8.008 8.008 0 0 0 4.062 11zm5.969 0h3.938A15.905 15.905 0 0 0 12 4.248 15.905 15.905 0 0 0 10.03 11zm4.259-6.667A17.9 17.9 0 0 1 15.973 11h3.965a8.008 8.008 0 0 0-5.648-6.667z"/></svg>
+            <button class="icon-btn" id="themeBtn" type="button" aria-label="Переключить тему" data-i18n-aria="aria.theme">🌙</button>
+            <button class="icon-btn" id="langBtn" type="button" aria-label="Сменить язык" data-i18n-aria="aria.lang">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-2.29-2.333A17.9 17.9 0 0 1 8.027 13H4.062a8.008 8.008 0 0 0 5.648 6.667zM10.03 13c.151 2.439.848 4.73 1.97 6.752A15.905 15.905 0 0 0 13.97 13h-3.94zm9.908 0h-3.965a17.9 17.9 0 0 1-1.683 6.667A8.008 8.008 0 0 0 19.938 13zM4.062 11h3.965A17.9 17.9 0 0 1 9.71 4.333 8.008 8.008 0 0 0 4.062 11zm5.969 0h3.938A15.905 15.905 0 0 0 12 4.248 15.905 15.905 0 0 0 10.03 11zm4.259-6.667A17.9 17.9 0 0 1 15.973 11h3.965a8.008 8.008 0 0 0-5.648-6.667z"/></svg>
                 <span class="lang-code" id="langCode">RU</span>
             </button>
         </div>
-    </div>
+    </header>
 
-    <h1 class="page-title" data-i18n="pageTitle">🛠️ RepoTools</h1>
+    <h1 class="page-title">🛠️ RepoTools</h1>
 
-    <section class="tool">
-        <h2 class="tool__title" data-i18n="tool">JSON Парсер</h2>
-    <div class="container">
-        <div class="card">
-            <h2 class="card__title" data-i18n="upload">📁 Загрузка JSON</h2>
-            <button class="btn">
-                <span data-i18n="choose">Выбрать файл</span>
-                <input type="file" id="fileInput" accept=".json">
-            </button>
-            <button class="btn" id="parseBtn" data-i18n="parse">⬇️ Парсить и скачать</button>
+    <!-- Чтобы добавить новый инструмент: кнопка в .tool-tabs (data-tool="имя") + <section class="tool" data-tool="имя" hidden> -->
+    <nav class="tool-tabs" id="toolTabs" role="tablist" aria-label="Tools">
+        <button class="tool-tab" type="button" role="tab" data-tool="parser" data-i18n="tab.parser" aria-selected="true">JSON Парсер</button>
+        <button class="tool-tab" type="button" role="tab" data-tool="objc" data-i18n="tab.objc" aria-selected="false">JSON → ObjC</button>
+        <button class="tool-tab" type="button" role="tab" data-tool="time" data-i18n="tab.time" aria-selected="false">Unix время</button>
+    </nav>
+
+    <!-- ============ Парсер Repo.json ============ -->
+    <section class="tool" id="tool-parser" data-tool="parser" role="tabpanel">
+        <div class="grid-2">
+            <div class="card card__body">
+                <h2 class="card__title" data-i18n="parser.upload">📁 Загрузка JSON</h2>
+                <p class="hint" data-i18n="parser.hint">Загрузите JSON с полем appRepositories — на выходе получите Repo.json.</p>
+                <button class="btn btn--primary" type="button">
+                    <span data-i18n="parser.choose">Выбрать файл</span>
+                    <input type="file" id="fileInput" accept=".json,application/json">
+                </button>
+                <button class="btn" type="button" id="parseBtn" data-i18n="parser.parse">⬇️ Парсить и скачать</button>
+                <p class="status" id="parserStatus" style="text-align:left"></p>
+            </div>
+            <div class="card">
+                <div class="card__head">
+                    <h2 class="card__title" data-i18n="parser.preview">👁️ Предпросмотр</h2>
+                </div>
+                <div style="padding:1rem">
+                    <pre class="json-box empty" id="jsonBox"><span data-i18n="parser.empty">Файл ещё не выбран</span></pre>
+                </div>
+            </div>
         </div>
-        <div class="card">
-            <h2 class="card__title" data-i18n="preview">👁️ Предпросмотр</h2>
-            <pre class="json-box" id="jsonBox"></pre>
-        </div>
-    </div>
     </section>
 
-    <script>
-        // Language (shared with the main site via localStorage)
-        const DICT = {
-            ru: { title: 'RepoTools | iApps', pageTitle: '🛠️ RepoTools', tool: 'JSON Парсер', back: 'Назад', upload: '📁 Загрузка JSON', choose: 'Выбрать файл',
-                  parse: '⬇️ Парсить и скачать', preview: '👁️ Предпросмотр', aria: 'Сменить язык',
-                  errParse: 'Ошибка парсинга JSON', errField: 'Загрузите JSON с полем appRepositories' },
-            en: { title: 'RepoTools | iApps', pageTitle: '🛠️ RepoTools', tool: 'JSON Parser', back: 'Back', upload: '📁 Upload JSON', choose: 'Choose file',
-                  parse: '⬇️ Parse and download', preview: '👁️ Preview', aria: 'Change language',
-                  errParse: 'JSON parsing error', errField: 'Upload a JSON file with an appRepositories field' }
-        };
-        let lang = 'ru';
-        try { const s = localStorage.getItem('lang'); if (s === 'ru' || s === 'en') lang = s; } catch (e) {}
-        const t = (k) => DICT[lang][k];
-        function applyLang() {
-            document.documentElement.lang = lang;
-            document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
-            document.getElementById('langCode').textContent = lang.toUpperCase();
-            document.getElementById('langBtn').setAttribute('aria-label', t('aria'));
+    <!-- ============ JSON -> ObjC ============ -->
+    <section class="tool" id="tool-objc" data-tool="objc" role="tabpanel" hidden>
+        <div class="toolbar">
+            <div>
+                <h2 data-i18n="objc.title">JSON → NSObject для Objective-C</h2>
+                <p data-i18n="objc.subtitle">Локальный конвертер: данные не покидают браузер</p>
+            </div>
+            <div class="toolbar__actions">
+                <button class="btn btn--sm" id="formatBtn" type="button" data-i18n="objc.format">Форматировать JSON</button>
+                <button class="btn btn--sm" id="sampleBtn" type="button" data-i18n="objc.sample">Пример</button>
+                <button class="btn btn--sm" id="clearBtn" type="button" data-i18n="objc.clear">Очистить</button>
+                <button class="btn btn--sm btn--primary" id="copyBtn" type="button" data-i18n="objc.copy">Копировать ObjC</button>
+            </div>
+        </div>
+
+        <div class="card searchbar">
+            <input class="input" id="searchInput" type="search" placeholder="Поиск в JSON и ObjC" data-i18n-ph="objc.search" autocomplete="off">
+            <button class="btn btn--sm" id="searchPrevBtn" type="button" data-i18n="objc.prev">Назад</button>
+            <button class="btn btn--sm" id="searchNextBtn" type="button" data-i18n="objc.next">Вперёд</button>
+            <span class="search-count" id="searchCount">0 / 0</span>
+        </div>
+
+        <div class="workspace">
+            <article class="card pane">
+                <div class="card__head">
+                    <span class="card__title">JSON</span>
+                    <span class="status" id="inputStatus">Ожидаю ввод</span>
+                </div>
+                <div class="code">
+                    <pre class="code__mirror" id="jsonMirror" aria-hidden="true"></pre>
+                    <textarea id="jsonInput" spellcheck="false" aria-label="JSON input" placeholder='{"name":"Alex","active":true,"items":[1,null,"text"]}'></textarea>
+                </div>
+                <div class="options">
+                    <label class="check"><input id="wrapVariable" type="checkbox"> <span data-i18n="objc.wrap">Обернуть в id object = ...;</span></label>
+                    <label class="check"><input id="useMutable" type="checkbox"> <span data-i18n="objc.mutable">mutableCopy для коллекций</span></label>
+                </div>
+            </article>
+
+            <article class="card pane">
+                <div class="card__head">
+                    <span class="card__title">Objective-C NSObject</span>
+                    <span class="status" id="outputStatus">Готово</span>
+                </div>
+                <div class="code">
+                    <pre class="code__mirror" id="objcMirror" aria-hidden="true"></pre>
+                    <textarea id="objcOutput" spellcheck="false" aria-label="Objective-C output" readonly></textarea>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- ============ Unix time ============ -->
+    <section class="tool" id="tool-time" data-tool="time" role="tabpanel" hidden>
+        <div class="grid-2">
+            <article class="card">
+                <div class="card__head">
+                    <span class="card__title" data-i18n="time.title">Unix time</span>
+                    <span class="status ok" data-i18n="time.live">Обновляется</span>
+                </div>
+                <div class="card__body">
+                    <div class="epoch-grid">
+                        <div class="field"><span data-i18n="time.sec">Секунды</span><div class="result copyable" id="nowSeconds">0</div></div>
+                        <div class="field"><span data-i18n="time.ms">Миллисекунды</span><div class="result copyable" id="nowMilliseconds">0</div></div>
+                        <div class="field"><span data-i18n="time.us">Микросекунды</span><div class="result copyable" id="nowMicroseconds">0</div></div>
+                        <div class="field"><span data-i18n="time.ns">Наносекунды</span><div class="result copyable" id="nowNanoseconds">0</div></div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card__head">
+                    <span class="card__title" data-i18n="time.convert">Конвертер времени</span>
+                    <span class="status" id="timeStatus">Готово</span>
+                </div>
+                <div class="card__body">
+                    <div class="field">
+                        <span data-i18n="time.timestamp">Timestamp</span>
+                        <div class="inline-form">
+                            <input class="input" id="timestampInput" inputmode="numeric" placeholder="1781201784" autocomplete="off">
+                            <select class="select" id="timestampUnit" aria-label="Timestamp unit">
+                                <option value="auto" data-i18n="time.auto">Auto</option>
+                                <option value="seconds" data-i18n="time.sec">Секунды</option>
+                                <option value="milliseconds" data-i18n="time.ms">Миллисекунды</option>
+                                <option value="microseconds" data-i18n="time.us">Микросекунды</option>
+                                <option value="nanoseconds" data-i18n="time.ns">Наносекунды</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="epoch-grid">
+                        <div class="field"><span data-i18n="time.local">Локальное время</span><div class="result copyable" id="localDateResult"></div></div>
+                        <div class="field"><span data-i18n="time.utc">UTC время</span><div class="result copyable" id="utcDateResult"></div></div>
+                        <div class="field"><span>ISO 8601</span><div class="result copyable" id="isoDateResult"></div></div>
+                        <div class="field"><span data-i18n="time.unit">Единица</span><div class="result" id="unitResult"></div></div>
+                    </div>
+                    <div class="field">
+                        <span data-i18n="time.date">Дата в timestamp</span>
+                        <div class="inline-form">
+                            <input class="input" id="dateInput" type="datetime-local" step="1">
+                            <button class="btn" id="dateNowBtn" type="button" data-i18n="time.now">Сейчас</button>
+                        </div>
+                    </div>
+                    <div class="epoch-grid">
+                        <div class="field"><span data-i18n="time.sec">Секунды</span><div class="result copyable" id="dateSecondsResult"></div></div>
+                        <div class="field"><span data-i18n="time.ms">Миллисекунды</span><div class="result copyable" id="dateMillisecondsResult"></div></div>
+                        <div class="field"><span data-i18n="time.us">Микросекунды</span><div class="result copyable" id="dateMicrosecondsResult"></div></div>
+                        <div class="field"><span data-i18n="time.ns">Наносекунды</span><div class="result copyable" id="dateNanosecondsResult"></div></div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function () {
+    'use strict';
+    const $ = (s, r) => (r || document).querySelector(s);
+    const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+
+    /* ===================== i18n ===================== */
+    const DICT = {
+        ru: {
+            title: 'RepoTools | iApps', back: 'Назад', copied: 'Скопировано', copyFail: 'Не удалось скопировать',
+            'aria.theme': 'Переключить тему', 'aria.lang': 'Сменить язык',
+            'tab.parser': 'JSON Парсер', 'tab.objc': 'JSON → ObjC', 'tab.time': 'Unix время',
+            'parser.upload': '📁 Загрузка JSON', 'parser.hint': 'Загрузите JSON с полем appRepositories — на выходе получите Repo.json.',
+            'parser.choose': 'Выбрать файл', 'parser.parse': '⬇️ Парсить и скачать', 'parser.preview': '👁️ Предпросмотр',
+            'parser.empty': 'Файл ещё не выбран', 'parser.errParse': 'Ошибка парсинга JSON', 'parser.errField': 'Загрузите JSON с полем appRepositories',
+            'parser.loaded': 'Загружено: {name}', 'parser.done': 'Готово: {n} приложений → Repo.json',
+            'objc.title': 'JSON → NSObject для Objective-C', 'objc.subtitle': 'Локальный конвертер: данные не покидают браузер',
+            'objc.format': 'Форматировать JSON', 'objc.sample': 'Пример', 'objc.clear': 'Очистить', 'objc.copy': 'Копировать ObjC',
+            'objc.search': 'Поиск в JSON и ObjC', 'objc.prev': 'Назад', 'objc.next': 'Вперёд', 'objc.noMatches': 'Нет совпадений',
+            'objc.wrap': 'Обернуть в id object = ...;', 'objc.mutable': 'mutableCopy для коллекций',
+            'objc.waiting': 'Ожидаю ввод', 'objc.ready': 'Готово', 'objc.valid': 'JSON валиден', 'objc.error': 'Ошибка', 'objc.chars': 'символов',
+            'time.title': 'Unix time', 'time.live': 'Обновляется', 'time.convert': 'Конвертер времени',
+            'time.sec': 'Секунды', 'time.ms': 'Миллисекунды', 'time.us': 'Микросекунды', 'time.ns': 'Наносекунды',
+            'time.timestamp': 'Timestamp', 'time.auto': 'Auto', 'time.local': 'Локальное время', 'time.utc': 'UTC время',
+            'time.unit': 'Единица', 'time.date': 'Дата в timestamp', 'time.now': 'Сейчас', 'time.ready': 'Готово',
+            'time.badTs': 'Неверный timestamp', 'time.badDate': 'Неверная дата'
+        },
+        en: {
+            title: 'RepoTools | iApps', back: 'Back', copied: 'Copied', copyFail: 'Could not copy',
+            'aria.theme': 'Toggle theme', 'aria.lang': 'Change language',
+            'tab.parser': 'JSON Parser', 'tab.objc': 'JSON → ObjC', 'tab.time': 'Unix time',
+            'parser.upload': '📁 Upload JSON', 'parser.hint': 'Upload a JSON with an appRepositories field — you will get Repo.json.',
+            'parser.choose': 'Choose file', 'parser.parse': '⬇️ Parse and download', 'parser.preview': '👁️ Preview',
+            'parser.empty': 'No file selected yet', 'parser.errParse': 'JSON parsing error', 'parser.errField': 'Upload a JSON file with an appRepositories field',
+            'parser.loaded': 'Loaded: {name}', 'parser.done': 'Done: {n} apps → Repo.json',
+            'objc.title': 'JSON → NSObject for Objective-C', 'objc.subtitle': 'Local converter: your data never leaves the browser',
+            'objc.format': 'Format JSON', 'objc.sample': 'Sample', 'objc.clear': 'Clear', 'objc.copy': 'Copy ObjC',
+            'objc.search': 'Search JSON and ObjC', 'objc.prev': 'Previous', 'objc.next': 'Next', 'objc.noMatches': 'No matches',
+            'objc.wrap': 'Wrap as id object = ...;', 'objc.mutable': 'mutableCopy for collections',
+            'objc.waiting': 'Waiting for input', 'objc.ready': 'Ready', 'objc.valid': 'Valid JSON', 'objc.error': 'Error', 'objc.chars': 'characters',
+            'time.title': 'Unix time', 'time.live': 'Live', 'time.convert': 'Time converter',
+            'time.sec': 'Seconds', 'time.ms': 'Milliseconds', 'time.us': 'Microseconds', 'time.ns': 'Nanoseconds',
+            'time.timestamp': 'Timestamp', 'time.auto': 'Auto', 'time.local': 'Local time', 'time.utc': 'UTC time',
+            'time.unit': 'Detected unit', 'time.date': 'Date to timestamp', 'time.now': 'Now', 'time.ready': 'Ready',
+            'time.badTs': 'Invalid timestamp', 'time.badDate': 'Invalid date'
         }
-        document.getElementById('langBtn').onclick = () => {
-            lang = lang === 'ru' ? 'en' : 'ru';
-            try { localStorage.setItem('lang', lang); } catch (e) {}
-            applyLang();
+    };
+    let lang = 'ru';
+    try { const s = localStorage.getItem('lang'); if (s === 'ru' || s === 'en') lang = s; } catch (e) {}
+    const t = (key, vars) => {
+        let s = (DICT[lang] && DICT[lang][key]) || DICT.ru[key] || key;
+        if (vars) Object.keys(vars).forEach(k => { s = s.split('{' + k + '}').join(vars[k]); });
+        return s;
+    };
+
+    /* ===================== utils ===================== */
+    const toastEl = $('#toast');
+    let toastTimer;
+    function toast(text) {
+        toastEl.textContent = text;
+        toastEl.classList.add('visible');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toastEl.classList.remove('visible'), 1800);
+    }
+    async function copyText(text) {
+        try {
+            if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text); return true; }
+        } catch (e) { /* fall back below */ }
+        try {
+            const ta = document.createElement('textarea');
+            ta.value = text; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;opacity:0';
+            document.body.appendChild(ta); ta.select();
+            const ok = document.execCommand('copy');
+            document.body.removeChild(ta);
+            return ok;
+        } catch (e) { return false; }
+    }
+    const escHtml = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+    /* ===================== theme ===================== */
+    const html = document.documentElement;
+    const themeBtn = $('#themeBtn');
+    function applyTheme(theme) {
+        html.dataset.theme = theme;
+        themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+    }
+    let savedTheme = 'dark';
+    try { savedTheme = localStorage.getItem('theme') || 'dark'; } catch (e) {}
+    applyTheme(savedTheme === 'light' ? 'light' : 'dark');
+    themeBtn.addEventListener('click', () => {
+        const next = html.dataset.theme === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+        try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+
+    /* ===================== tool switcher ===================== */
+    const tabs = $$('.tool-tab');
+    const sections = $$('.tool');
+    const TOOLS = tabs.map(b => b.dataset.tool);
+    function setTool(name, updateHash) {
+        if (TOOLS.indexOf(name) === -1) name = TOOLS[0];
+        sections.forEach(s => { s.hidden = s.dataset.tool !== name; });
+        tabs.forEach(b => { b.setAttribute('aria-selected', String(b.dataset.tool === name)); });
+        try { localStorage.setItem('repotoolsTool', name); } catch (e) {}
+        if (updateHash) history.replaceState(null, '', '#' + name);
+        const active = $('.tool-tab[aria-selected="true"]');
+        if (active && active.scrollIntoView) active.scrollIntoView({ block: 'nearest', inline: 'center' });
+    }
+    tabs.forEach(b => b.addEventListener('click', () => setTool(b.dataset.tool, true)));
+    window.addEventListener('hashchange', () => setTool(location.hash.slice(1), false));
+
+    /* ===================== Parser (Repo.json) ===================== */
+    const fileInput = $('#fileInput'), parseBtn = $('#parseBtn'), jsonBox = $('#jsonBox'), parserStatus = $('#parserStatus');
+    let parserData = null, parserFileName = '';
+    function highlight(json) {
+        return escHtml(json).replace(
+            /("(\\u[\da-fA-F]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g,
+            (m) => {
+                let c = 'json-number';
+                if (/^"/.test(m)) c = /:$/.test(m) ? 'json-key' : 'json-string';
+                else if (/true|false/.test(m)) c = 'json-boolean';
+                return '<span class="' + c + '">' + m + '</span>';
+            });
+    }
+    function setParserStatus(text, cls) {
+        parserStatus.textContent = text || '';
+        parserStatus.className = 'status' + (cls ? ' ' + cls : '');
+        parserStatus.style.textAlign = 'left';
+    }
+    fileInput.addEventListener('change', function () {
+        const file = this.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+            try {
+                parserData = JSON.parse(reader.result);
+                parserFileName = file.name;
+                jsonBox.classList.remove('empty');
+                jsonBox.innerHTML = highlight(JSON.stringify(parserData, null, 2));
+                setParserStatus(t('parser.loaded', { name: file.name }), 'ok');
+            } catch (e) {
+                parserData = null;
+                setParserStatus(t('parser.errParse'), 'error');
+                toast(t('parser.errParse'));
+            }
         };
+        reader.readAsText(file);
+    });
+    parseBtn.addEventListener('click', () => {
+        if (!parserData || !Array.isArray(parserData.appRepositories)) {
+            setParserStatus(t('parser.errField'), 'error');
+            toast(t('parser.errField'));
+            return;
+        }
+        const data = parserData.appRepositories.map(a => ({
+            appName: a.appName, appImage: a.appImage, appVersion: a.appVersion,
+            appDescription: a.appDescription, appUpdateTime: a.appUpdateTime
+        }));
+        const blob = new Blob([JSON.stringify(data, null, 4)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'Repo.json';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+        setParserStatus(t('parser.done', { n: data.length }), 'ok');
+    });
+
+    /* ===================== JSON -> ObjC ===================== */
+    const jsonInput = $('#jsonInput'), objcOutput = $('#objcOutput');
+    const jsonMirror = $('#jsonMirror'), objcMirror = $('#objcMirror');
+    const inputStatus = $('#inputStatus'), outputStatus = $('#outputStatus');
+    const wrapVariable = $('#wrapVariable'), useMutable = $('#useMutable');
+    const searchInput = $('#searchInput'), searchCount = $('#searchCount');
+    const sampleJson = {
+        user: { id: 42, name: 'Ivan', premium: true, balance: 19.95, email: null },
+        tags: ['ios', 'objc', 'json'],
+        meta: { source: 'web-tool', retries: 0 }
+    };
+    let searchMatches = [], activeSearchIndex = -1, lastValid = true;
+
+    function escapeObjCString(value) {
+        return value.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t');
+    }
+    const indent = (level) => '    '.repeat(level);
+    function numberLiteral(value) {
+        if (Number.isFinite(value)) return '@(' + String(value) + ')';
+        return '[NSNull null]';
+    }
+    function toObjC(value, level) {
+        level = level || 0;
+        if (value === null) return '[NSNull null]';
+        if (Array.isArray(value)) {
+            if (value.length === 0) return '@[]';
+            const items = value.map(item => indent(level + 1) + toObjC(item, level + 1));
+            return '@[\n' + items.join(',\n') + '\n' + indent(level) + ']';
+        }
+        if (typeof value === 'object') {
+            const entries = Object.entries(value);
+            if (entries.length === 0) return '@{}';
+            const pairs = entries.map(([key, item]) => indent(level + 1) + '@"' + escapeObjCString(key) + '": ' + toObjC(item, level + 1));
+            return '@{\n' + pairs.join(',\n') + '\n' + indent(level) + '}';
+        }
+        if (typeof value === 'string') return '@"' + escapeObjCString(value) + '"';
+        if (typeof value === 'number') return numberLiteral(value);
+        if (typeof value === 'boolean') return value ? '@YES' : '@NO';
+        return '[NSNull null]';
+    }
+    function setStatus(el, text, isError) { el.textContent = text; el.classList.toggle('error', !!isError); }
+
+    function updateOutput() {
+        const raw = jsonInput.value.trim();
+        if (!raw) {
+            objcOutput.value = '';
+            setStatus(inputStatus, t('objc.waiting'));
+            setStatus(outputStatus, t('objc.ready'));
+        } else {
+            try {
+                const parsed = JSON.parse(raw);
+                let code = toObjC(parsed);
+                if (useMutable.checked && parsed !== null && typeof parsed === 'object') code = '[' + code + ' mutableCopy]';
+                objcOutput.value = wrapVariable.checked ? 'id object = ' + code + ';' : code + ';';
+                setStatus(inputStatus, t('objc.valid'));
+                inputStatus.classList.toggle('ok', true);
+                setStatus(outputStatus, objcOutput.value.length + ' ' + t('objc.chars'));
+                lastValid = true;
+            } catch (error) {
+                objcOutput.value = '';
+                setStatus(inputStatus, error.message, true);
+                setStatus(outputStatus, t('objc.error'), true);
+                lastValid = false;
+            }
+        }
+        if (!raw || !lastValid) inputStatus.classList.remove('ok');
+        updateSearch(true);
+    }
+
+    /* --- search with highlight layer (does not steal focus from the search box) --- */
+    function findMatches(text, pane) {
+        const q = searchInput.value.trim().toLowerCase();
+        if (!q) return [];
+        const hay = text.toLowerCase(), out = [];
+        let i = hay.indexOf(q);
+        while (i !== -1) { out.push({ pane: pane, start: i, end: i + q.length }); i = hay.indexOf(q, i + q.length); }
+        return out;
+    }
+    function renderMirror(mirror, text, pane) {
+        const mine = [];
+        searchMatches.forEach((m, idx) => { if (m.pane === pane) mine.push({ m: m, idx: idx }); });
+        if (!mine.length) { mirror.innerHTML = ''; return; }
+        let out = '', pos = 0;
+        mine.forEach(({ m, idx }) => {
+            out += escHtml(text.slice(pos, m.start));
+            out += '<mark' + (idx === activeSearchIndex ? ' class="is-active"' : '') + '>' + escHtml(text.slice(m.start, m.end)) + '</mark>';
+            pos = m.end;
+        });
+        out += escHtml(text.slice(pos)) + '\n';
+        mirror.innerHTML = out;
+        mirror.scrollTop = pane === 'json' ? jsonInput.scrollTop : objcOutput.scrollTop;
+    }
+    function renderSearch() {
+        renderMirror(jsonMirror, jsonInput.value, 'json');
+        renderMirror(objcMirror, objcOutput.value, 'objc');
+        if (!searchInput.value.trim()) searchCount.textContent = '0 / 0';
+        else if (!searchMatches.length) searchCount.textContent = t('objc.noMatches');
+        else searchCount.textContent = (activeSearchIndex + 1) + ' / ' + searchMatches.length;
+    }
+    function updateSearch(keepIndex) {
+        const prev = activeSearchIndex;
+        searchMatches = findMatches(jsonInput.value, 'json').concat(findMatches(objcOutput.value, 'objc'));
+        if (!searchMatches.length) activeSearchIndex = -1;
+        else if (keepIndex && prev >= 0) activeSearchIndex = Math.min(prev, searchMatches.length - 1);
+        else activeSearchIndex = 0;
+        renderSearch();
+    }
+    function revealActive() {
+        const m = searchMatches[activeSearchIndex];
+        if (!m) return;
+        const mirror = m.pane === 'json' ? jsonMirror : objcMirror;
+        const ta = m.pane === 'json' ? jsonInput : objcOutput;
+        const el = mirror.querySelector('mark.is-active');
+        if (el) { ta.scrollTop = Math.max(0, el.offsetTop - ta.clientHeight / 3); mirror.scrollTop = ta.scrollTop; }
+    }
+    function moveSearch(dir) {
+        if (!searchMatches.length) updateSearch();
+        if (!searchMatches.length) return;
+        activeSearchIndex = (activeSearchIndex + dir + searchMatches.length) % searchMatches.length;
+        renderSearch();
+        revealActive();
+    }
+    jsonInput.addEventListener('scroll', () => { jsonMirror.scrollTop = jsonInput.scrollTop; jsonMirror.scrollLeft = jsonInput.scrollLeft; });
+    objcOutput.addEventListener('scroll', () => { objcMirror.scrollTop = objcOutput.scrollTop; objcMirror.scrollLeft = objcOutput.scrollLeft; });
+    jsonInput.addEventListener('input', updateOutput);
+    wrapVariable.addEventListener('change', updateOutput);
+    useMutable.addEventListener('change', updateOutput);
+    searchInput.addEventListener('input', () => { updateSearch(); revealActive(); });
+    searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); moveSearch(e.shiftKey ? -1 : 1); }
+    });
+    $('#searchPrevBtn').addEventListener('click', () => moveSearch(-1));
+    $('#searchNextBtn').addEventListener('click', () => moveSearch(1));
+
+    $('#formatBtn').addEventListener('click', () => {
+        try {
+            jsonInput.value = JSON.stringify(JSON.parse(jsonInput.value), null, 2);
+            updateOutput();
+        } catch (error) { setStatus(inputStatus, error.message, true); }
+    });
+    $('#sampleBtn').addEventListener('click', () => { jsonInput.value = JSON.stringify(sampleJson, null, 2); updateOutput(); });
+    $('#clearBtn').addEventListener('click', () => { jsonInput.value = ''; updateOutput(); jsonInput.focus(); });
+    $('#copyBtn').addEventListener('click', async () => {
+        if (!objcOutput.value) return;
+        toast((await copyText(objcOutput.value)) ? t('copied') : t('copyFail'));
+    });
+
+    /* ===================== Unix time ===================== */
+    const timestampInput = $('#timestampInput'), timestampUnit = $('#timestampUnit'), dateInput = $('#dateInput'), timeStatus = $('#timeStatus');
+    const out = {
+        nowS: $('#nowSeconds'), nowMs: $('#nowMilliseconds'), nowUs: $('#nowMicroseconds'), nowNs: $('#nowNanoseconds'),
+        local: $('#localDateResult'), utc: $('#utcDateResult'), iso: $('#isoDateResult'), unit: $('#unitResult'),
+        dS: $('#dateSecondsResult'), dMs: $('#dateMillisecondsResult'), dUs: $('#dateMicrosecondsResult'), dNs: $('#dateNanosecondsResult')
+    };
+    const UNIT_KEY = { seconds: 'time.sec', milliseconds: 'time.ms', microseconds: 'time.us', nanoseconds: 'time.ns' };
+    function detectUnit(value) {
+        if (timestampUnit.value !== 'auto') return timestampUnit.value;
+        const digits = value.replace(/^-/, '').replace(/\D/g, '').length;
+        if (digits >= 18) return 'nanoseconds';
+        if (digits >= 15) return 'microseconds';
+        if (digits >= 12) return 'milliseconds';
+        return 'seconds';
+    }
+    function toMilliseconds(value, unit) {
+        if (value.indexOf('.') !== -1) {
+            const n = Number(value);
+            return { seconds: n * 1000, milliseconds: n, microseconds: n / 1000, nanoseconds: n / 1e6 }[unit];
+        }
+        const v = BigInt(value);
+        if (unit === 'nanoseconds') return Number(v / 1000000n);
+        if (unit === 'microseconds') return Number(v / 1000n);
+        if (unit === 'milliseconds') return Number(v);
+        return Number(v * 1000n);
+    }
+    const locale = () => (lang === 'ru' ? 'ru-RU' : 'en-US');
+    const fmtOpts = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' };
+    const fmtLocal = (d) => new Intl.DateTimeFormat(locale(), fmtOpts).format(d);
+    const fmtUtc = (d) => new Intl.DateTimeFormat(locale(), Object.assign({ timeZone: 'UTC' }, fmtOpts)).format(d);
+    function clearTs() { out.local.textContent = out.utc.textContent = out.iso.textContent = out.unit.textContent = ''; }
+    function updateNow() {
+        const ms = BigInt(Date.now());
+        out.nowS.textContent = String(ms / 1000n); out.nowMs.textContent = String(ms);
+        out.nowUs.textContent = String(ms * 1000n); out.nowNs.textContent = String(ms * 1000000n);
+    }
+    function updateTimestamp() {
+        const value = timestampInput.value.trim();
+        if (!value) { clearTs(); setStatus(timeStatus, t('time.ready')); return; }
+        try {
+            if (!/^-?\d+(\.\d+)?$/.test(value)) throw new Error(t('time.badTs'));
+            const unit = detectUnit(value);
+            const date = new Date(toMilliseconds(value, unit));
+            if (Number.isNaN(date.getTime())) throw new Error(t('time.badTs'));
+            out.local.textContent = fmtLocal(date); out.utc.textContent = fmtUtc(date);
+            out.iso.textContent = date.toISOString(); out.unit.textContent = t(UNIT_KEY[unit]);
+            setStatus(timeStatus, t('time.ready'));
+        } catch (e) { clearTs(); setStatus(timeStatus, e.message, true); }
+    }
+    function toDateInputValue(date) {
+        return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 19);
+    }
+    function updateDate() {
+        if (!dateInput.value) { out.dS.textContent = out.dMs.textContent = out.dUs.textContent = out.dNs.textContent = ''; return; }
+        const ms = new Date(dateInput.value).getTime();
+        if (Number.isNaN(ms)) { setStatus(timeStatus, t('time.badDate'), true); return; }
+        const b = BigInt(ms);
+        out.dS.textContent = String(b / 1000n); out.dMs.textContent = String(b);
+        out.dUs.textContent = String(b * 1000n); out.dNs.textContent = String(b * 1000000n);
+    }
+    function fillNow() { dateInput.value = toDateInputValue(new Date()); updateDate(); }
+    timestampInput.addEventListener('input', updateTimestamp);
+    timestampUnit.addEventListener('change', updateTimestamp);
+    dateInput.addEventListener('input', updateDate);
+    $('#dateNowBtn').addEventListener('click', fillNow);
+    // click on any result to copy it
+    $$('.copyable').forEach(el => el.addEventListener('click', async () => {
+        const v = el.textContent.trim();
+        if (v) toast((await copyText(v)) ? t('copied') : t('copyFail'));
+    }));
+    setInterval(updateNow, 1000);
+
+    /* ===================== language ===================== */
+    function applyLang() {
+        html.lang = lang;
+        document.title = t('title');
+        $$('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+        $$('[data-i18n-ph]').forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
+        $$('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
+        $('#langCode').textContent = lang.toUpperCase();
+        if (!parserData) { jsonBox.classList.add('empty'); }
+        updateOutput(); updateTimestamp(); updateDate();
+    }
+    $('#langBtn').addEventListener('click', () => {
+        lang = lang === 'ru' ? 'en' : 'ru';
+        try { localStorage.setItem('lang', lang); } catch (e) {}
         applyLang();
+    });
 
-        // Theme
-        const html = document.documentElement;
-        const themeBtn = document.getElementById('themeBtn');
-        const saved = localStorage.getItem('theme') || 'dark';
-        html.dataset.theme = saved;
-        themeBtn.textContent = saved === 'dark' ? '☀️' : '🌙';
-        
-        themeBtn.onclick = () => {
-            const next = html.dataset.theme === 'dark' ? 'light' : 'dark';
-            html.dataset.theme = next;
-            localStorage.setItem('theme', next);
-            themeBtn.textContent = next === 'dark' ? '☀️' : '🌙';
-        };
-
-        // JSON Parser
-        let jsonData = null;
-        const fileInput = document.getElementById('fileInput');
-        const parseBtn = document.getElementById('parseBtn');
-        const jsonBox = document.getElementById('jsonBox');
-
-        fileInput.onchange = function() {
-            const file = this.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = () => {
-                try {
-                    jsonData = JSON.parse(reader.result);
-                    jsonBox.innerHTML = highlight(JSON.stringify(jsonData, null, 2));
-                    jsonBox.classList.add('active');
-                } catch { alert(t('errParse')); }
-            };
-            reader.readAsText(file);
-        };
-
-        function highlight(json) {
-            return json.replace(
-                /("(\\u[\da-fA-F]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+-]?\d+)?)/g,
-                m => {
-                    let c = 'json-number';
-                    if (/^"/.test(m)) c = /:$/.test(m) ? 'json-key' : 'json-string';
-                    else if (/true|false/.test(m)) c = 'json-boolean';
-                    return `<span class="${c}">${m}</span>`;
-                }
-            );
-        }
-
-        parseBtn.onclick = () => {
-            if (!jsonData?.appRepositories) return alert(t('errField'));
-            const data = jsonData.appRepositories.map(a => ({
-                appName: a.appName, appImage: a.appImage, appVersion: a.appVersion,
-                appDescription: a.appDescription, appUpdateTime: a.appUpdateTime
-            }));
-            const blob = new Blob([JSON.stringify(data, null, 4)], { type: 'application/json' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = 'Repo.json';
-            a.click();
-        };
-    </script>
+    /* ===================== init ===================== */
+    jsonInput.value = JSON.stringify(sampleJson, null, 2);
+    timestampInput.value = String(Math.floor(Date.now() / 1000));
+    fillNow();
+    updateNow();
+    let startTool = location.hash.slice(1);
+    if (TOOLS.indexOf(startTool) === -1) { try { startTool = localStorage.getItem('repotoolsTool') || TOOLS[0]; } catch (e) { startTool = TOOLS[0]; } }
+    setTool(startTool, false);
+    applyLang();
+})();
+</script>
 </body>
 </html>
