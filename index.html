@@ -8,7 +8,7 @@
     <title data-i18n="page.title">iApps - Сертификат разработчика Apple и приложения для iPhone</title>
     <link rel="icon" type="image/png" href="Images/Profile.PNG">
     <link rel="apple-touch-icon" href="Images/Profile.PNG">
-    <link rel="stylesheet" href="Styles/Style.css?v=13">
+    <link rel="stylesheet" href="Styles/Style.css?v=14">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -81,7 +81,7 @@
     <style id="category-styles">
         .search-bar { margin-bottom: 1rem; }
         .category-bar { position: relative; max-width: 600px; margin: 0 auto 2.5rem; }
-        .category-bar__scroll { --fl: 0px; --fr: 0px; display: flex; gap: 0.5rem; padding: 4px 2px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; scrollbar-width: none; cursor: grab; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--fl), #000 calc(100% - var(--fr)), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 var(--fl), #000 calc(100% - var(--fr)), transparent 100%); }
+        .category-bar__scroll { --fl: 0px; --fr: 0px; display: flex; gap: 0.5rem; position: relative; padding: 14px 12px; margin: -14px -12px; scroll-padding: 0 12px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; scrollbar-width: none; cursor: grab; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--fl), #000 calc(100% - var(--fr)), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 var(--fl), #000 calc(100% - var(--fr)), transparent 100%); }
         .category-bar__scroll::-webkit-scrollbar { display: none; }
         .category-bar__scroll.fade-l { --fl: 28px; }
         .category-bar__scroll.fade-r { --fr: 28px; }
@@ -89,7 +89,7 @@
         .category-bar__scroll.is-dragging .cat-chip { pointer-events: none; }
         .cat-chip { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 9999px; color: var(--text-secondary); font-size: 0.875rem; font-weight: 600; white-space: nowrap; scroll-snap-align: start; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); transition: all var(--transition); }
         .cat-chip:hover { border-color: var(--border-hover); color: var(--text-primary); }
-        .cat-chip.is-active { background: var(--gradient-1); border-color: transparent; color: #fff; box-shadow: 0 6px 20px var(--accent-glow); }
+        .cat-chip.is-active { background: var(--gradient-1); border-color: transparent; color: #fff; box-shadow: 0 4px 14px var(--accent-glow); }
         .cat-chip__emoji { font-size: 1rem; line-height: 1; }
         .cat-arrow { position: absolute; top: 50%; z-index: 3; width: 32px; height: 32px; margin-top: -16px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-secondary); border: 1px solid var(--border-hover); box-shadow: var(--shadow-md); transition: all var(--transition); }
         .cat-arrow[hidden] { display: none; }
@@ -127,7 +127,7 @@
     </style>
 
     <style id="cert-card-styles">
-        .pricing__scroll .pricing__item.cert-card { width: 272px; min-height: 0; padding: 1.5rem 1.25rem; gap: 1.125rem; align-items: stretch; justify-content: flex-start; border-radius: 26px; cursor: pointer; }
+        .pricing__scroll .pricing__item.cert-card { width: 320px; min-height: 0; padding: 1.5rem 1.25rem; gap: 1.125rem; align-items: stretch; justify-content: flex-start; border-radius: 26px; cursor: pointer; }
         .cert-card__head { display: flex; align-items: center; gap: 0.875rem; }
         .cert-card__icon { flex-shrink: 0; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 14px; background: var(--bg-tertiary); border: 1px solid var(--border); font-size: 1.0625rem; font-weight: 800; letter-spacing: -0.02em; color: #c4b5fd; }
         [data-theme="light"] .cert-card__icon { color: var(--accent); }
@@ -147,7 +147,7 @@
         .cert-card.pricing__item--selected .cert-card__name { color: #c4b5fd; }
         [data-theme="light"] .cert-card.pricing__item--selected .cert-card__name { color: var(--accent); }
         @media (max-width: 480px) {
-            .pricing__scroll .pricing__item.cert-card { width: 244px; padding: 1.25rem 1rem; gap: 1rem; }
+            .pricing__scroll .pricing__item.cert-card { width: 300px; padding: 1.25rem 1rem; gap: 1rem; }
             .cert-card__icon { width: 42px; height: 42px; font-size: 0.9375rem; }
             .cert-card__name { font-size: 1.1875rem; }
             .cert-card .pricing__price { font-size: 1.875rem; }
@@ -191,9 +191,9 @@
         html { scroll-behavior: auto !important; }
     </style>
     <style id="jit-fit">
-        .pricing__scroll .pricing__item.cert-card[data-duration*="JIT"] { width: 300px; }
+        .pricing__scroll .pricing__item.cert-card[data-duration*="JIT"] { width: 320px; }
         .cert-card[data-duration*="JIT"] .cert-card__list .cert-card__li:first-child > span { white-space: nowrap; }
-        @media (max-width: 480px) { .pricing__scroll .pricing__item.cert-card[data-duration*="JIT"] { width: 276px; } }
+        @media (max-width: 480px) { .pricing__scroll .pricing__item.cert-card[data-duration*="JIT"] { width: 300px; } }
     </style>
 
     <style id="menu-styles">
@@ -213,6 +213,25 @@
     <style id="categories-styles">
         .app-detail__categories { display: flex; flex-wrap: wrap; gap: 0.5rem; }
     </style>
+    <style id="header-name-styles">
+        .header__logo-text { display: inline-block !important; letter-spacing: 0.06em; font-weight: 800; }
+        @media (max-width: 480px) {
+            .header__logo { gap: 0.5rem; }
+            .header__logo-text { font-size: 1.0625rem; }
+        }
+        @media (max-width: 360px) {
+            .header__logo-text { font-size: 1rem; letter-spacing: 0.04em; }
+            .header__actions { gap: 0.375rem; }
+        }
+    </style>
+    <style id="warranty-styles">
+        .cert-card__accs { display: grid; gap: 0.625rem; }
+        .cert-card__warranty-body { margin-top: 0.625rem; display: grid; gap: 0.875rem; padding: 0.25rem 0.25rem 0.25rem 0; cursor: default; }
+        .cert-card__warranty-term { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.75rem 0.875rem; border-radius: 12px; background: var(--bg-tertiary); border: 1px solid var(--border); font-size: 0.875rem; color: var(--text-secondary); }
+        .cert-card__warranty-term strong { color: var(--text-primary); font-weight: 800; white-space: nowrap; }
+        .cert-card__warranty-item strong { display: block; margin-bottom: 0.25rem; font-size: 0.9375rem; font-weight: 800; color: var(--text-primary); }
+        .cert-card__warranty-item p { font-size: 0.875rem; line-height: 1.55; color: var(--text-secondary); }
+    </style>
 </head>
 <body>
     <div class="bg-animation">
@@ -227,7 +246,7 @@
         <div class="header__container">
             <a href="index.html" class="header__logo">
                 <img class="header__logo-icon header__logo-icon--img" src="Images/Profile.PNG" alt="iApps">
-                <span class="header__logo-text">iApps</span>
+                <span class="header__logo-text">IAPPS</span>
             </a>
             <div class="header__actions">
                 <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему" data-i18n-attr="aria-label:aria.theme">
@@ -284,7 +303,6 @@
             </a>
         </nav>
     </div>
-    </div>
     <div class="overlay" id="overlay"></div>
 
     <section class="hero">
@@ -294,11 +312,11 @@
                 <span class="hero__badge-text"><span data-i18n="hero.badgePre">Более</span> <span id="badgeCount">0</span><span data-i18n="hero.badgePost">+ приложений</span></span>
             </div>
             <h1 class="hero__title animate-on-scroll">
-                <span data-i18n="hero.title1">Твой персональный</span>
+                <span data-i18n="hero.title1">Твой прокачанный</span><br>
                 <span class="hero__title-gradient">App Store</span>
             </h1>
             <p class="hero__subtitle animate-on-scroll" data-i18n="hero.subtitle">
-                Каталог модифицированных приложений для iOS. Установка в пару касаний, как из официального магазина.
+                Большой каталог приложений — банки, удаленные из App Store, разблокированные на платные функции, моды, игры и другие. Работает с iPhone и iPad.
             </p>
             <div class="hero__actions animate-on-scroll">
                 <a href="#apps" class="btn btn--primary btn--lg">
@@ -308,20 +326,6 @@
                 <a href="#pricing" class="btn btn--sky btn--lg">
                     <span data-i18n="hero.plans">Тарифы</span>
                 </a>
-            </div>
-            <div class="hero__stats animate-on-scroll">
-                <div class="hero__stat">
-                    <span class="hero__stat-value" id="statApps" data-target="0">0</span>
-                    <span class="hero__stat-label" data-i18n="hero.statApps">Приложений</span>
-                </div>
-                <div class="hero__stat">
-                    <span class="hero__stat-value" id="statUsers" data-target="5000">0</span>
-                    <span class="hero__stat-label" data-i18n="hero.statUsers">Пользователей</span>
-                </div>
-                <div class="hero__stat">
-                    <span class="hero__stat-value">24/7</span>
-                    <span class="hero__stat-label" data-i18n="hero.statSupport">Поддержка</span>
-                </div>
             </div>
         </div>
     </section>
@@ -395,14 +399,14 @@
                                     <svg viewBox="0 0 24 24" width="18" height="18"><path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/></svg>
                                 </button>
                                 <div class="pricing__scroll" role="group" aria-label="Тарифы сертификатов" data-i18n-attr="aria-label:aria.certPlans">
-                                    <div tabindex="0" class="pricing__item cert-card pricing__item--selected" data-product="Сертификат" data-duration="Годовой | Супер30" data-duration-en="Annual | Super30" data-price="1500₽">
+                                    <div tabindex="0" class="pricing__item cert-card pricing__item--selected" data-product="Сертификат" data-duration="Год | Супер30" data-duration-en="Year | Super30" data-price="1500₽">
                                         <span class="cert-card__head">
                                             <span class="cert-card__icon">30</span>
                                             <span class="cert-card__name" data-i18n="cert.s30">Супер30</span>
                                         </span>
                                         <span class="cert-card__priceRow">
                                             <span class="pricing__price">1500₽</span>
-                                            <span class="cert-card__tag" data-i18n="cert.tag">/ годовой</span>
+                                            <span class="cert-card__tag" data-i18n="cert.tag">/ год</span>
                                         </span>
                                         <span class="cert-card__list">
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.dist">Distribution сертификат</span></span>
@@ -410,10 +414,30 @@
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.ppq">Без проверки PPQ</span></span>
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.valid">Срок действия ~1 год</span></span>
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.support">Годовая поддержка</span></span>
-                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.unlimited">Установка без лимитов</span></span>
-                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.warranty">Гарантия</span></span>
+                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.unlimited">Установка без лимитов и ПК</span></span>
+                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.notif">Поддерживает уведомления и VPN</span></span>
+                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.widgets">Поддерживает виджеты</span></span>
                                         </span>
-                                        <div class="cert-card__rights">
+                                        <div class="cert-card__accs">
+                                            <div class="cert-card__rights cert-card__warranty">
+                                                <button type="button" class="cert-card__rights-toggle" aria-expanded="false">
+                                                    <span class="cert-card__rights-label" data-i18n="f.warranty">Гарантия</span>
+                                                    <span class="cert-card__rights-count" data-days="30">30 дн.</span>
+                                                    <svg class="cert-card__chev" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 15.0006L7.75732 10.758L9.17154 9.34375L12 12.1722L14.8284 9.34375L16.2426 10.758z"/></svg>
+                                                </button>
+                                                <div class="cert-card__rights-panel" inert>
+                                                    <div class="cert-card__rights-inner">
+                                                        <div class="cert-card__warranty-body">
+                                                            <div class="cert-card__warranty-term"><span data-i18n="cert.warrantyTerm">Срок гарантии</span><strong data-days-full="30">30 дней</strong></div>
+                                                            <div class="cert-card__warranty-item">
+                                                                <strong data-i18n="cert.unlimited">Неограниченные перевыпуски</strong>
+                                                                <p data-i18n="cert.unlimitedText">Мы заменим ваш сертификат на новый по гарантии, если он будет аннулирован раньше срока компанией Apple. Количество замен неограниченно, пока действует гарантия.</p>
+                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="cert-card__rights">
                                             <button type="button" class="cert-card__rights-toggle" aria-expanded="false">
                                                 <span class="cert-card__rights-label" data-i18n="cert.rights">Список прав</span>
                                                 <span class="cert-card__rights-count">43</span>
@@ -425,16 +449,17 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        </div>
                                         <span class="cert-card__cta"><span class="cert-card__cta-off" data-i18n="cert.select">Выбрать</span><span class="cert-card__cta-on" data-i18n="cert.selected">Выбрано</span></span>
                                     </div>
-                                    <div tabindex="0" class="pricing__item cert-card" data-product="Сертификат" data-duration="Годовой | Супер60" data-duration-en="Annual | Super60" data-price="1600₽">
+                                    <div tabindex="0" class="pricing__item cert-card" data-product="Сертификат" data-duration="Год | Супер60" data-duration-en="Year | Super60" data-price="1600₽">
                                         <span class="cert-card__head">
                                             <span class="cert-card__icon">60</span>
                                             <span class="cert-card__name" data-i18n="cert.s60">Супер60</span>
                                         </span>
                                         <span class="cert-card__priceRow">
                                             <span class="pricing__price">1600₽</span>
-                                            <span class="cert-card__tag" data-i18n="cert.tag">/ годовой</span>
+                                            <span class="cert-card__tag" data-i18n="cert.tag">/ год</span>
                                         </span>
                                         <span class="cert-card__list">
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.dist">Distribution сертификат</span></span>
@@ -442,10 +467,30 @@
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.ppq">Без проверки PPQ</span></span>
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.valid">Срок действия ~1 год</span></span>
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.support">Годовая поддержка</span></span>
-                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.unlimited">Установка без лимитов</span></span>
-                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.warranty">Гарантия</span></span>
+                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.unlimited">Установка без лимитов и ПК</span></span>
+                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.notif">Поддерживает уведомления и VPN</span></span>
+                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.widgets">Поддерживает виджеты</span></span>
                                         </span>
-                                        <div class="cert-card__rights">
+                                        <div class="cert-card__accs">
+                                            <div class="cert-card__rights cert-card__warranty">
+                                                <button type="button" class="cert-card__rights-toggle" aria-expanded="false">
+                                                    <span class="cert-card__rights-label" data-i18n="f.warranty">Гарантия</span>
+                                                    <span class="cert-card__rights-count" data-days="60">60 дн.</span>
+                                                    <svg class="cert-card__chev" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 15.0006L7.75732 10.758L9.17154 9.34375L12 12.1722L14.8284 9.34375L16.2426 10.758z"/></svg>
+                                                </button>
+                                                <div class="cert-card__rights-panel" inert>
+                                                    <div class="cert-card__rights-inner">
+                                                        <div class="cert-card__warranty-body">
+                                                            <div class="cert-card__warranty-term"><span data-i18n="cert.warrantyTerm">Срок гарантии</span><strong data-days-full="60">60 дней</strong></div>
+                                                            <div class="cert-card__warranty-item">
+                                                                <strong data-i18n="cert.unlimited">Неограниченные перевыпуски</strong>
+                                                                <p data-i18n="cert.unlimitedText">Мы заменим ваш сертификат на новый по гарантии, если он будет аннулирован раньше срока компанией Apple. Количество замен неограниченно, пока действует гарантия.</p>
+                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="cert-card__rights">
                                             <button type="button" class="cert-card__rights-toggle" aria-expanded="false">
                                                 <span class="cert-card__rights-label" data-i18n="cert.rights">Список прав</span>
                                                 <span class="cert-card__rights-count">43</span>
@@ -457,16 +502,17 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        </div>
                                         <span class="cert-card__cta"><span class="cert-card__cta-off" data-i18n="cert.select">Выбрать</span><span class="cert-card__cta-on" data-i18n="cert.selected">Выбрано</span></span>
                                     </div>
-                                    <div tabindex="0" class="pricing__item cert-card" data-product="Сертификат" data-duration="Годовой | Супер90" data-duration-en="Annual | Super90" data-price="2000₽">
+                                    <div tabindex="0" class="pricing__item cert-card" data-product="Сертификат" data-duration="Год | Супер90" data-duration-en="Year | Super90" data-price="2000₽">
                                         <span class="cert-card__head">
                                             <span class="cert-card__icon">90</span>
                                             <span class="cert-card__name" data-i18n="cert.s90">Супер90</span>
                                         </span>
                                         <span class="cert-card__priceRow">
                                             <span class="pricing__price">2000₽</span>
-                                            <span class="cert-card__tag" data-i18n="cert.tag">/ годовой</span>
+                                            <span class="cert-card__tag" data-i18n="cert.tag">/ год</span>
                                         </span>
                                         <span class="cert-card__list">
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.dist">Distribution сертификат</span></span>
@@ -474,10 +520,30 @@
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.ppq">Без проверки PPQ</span></span>
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.valid">Срок действия ~1 год</span></span>
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.support">Годовая поддержка</span></span>
-                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.unlimited">Установка без лимитов</span></span>
-                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.warranty">Гарантия</span></span>
+                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.unlimited">Установка без лимитов и ПК</span></span>
+                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.notif">Поддерживает уведомления и VPN</span></span>
+                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.widgets">Поддерживает виджеты</span></span>
                                         </span>
-                                        <div class="cert-card__rights">
+                                        <div class="cert-card__accs">
+                                            <div class="cert-card__rights cert-card__warranty">
+                                                <button type="button" class="cert-card__rights-toggle" aria-expanded="false">
+                                                    <span class="cert-card__rights-label" data-i18n="f.warranty">Гарантия</span>
+                                                    <span class="cert-card__rights-count" data-days="90">90 дн.</span>
+                                                    <svg class="cert-card__chev" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 15.0006L7.75732 10.758L9.17154 9.34375L12 12.1722L14.8284 9.34375L16.2426 10.758z"/></svg>
+                                                </button>
+                                                <div class="cert-card__rights-panel" inert>
+                                                    <div class="cert-card__rights-inner">
+                                                        <div class="cert-card__warranty-body">
+                                                            <div class="cert-card__warranty-term"><span data-i18n="cert.warrantyTerm">Срок гарантии</span><strong data-days-full="90">90 дней</strong></div>
+                                                            <div class="cert-card__warranty-item">
+                                                                <strong data-i18n="cert.unlimited">Неограниченные перевыпуски</strong>
+                                                                <p data-i18n="cert.unlimitedText">Мы заменим ваш сертификат на новый по гарантии, если он будет аннулирован раньше срока компанией Apple. Количество замен неограниченно, пока действует гарантия.</p>
+                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="cert-card__rights">
                                             <button type="button" class="cert-card__rights-toggle" aria-expanded="false">
                                                 <span class="cert-card__rights-label" data-i18n="cert.rights">Список прав</span>
                                                 <span class="cert-card__rights-count">43</span>
@@ -489,16 +555,17 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        </div>
                                         <span class="cert-card__cta"><span class="cert-card__cta-off" data-i18n="cert.select">Выбрать</span><span class="cert-card__cta-on" data-i18n="cert.selected">Выбрано</span></span>
                                     </div>
-                                    <div tabindex="0" class="pricing__item cert-card" data-product="Сертификат" data-duration="Годовой | Супер180" data-duration-en="Annual | Super180" data-price="2300₽">
+                                    <div tabindex="0" class="pricing__item cert-card" data-product="Сертификат" data-duration="Год | Супер180" data-duration-en="Year | Super180" data-price="2300₽">
                                         <span class="cert-card__head">
                                             <span class="cert-card__icon">180</span>
                                             <span class="cert-card__name" data-i18n="cert.s180">Супер180</span>
                                         </span>
                                         <span class="cert-card__priceRow">
                                             <span class="pricing__price">2300₽</span>
-                                            <span class="cert-card__tag" data-i18n="cert.tag">/ годовой</span>
+                                            <span class="cert-card__tag" data-i18n="cert.tag">/ год</span>
                                         </span>
                                         <span class="cert-card__list">
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.dist">Distribution сертификат</span></span>
@@ -506,10 +573,30 @@
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.ppq">Без проверки PPQ</span></span>
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.valid">Срок действия ~1 год</span></span>
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.support">Годовая поддержка</span></span>
-                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.unlimited">Установка без лимитов</span></span>
-                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.warranty">Гарантия</span></span>
+                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.unlimited">Установка без лимитов и ПК</span></span>
+                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.notif">Поддерживает уведомления и VPN</span></span>
+                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.widgets">Поддерживает виджеты</span></span>
                                         </span>
-                                        <div class="cert-card__rights">
+                                        <div class="cert-card__accs">
+                                            <div class="cert-card__rights cert-card__warranty">
+                                                <button type="button" class="cert-card__rights-toggle" aria-expanded="false">
+                                                    <span class="cert-card__rights-label" data-i18n="f.warranty">Гарантия</span>
+                                                    <span class="cert-card__rights-count" data-days="180">180 дн.</span>
+                                                    <svg class="cert-card__chev" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 15.0006L7.75732 10.758L9.17154 9.34375L12 12.1722L14.8284 9.34375L16.2426 10.758z"/></svg>
+                                                </button>
+                                                <div class="cert-card__rights-panel" inert>
+                                                    <div class="cert-card__rights-inner">
+                                                        <div class="cert-card__warranty-body">
+                                                            <div class="cert-card__warranty-term"><span data-i18n="cert.warrantyTerm">Срок гарантии</span><strong data-days-full="180">180 дней</strong></div>
+                                                            <div class="cert-card__warranty-item">
+                                                                <strong data-i18n="cert.unlimited">Неограниченные перевыпуски</strong>
+                                                                <p data-i18n="cert.unlimitedText">Мы заменим ваш сертификат на новый по гарантии, если он будет аннулирован раньше срока компанией Apple. Количество замен неограниченно, пока действует гарантия.</p>
+                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="cert-card__rights">
                                             <button type="button" class="cert-card__rights-toggle" aria-expanded="false">
                                                 <span class="cert-card__rights-label" data-i18n="cert.rights">Список прав</span>
                                                 <span class="cert-card__rights-count">43</span>
@@ -521,16 +608,17 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        </div>
                                         <span class="cert-card__cta"><span class="cert-card__cta-off" data-i18n="cert.select">Выбрать</span><span class="cert-card__cta-on" data-i18n="cert.selected">Выбрано</span></span>
                                     </div>
-                                    <div tabindex="0" class="pricing__item cert-card" data-product="Сертификат" data-duration="Годовой | Супер300" data-duration-en="Annual | Super300" data-price="2700₽">
+                                    <div tabindex="0" class="pricing__item cert-card" data-product="Сертификат" data-duration="Год | Супер300" data-duration-en="Year | Super300" data-price="2700₽">
                                         <span class="cert-card__head">
                                             <span class="cert-card__icon">300</span>
                                             <span class="cert-card__name" data-i18n="cert.s300">Супер300</span>
                                         </span>
                                         <span class="cert-card__priceRow">
                                             <span class="pricing__price">2700₽</span>
-                                            <span class="cert-card__tag" data-i18n="cert.tag">/ годовой</span>
+                                            <span class="cert-card__tag" data-i18n="cert.tag">/ год</span>
                                         </span>
                                         <span class="cert-card__list">
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.dist">Distribution сертификат</span></span>
@@ -538,10 +626,30 @@
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.ppq">Без проверки PPQ</span></span>
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.valid">Срок действия ~1 год</span></span>
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.support">Годовая поддержка</span></span>
-                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.unlimited">Установка без лимитов</span></span>
-                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.warranty">Гарантия</span></span>
+                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.unlimited">Установка без лимитов и ПК</span></span>
+                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.notif">Поддерживает уведомления и VPN</span></span>
+                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.widgets">Поддерживает виджеты</span></span>
                                         </span>
-                                        <div class="cert-card__rights">
+                                        <div class="cert-card__accs">
+                                            <div class="cert-card__rights cert-card__warranty">
+                                                <button type="button" class="cert-card__rights-toggle" aria-expanded="false">
+                                                    <span class="cert-card__rights-label" data-i18n="f.warranty">Гарантия</span>
+                                                    <span class="cert-card__rights-count" data-days="300">300 дн.</span>
+                                                    <svg class="cert-card__chev" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 15.0006L7.75732 10.758L9.17154 9.34375L12 12.1722L14.8284 9.34375L16.2426 10.758z"/></svg>
+                                                </button>
+                                                <div class="cert-card__rights-panel" inert>
+                                                    <div class="cert-card__rights-inner">
+                                                        <div class="cert-card__warranty-body">
+                                                            <div class="cert-card__warranty-term"><span data-i18n="cert.warrantyTerm">Срок гарантии</span><strong data-days-full="300">300 дней</strong></div>
+                                                            <div class="cert-card__warranty-item">
+                                                                <strong data-i18n="cert.unlimited">Неограниченные перевыпуски</strong>
+                                                                <p data-i18n="cert.unlimitedText">Мы заменим ваш сертификат на новый по гарантии, если он будет аннулирован раньше срока компанией Apple. Количество замен неограниченно, пока действует гарантия.</p>
+                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="cert-card__rights">
                                             <button type="button" class="cert-card__rights-toggle" aria-expanded="false">
                                                 <span class="cert-card__rights-label" data-i18n="cert.rights">Список прав</span>
                                                 <span class="cert-card__rights-count">43</span>
@@ -553,16 +661,17 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        </div>
                                         <span class="cert-card__cta"><span class="cert-card__cta-off" data-i18n="cert.select">Выбрать</span><span class="cert-card__cta-on" data-i18n="cert.selected">Выбрано</span></span>
                                     </div>
-                                    <div tabindex="0" class="pricing__item cert-card" data-product="Сертификат" data-duration="Годовой | Супер30 + JIT" data-duration-en="Annual | Super30 + JIT" data-price="2000₽">
+                                    <div tabindex="0" class="pricing__item cert-card" data-product="Сертификат" data-duration="Год | Супер30 + JIT" data-duration-en="Year | Super30 + JIT" data-price="2000₽">
                                         <span class="cert-card__head">
                                             <span class="cert-card__icon">⚡</span>
                                             <span class="cert-card__name" data-i18n="cert.s30jit">Супер30 + JIT</span>
                                         </span>
                                         <span class="cert-card__priceRow">
                                             <span class="pricing__price">2000₽</span>
-                                            <span class="cert-card__tag" data-i18n="cert.tag">/ годовой</span>
+                                            <span class="cert-card__tag" data-i18n="cert.tag">/ год</span>
                                         </span>
                                         <span class="cert-card__list">
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.devdist">Dev и Distribution сертификат</span></span>
@@ -570,10 +679,30 @@
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.ppq">Без проверки PPQ</span></span>
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.valid">Срок действия ~1 год</span></span>
                                         <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.support">Годовая поддержка</span></span>
-                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.unlimited">Установка без лимитов</span></span>
-                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.warranty">Гарантия</span></span>
+                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.unlimited">Установка без лимитов и ПК</span></span>
+                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.notif">Поддерживает уведомления и VPN</span></span>
+                                        <span class="cert-card__li"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/></svg><span data-i18n="f.widgets">Поддерживает виджеты</span></span>
                                         </span>
-                                        <div class="cert-card__rights">
+                                        <div class="cert-card__accs">
+                                            <div class="cert-card__rights cert-card__warranty">
+                                                <button type="button" class="cert-card__rights-toggle" aria-expanded="false">
+                                                    <span class="cert-card__rights-label" data-i18n="f.warranty">Гарантия</span>
+                                                    <span class="cert-card__rights-count" data-days="30">30 дн.</span>
+                                                    <svg class="cert-card__chev" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 15.0006L7.75732 10.758L9.17154 9.34375L12 12.1722L14.8284 9.34375L16.2426 10.758z"/></svg>
+                                                </button>
+                                                <div class="cert-card__rights-panel" inert>
+                                                    <div class="cert-card__rights-inner">
+                                                        <div class="cert-card__warranty-body">
+                                                            <div class="cert-card__warranty-term"><span data-i18n="cert.warrantyTerm">Срок гарантии</span><strong data-days-full="30">30 дней</strong></div>
+                                                            <div class="cert-card__warranty-item">
+                                                                <strong data-i18n="cert.unlimited">Неограниченные перевыпуски</strong>
+                                                                <p data-i18n="cert.unlimitedText">Мы заменим ваш сертификат на новый по гарантии, если он будет аннулирован раньше срока компанией Apple. Количество замен неограниченно, пока действует гарантия.</p>
+                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="cert-card__rights">
                                             <button type="button" class="cert-card__rights-toggle" aria-expanded="false">
                                                 <span class="cert-card__rights-label" data-i18n="cert.rights">Список прав</span>
                                                 <span class="cert-card__rights-count">43</span>
@@ -584,6 +713,7 @@
                                                     <ul class="cert-card__rights-list"></ul>
                                                 </div>
                                             </div>
+                                        </div>
                                         </div>
                                         <span class="cert-card__cta"><span class="cert-card__cta-off" data-i18n="cert.select">Выбрать</span><span class="cert-card__cta-on" data-i18n="cert.selected">Выбрано</span></span>
                                     </div>
@@ -599,7 +729,7 @@
                 <div class="pricing__actions">
                     <a href="https://t.me/iappspay_bot" id="buyBotBtn" class="btn btn--sky btn--full" target="_blank" rel="noopener">
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2zM7.5 13a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm9 0a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"/></svg>
-                        <span data-i18n="buy.bot">Купить через бота @iappspay_bot</span>
+                        <span data-i18n="buy.bot">Купить через бот</span>
                     </a>
                     <a href="https://t.me/mdfurman" id="contactAdminBtn" class="btn btn--primary btn--full" target="_blank" rel="noopener">
                         <svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-3.11-8.83l.013-.007.87 2.87c.112.311.266.367.453.341.188-.025.287-.126.41-.244l1.188-1.148 2.55 1.888c.466.257.801.124.917-.432l1.657-7.822c.183-.728-.137-1.02-.702-.788l-9.733 3.76c-.664.266-.66.638-.12.803l2.497.78z"/></svg>
@@ -761,13 +891,10 @@
   "menu.bot": "Telegram бот",
   "hero.badgePre": "Более",
   "hero.badgePost": "+ приложений",
-  "hero.title1": "Твой персональный",
-  "hero.subtitle": "Каталог модифицированных приложений для iOS. Установка в пару касаний, как из официального магазина.",
+  "hero.title1": "Твой прокачанный",
+  "hero.subtitle": "Большой каталог приложений — банки, удаленные из App Store, разблокированные на платные функции, моды, игры и другие. Работает с iPhone и iPad.",
   "hero.browse": "Смотреть приложения",
   "hero.plans": "Тарифы",
-  "hero.statApps": "Приложений",
-  "hero.statUsers": "Пользователей",
-  "hero.statSupport": "Поддержка",
   "pricing.title": "Тарифные планы",
   "pricing.descDefault": "Выберите товар и подходящий тариф",
   "pricing.descRepo": "Доступ ко всем приложениям каталога",
@@ -786,19 +913,26 @@
   "cert.s180": "Супер180",
   "cert.s300": "Супер300",
   "cert.s30jit": "Супер30 + JIT",
-  "cert.tag": "/ годовой",
+  "cert.tag": "/ год",
   "f.dist": "Distribution сертификат",
   "f.devdist": "Dev и Distribution сертификат",
   "f.make": "Изготовление 1 минута",
   "f.ppq": "Без проверки PPQ",
   "f.valid": "Срок действия ~1 год",
   "f.support": "Годовая поддержка",
-  "f.unlimited": "Установка без лимитов",
+  "f.unlimited": "Установка без лимитов и ПК",
   "f.warranty": "Гарантия",
   "cert.select": "Выбрать",
   "cert.selected": "Выбрано",
   "cert.rights": "Список прав",
-  "buy.bot": "Купить через бота @iappspay_bot",
+  "f.notif": "Поддерживает уведомления и VPN",
+  "f.widgets": "Поддерживает виджеты",
+  "cert.warrantyTerm": "Срок гарантии",
+  "cert.daysShort": "{n} дн.",
+  "cert.daysFull": "{n} дней",
+  "cert.unlimited": "Неограниченные перевыпуски",
+  "cert.unlimitedText": "Мы заменим ваш сертификат на новый по гарантии, если он будет аннулирован раньше срока компанией Apple. Количество замен неограниченно, пока действует гарантия.",
+  "buy.bot": "Купить через бот",
   "buy.seller": "Купить у продавца",
   "apps.title": "Каталог приложений",
   "apps.subtitle": "Найдите нужное приложение среди нашей коллекции",
@@ -868,13 +1002,10 @@
   "menu.bot": "Telegram bot",
   "hero.badgePre": "Over",
   "hero.badgePost": "+ apps",
-  "hero.title1": "Your personal",
-  "hero.subtitle": "A catalog of modified apps for iOS. Install in a couple of taps, just like from the official store.",
+  "hero.title1": "Your supercharged",
+  "hero.subtitle": "A big catalog of apps — banks, apps removed from the App Store, apps unlocked with paid features, mods, games and more. Works with iPhone and iPad.",
   "hero.browse": "Browse apps",
   "hero.plans": "Pricing",
-  "hero.statApps": "Apps",
-  "hero.statUsers": "Users",
-  "hero.statSupport": "Support",
   "pricing.title": "Pricing Plans",
   "pricing.descDefault": "Choose a product and a plan that suits you",
   "pricing.descRepo": "Access to all apps in the catalog",
@@ -893,19 +1024,26 @@
   "cert.s180": "Super180",
   "cert.s300": "Super300",
   "cert.s30jit": "Super30 + JIT",
-  "cert.tag": "/ annual",
+  "cert.tag": "/ year",
   "f.dist": "Distribution certificate",
   "f.devdist": "Dev and Distribution certificate",
   "f.make": "Ready in 1 minute",
   "f.ppq": "No PPQ check",
   "f.valid": "Valid for ~1 year",
   "f.support": "1-year support",
-  "f.unlimited": "Unlimited installs",
+  "f.unlimited": "Unlimited installs, no PC",
   "f.warranty": "Warranty",
   "cert.select": "Select",
   "cert.selected": "Selected",
   "cert.rights": "Entitlements list",
-  "buy.bot": "Buy via bot @iappspay_bot",
+  "f.notif": "Supports notifications and VPN",
+  "f.widgets": "Supports widgets",
+  "cert.warrantyTerm": "Warranty period",
+  "cert.daysShort": "{n} d",
+  "cert.daysFull": "{n} days",
+  "cert.unlimited": "Unlimited reissues",
+  "cert.unlimitedText": "We will replace your certificate with a new one under warranty if Apple revokes it before it expires. The number of replacements is unlimited while the warranty is active.",
+  "buy.bot": "Buy via bot",
   "buy.seller": "Buy from seller",
   "apps.title": "App Catalog",
   "apps.subtitle": "Find the app you need in our collection",
@@ -1003,8 +1141,8 @@
     if (btn) btn.addEventListener('click', () => window.i18n.toggle());
 })();
 </script>
-    <script src="Scripts/Script.js?v=13"></script>
-    <script src="Scripts/Repository.js?v=13"></script>
+    <script src="Scripts/Script.js?v=14"></script>
+    <script src="Scripts/Repository.js?v=14"></script>
     <script>
 (function () {
 
@@ -1331,23 +1469,25 @@
     const EXTRA_JIT = [["Get Task Allow / Debugging*", "get-task-allow"]];
 
     document.querySelectorAll('.cert-card').forEach(card => {
-        const box = card.querySelector('.cert-card__rights');
-        if (!box) return;
-        const toggle = box.querySelector('.cert-card__rights-toggle');
-        const panel = box.querySelector('.cert-card__rights-panel');
-        const extra = (card.dataset.duration || '').indexOf('JIT') !== -1 ? EXTRA_JIT : [];
-        box.querySelector('.cert-card__rights-list').innerHTML = (extra.length ? toHtml(extra) : '') + listHtml;
-        const countEl = box.querySelector('.cert-card__rights-count');
-        if (countEl) countEl.textContent = RIGHTS.length + extra.length;
-
-        // нажатия внутри блока прав не должны выбирать карточку
-        box.addEventListener('click', (e) => e.stopPropagation());
-        box.addEventListener('keydown', (e) => e.stopPropagation());
-        toggle.addEventListener('click', () => {
-            const open = !box.classList.contains('is-open');
-            box.classList.toggle('is-open', open);
-            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-            if (open) panel.removeAttribute('inert'); else panel.setAttribute('inert', '');
+        card.querySelectorAll('.cert-card__rights').forEach(box => {
+            const toggle = box.querySelector('.cert-card__rights-toggle');
+            const panel = box.querySelector('.cert-card__rights-panel');
+            const list = box.querySelector('.cert-card__rights-list');
+            if (list) {
+                const extra = (card.dataset.duration || '').indexOf('JIT') !== -1 ? EXTRA_JIT : [];
+                list.innerHTML = (extra.length ? toHtml(extra) : '') + listHtml;
+                const countEl = box.querySelector('.cert-card__rights-count');
+                if (countEl) countEl.textContent = RIGHTS.length + extra.length;
+            }
+            // нажатия внутри блоков «Гарантия» и «Список прав» не выбирают карточку
+            box.addEventListener('click', (e) => e.stopPropagation());
+            box.addEventListener('keydown', (e) => e.stopPropagation());
+            toggle.addEventListener('click', () => {
+                const open = !box.classList.contains('is-open');
+                box.classList.toggle('is-open', open);
+                toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                if (open) panel.removeAttribute('inert'); else panel.setAttribute('inert', '');
+            });
         });
 
         // выбор карточки с клавиатуры
@@ -1355,6 +1495,15 @@
             if (e.target === card && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); card.click(); }
         });
     });
+
+    // гарантия: срок берётся из названия тарифа (Супер30 -> 30 дней)
+    function refreshDays() {
+        const tr = (key, n) => (window.i18n ? window.i18n.t(key, { n: n }) : n);
+        document.querySelectorAll('[data-days]').forEach(el => { el.textContent = tr('cert.daysShort', el.dataset.days); });
+        document.querySelectorAll('[data-days-full]').forEach(el => { el.textContent = tr('cert.daysFull', el.dataset.daysFull); });
+    }
+    refreshDays();
+    document.addEventListener('iapps:lang', refreshDays);
 })();
 </script>
 </body>

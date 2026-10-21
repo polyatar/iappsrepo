@@ -153,6 +153,38 @@
             .tool-tabs { width: 100%; }
             .tool-tab { padding: 0.65rem 1rem; font-size: 0.875rem; }
         }
+        /* ============ Posters ============ */
+        .poster-layout { display: grid; grid-template-columns: 380px minmax(0, 1fr); gap: 1.25rem; align-items: start; }
+        .poster-controls { padding: 1.25rem; display: grid; gap: 1rem; }
+        .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 0.25rem; padding: 0.25rem; border-radius: 12px; background: var(--bg-soft); border: 1px solid var(--border); }
+        .seg button { padding: 0.6rem 0.5rem; border-radius: 9px; font-size: 0.875rem; font-weight: 700; color: var(--text-secondary); transition: all var(--transition); }
+        .seg button[aria-pressed="true"] { background: var(--gradient); color: #fff; box-shadow: 0 6px 18px var(--accent-glow); }
+        .poster-controls [data-only][hidden] { display: none; }
+        .poster-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        .poster-source { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; font-size: 0.8125rem; color: var(--text-muted); }
+        .poster-source .btn { flex-shrink: 0; }
+        .check--block { padding: 0.25rem 0; }
+        .picker { position: relative; }
+        .picker__results { position: absolute; left: 0; right: 0; top: calc(100% + 6px); z-index: 20; max-height: 320px; overflow: auto; padding: 0.375rem; border-radius: 14px; background: var(--bg-card); border: 1px solid var(--border-hover); box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .picker__results[hidden] { display: none; }
+        .picker__item { display: flex; align-items: center; gap: 0.75rem; width: 100%; padding: 0.5rem 0.625rem; border-radius: 10px; text-align: left; font-size: 0.875rem; font-weight: 600; transition: background var(--transition); }
+        .picker__item:hover, .picker__item.is-active { background: var(--bg-soft); }
+        .picker__item img { width: 32px; height: 32px; border-radius: 9px; object-fit: cover; background: var(--bg-soft); flex-shrink: 0; }
+        .picker__item span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .poster-preview { position: sticky; top: 1rem; padding: 1rem; }
+        .poster-frame { border-radius: 14px; overflow: hidden; border: 1px solid var(--border); background: var(--code-bg); line-height: 0; }
+        .poster-frame canvas { display: block; width: 100%; height: auto; }
+        .poster-frame.is-busy canvas { opacity: 0.55; transition: opacity 0.2s; }
+        .poster-hint { margin-top: 0.75rem; font-size: 0.8125rem; color: var(--text-muted); line-height: 1.5; }
+        .poster-text { width: 100%; min-height: 190px; resize: vertical; padding: 0.75rem; border-radius: 12px; border: 1px solid var(--border); background: var(--code-bg); color: var(--code-ink); font: 0.8125rem/1.5 var(--font); outline: none; }
+        .poster-text:focus { border-color: var(--accent); }
+        .poster-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .poster-actions .btn { flex: 1 1 auto; }
+        @media (max-width: 980px) {
+            .poster-layout { grid-template-columns: 1fr; }
+            .poster-preview { position: static; order: -1; }
+        }
+
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
@@ -181,6 +213,7 @@
         <button class="tool-tab" type="button" role="tab" data-tool="parser" data-i18n="tab.parser" aria-selected="true">JSON Парсер</button>
         <button class="tool-tab" type="button" role="tab" data-tool="objc" data-i18n="tab.objc" aria-selected="false">JSON → ObjC</button>
         <button class="tool-tab" type="button" role="tab" data-tool="time" data-i18n="tab.time" aria-selected="false">Unix время</button>
+        <button class="tool-tab" type="button" role="tab" data-tool="posters" data-i18n="tab.posters" aria-selected="false">Постеры</button>
     </nav>
 
     <!-- ============ Парсер Repo.json ============ -->
@@ -318,6 +351,113 @@
             </article>
         </div>
     </section>
+
+    <!-- ============ Posters ============ -->
+    <section class="tool" id="tool-posters" data-tool="posters" role="tabpanel" hidden>
+        <div class="poster-layout">
+            <aside class="card poster-controls">
+                <div class="seg" role="group" aria-label="Mode">
+                    <button type="button" id="posterModeList" aria-pressed="true" data-i18n="poster.modeList">Список</button>
+                    <button type="button" id="posterModeSingle" aria-pressed="false" data-i18n="poster.modeSingle">Одно приложение</button>
+                </div>
+
+                <div class="field">
+                    <span data-i18n="poster.source">Источник данных</span>
+                    <div class="poster-source">
+                        <span id="posterSource" data-i18n="poster.loading">Загрузка Repo.json…</span>
+                        <button class="btn btn--sm" type="button">
+                            <span data-i18n="poster.upload">Свой JSON</span>
+                            <input type="file" id="posterFile" accept=".json,application/json">
+                        </button>
+                    </div>
+                </div>
+
+                <!-- list mode -->
+                <div class="poster-row" data-only="list">
+                    <label class="field"><span data-i18n="poster.count">Количество</span>
+                        <input class="input" id="posterCount" type="number" min="1" max="100" value="20"></label>
+                    <label class="field"><span data-i18n="poster.format">Формат</span>
+                        <select class="select" id="posterFormatList">
+                            <option value="16:9">16:9 · 1920×1080</option>
+                            <option value="21:9" selected>21:9 · 2560×1080</option>
+                            <option value="32:9">32:9 · 3840×1080</option>
+                        </select></label>
+                </div>
+                <label class="field" data-only="list"><span data-i18n="poster.title">Заголовок</span>
+                    <input class="input" id="posterTitle" type="text" value="iApps Repo Updates" maxlength="60"></label>
+                <label class="check check--block" data-only="list"><input type="checkbox" id="posterShowDate"> <span data-i18n="poster.showDate">Показывать дату обновления</span></label>
+                <label class="check check--block" data-only="list"><input type="checkbox" id="posterShowVersion"> <span data-i18n="poster.showVersion">Показывать версию приложения</span></label>
+
+                <!-- single mode -->
+                <div class="field" data-only="single" hidden>
+                    <span data-i18n="poster.app">Приложение</span>
+                    <div class="picker">
+                        <input class="input" id="posterAppSearch" type="search" autocomplete="off" placeholder="Поиск приложения…" data-i18n-ph="poster.appSearch">
+                        <div class="picker__results" id="posterResults" hidden></div>
+                    </div>
+                </div>
+                <div class="poster-row" data-only="single" hidden>
+                    <label class="field"><span data-i18n="poster.format">Формат</span>
+                        <select class="select" id="posterFormatSingle">
+                            <option value="1:1">1:1 · 1080×1080</option>
+                            <option value="4:5">4:5 · 1080×1350</option>
+                            <option value="9:16">9:16 · 1080×1920</option>
+                            <option value="16:9">16:9 · 1920×1080</option>
+                        </select></label>
+                    <label class="field"><span data-i18n="poster.mark">Метка</span>
+                        <select class="select" id="posterMark">
+                            <option value="UPD" data-i18n="poster.markUpd">Обновление</option>
+                            <option value="NEW" data-i18n="poster.markNew">Новое</option>
+                            <option value="NONE" data-i18n="poster.markNone">Без метки</option>
+                        </select></label>
+                </div>
+                <label class="check check--block" data-only="single" hidden><input type="checkbox" id="posterShowVersionSingle" checked> <span data-i18n="poster.showVersion">Показывать версию приложения</span></label>
+                <label class="field" data-only="single" hidden><span data-i18n="poster.footer">Подпись внизу</span>
+                    <input class="input" id="posterFooter" type="text" value="" maxlength="60"></label>
+
+                <!-- common -->
+                <div class="poster-row">
+                    <label class="field"><span data-i18n="poster.style">Стиль</span>
+                        <select class="select" id="posterStyle">
+                            <option value="siteDark" selected>iApps Dark</option>
+                            <option value="siteLight">iApps Light</option>
+                            <option value="menuClassic">Menu Classic</option>
+                            <option value="menuPremium">Menu Premium</option>
+                            <option value="ultraDark">Ultra Dark Glass</option>
+                        </select></label>
+                    <label class="field"><span data-i18n="poster.glass">Эффект стекла</span>
+                        <select class="select" id="posterGlass">
+                            <option value="on" data-i18n="poster.on" selected>Вкл</option>
+                            <option value="off" data-i18n="poster.off">Выкл</option>
+                        </select></label>
+                </div>
+                <div class="poster-row">
+                    <label class="field"><span data-i18n="poster.quality">Размер PNG</span>
+                        <select class="select" id="posterScale">
+                            <option value="1" selected>1×</option>
+                            <option value="2">2×</option>
+                        </select></label>
+                    <div></div>
+                </div>
+
+                <div class="poster-actions">
+                    <button class="btn btn--primary" id="posterDownload" type="button" data-i18n="poster.download">Скачать PNG</button>
+                </div>
+                <p class="status" id="posterStatus" style="text-align:left"></p>
+
+                <div class="field" data-only="list">
+                    <span data-i18n="poster.textList">Текстовый список</span>
+                    <textarea class="poster-text" id="posterText" readonly spellcheck="false"></textarea>
+                    <button class="btn btn--sm" id="posterCopyText" type="button" data-i18n="poster.copyText">Копировать текст</button>
+                </div>
+            </aside>
+
+            <section class="card poster-preview">
+                <div class="poster-frame" id="posterFrame"><canvas id="posterCanvas" width="2560" height="1080"></canvas></div>
+                <p class="poster-hint" id="posterHint"></p>
+            </section>
+        </div>
+    </section>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
@@ -345,7 +485,70 @@
             'time.sec': 'Секунды', 'time.ms': 'Миллисекунды', 'time.us': 'Микросекунды', 'time.ns': 'Наносекунды',
             'time.timestamp': 'Timestamp', 'time.auto': 'Auto', 'time.local': 'Локальное время', 'time.utc': 'UTC время',
             'time.unit': 'Единица', 'time.date': 'Дата в timestamp', 'time.now': 'Сейчас', 'time.ready': 'Готово',
-            'time.badTs': 'Неверный timestamp', 'time.badDate': 'Неверная дата'
+            'time.badTs': 'Неверный timestamp', 'time.badDate': 'Неверная дата',
+            'tab.posters': 'Постеры',
+            'poster.modeList': 'Список',
+            'poster.modeSingle': 'Одно приложение',
+            'poster.source': 'Источник данных',
+            'poster.loading': 'Загрузка Repo.json…',
+            'poster.upload': 'Свой JSON',
+            'poster.count': 'Количество',
+            'poster.format': 'Формат',
+            'poster.title': 'Заголовок',
+            'poster.showDate': 'Показывать дату обновления',
+            'poster.showVersion': 'Показывать версию приложения',
+            'poster.app': 'Приложение',
+            'poster.appSearch': 'Поиск приложения…',
+            'poster.mark': 'Метка',
+            'poster.markUpd': 'Обновление',
+            'poster.markNew': 'Новое',
+            'poster.markNone': 'Без метки',
+            'poster.footer': 'Подпись внизу',
+            'poster.style': 'Стиль',
+            'poster.glass': 'Эффект стекла',
+            'poster.on': 'Вкл',
+            'poster.off': 'Выкл',
+            'poster.quality': 'Размер PNG',
+            'poster.download': 'Скачать PNG',
+            'poster.textList': 'Текстовый список',
+            'poster.copyText': 'Копировать текст',
+            'poster.errJson': 'JSON должен быть массивом приложений (Repo.json)',
+            'poster.empty': 'Нет приложений для отображения',
+            'poster.pickApp': 'Выберите приложение',
+            'poster.readyList': 'Готово: {n} приложений. По умолчанию метка UPD.',
+            'poster.readySingle': 'Готово. Можно скачивать.',
+            'poster.errRender': 'Ошибка отрисовки постера',
+            'poster.hintList': 'Нажмите на карточку в превью, чтобы сменить метку: UPD → NEW → без метки.',
+            'poster.hintSingle': 'Выберите приложение и формат: квадрат, 4:5, Stories 9:16 или широкий 16:9.',
+            'poster.nApps': '{n} прил.',
+            'poster.siteFail': 'Repo.json сайта недоступен',
+            'poster.siteFailHint': 'Не удалось загрузить Repo.json с сайта. Выберите файл кнопкой «Свой JSON».',
+            'poster.defaultFooter': 'Доступно в iApps',
+            'poster.preparing': 'Подготовка PNG…',
+            'poster.saved': 'PNG сохранён',
+            'poster.errExport': 'Ошибка экспорта PNG',
+            'poster.badgeNew': 'NEW',
+            'poster.badgeUpd': 'ОБНОВЛЕНО',
+            'poster.minIos': 'Минимум',
+            'poster.size': 'Размер',
+            'poster.version': 'Версия',
+            'poster.desc': 'Описание',
+            'poster.updated': 'Обновлено',
+            'cat.Russia': 'Удаленные из App Store',
+            'cat.Social': 'Соц.сети',
+            'cat.Music': 'Музыка',
+            'cat.Video': 'Видео',
+            'cat.Design': 'Дизайн',
+            'cat.Network': 'VPN',
+            'cat.Study': 'Учёба',
+            'cat.Office': 'Офис',
+            'cat.Games': 'Игры',
+            'cat.Kids': 'Дети',
+            'cat.Life': 'Здоровье',
+            'cat.Money': 'Финансы',
+            'cat.Travel': 'Путешествия',
+            'cat.Themes': 'Темы',
+            'cat.Other': 'Другое'
         },
         en: {
             title: 'RepoTools | iApps', back: 'Back', copied: 'Copied', copyFail: 'Could not copy',
@@ -364,7 +567,70 @@
             'time.sec': 'Seconds', 'time.ms': 'Milliseconds', 'time.us': 'Microseconds', 'time.ns': 'Nanoseconds',
             'time.timestamp': 'Timestamp', 'time.auto': 'Auto', 'time.local': 'Local time', 'time.utc': 'UTC time',
             'time.unit': 'Detected unit', 'time.date': 'Date to timestamp', 'time.now': 'Now', 'time.ready': 'Ready',
-            'time.badTs': 'Invalid timestamp', 'time.badDate': 'Invalid date'
+            'time.badTs': 'Invalid timestamp', 'time.badDate': 'Invalid date',
+            'tab.posters': 'Posters',
+            'poster.modeList': 'List',
+            'poster.modeSingle': 'Single app',
+            'poster.source': 'Data source',
+            'poster.loading': 'Loading Repo.json…',
+            'poster.upload': 'Own JSON',
+            'poster.count': 'Count',
+            'poster.format': 'Format',
+            'poster.title': 'Title',
+            'poster.showDate': 'Show update date',
+            'poster.showVersion': 'Show app version',
+            'poster.app': 'App',
+            'poster.appSearch': 'Search for an app…',
+            'poster.mark': 'Badge',
+            'poster.markUpd': 'Update',
+            'poster.markNew': 'New',
+            'poster.markNone': 'No badge',
+            'poster.footer': 'Footer text',
+            'poster.style': 'Style',
+            'poster.glass': 'Glass effect',
+            'poster.on': 'On',
+            'poster.off': 'Off',
+            'poster.quality': 'PNG size',
+            'poster.download': 'Download PNG',
+            'poster.textList': 'Text list',
+            'poster.copyText': 'Copy text',
+            'poster.errJson': 'JSON must be an array of apps (Repo.json)',
+            'poster.empty': 'No apps to display',
+            'poster.pickApp': 'Choose an app',
+            'poster.readyList': 'Ready: {n} apps. Default badge is UPD.',
+            'poster.readySingle': 'Ready. You can download it.',
+            'poster.errRender': 'Poster rendering error',
+            'poster.hintList': 'Click a card in the preview to change its badge: UPD → NEW → none.',
+            'poster.hintSingle': 'Pick an app and a format: square, 4:5, Stories 9:16 or wide 16:9.',
+            'poster.nApps': '{n} apps',
+            'poster.siteFail': 'Site Repo.json is unavailable',
+            'poster.siteFailHint': 'Could not load Repo.json from the site. Choose a file with the “Own JSON” button.',
+            'poster.defaultFooter': 'Available on iApps',
+            'poster.preparing': 'Preparing PNG…',
+            'poster.saved': 'PNG saved',
+            'poster.errExport': 'PNG export error',
+            'poster.badgeNew': 'NEW',
+            'poster.badgeUpd': 'UPDATED',
+            'poster.minIos': 'Minimum',
+            'poster.size': 'Size',
+            'poster.version': 'Version',
+            'poster.desc': 'Description',
+            'poster.updated': 'Updated',
+            'cat.Russia': 'Removed from App Store',
+            'cat.Social': 'Social',
+            'cat.Music': 'Music',
+            'cat.Video': 'Video',
+            'cat.Design': 'Design',
+            'cat.Network': 'VPN',
+            'cat.Study': 'Study',
+            'cat.Office': 'Office',
+            'cat.Games': 'Games',
+            'cat.Kids': 'Kids',
+            'cat.Life': 'Health',
+            'cat.Money': 'Finance',
+            'cat.Travel': 'Travel',
+            'cat.Themes': 'Themes',
+            'cat.Other': 'Other'
         }
     };
     let lang = 'ru';
@@ -422,6 +688,7 @@
     function setTool(name, updateHash) {
         if (TOOLS.indexOf(name) === -1) name = TOOLS[0];
         sections.forEach(s => { s.hidden = s.dataset.tool !== name; });
+        if (name === 'posters') posterActivated();
         tabs.forEach(b => { b.setAttribute('aria-selected', String(b.dataset.tool === name)); });
         try { localStorage.setItem('repotoolsTool', name); } catch (e) {}
         if (updateHash) history.replaceState(null, '', '#' + name);
@@ -707,6 +974,824 @@
     }));
     setInterval(updateNow, 1000);
 
+    /* ===================== Posters ===================== */
+    const FONT = "'Inter', 'Avenir Next', 'Segoe UI', system-ui, -apple-system, 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif";
+    const fnt = (weight, size) => weight + ' ' + Math.round(size) + 'px ' + FONT;
+
+    const LIST_FORMATS = { '16:9': [1920, 1080], '21:9': [2560, 1080], '32:9': [3840, 1080] };
+    const SINGLE_FORMATS = { '1:1': [1080, 1080], '4:5': [1080, 1350], '9:16': [1080, 1920], '16:9': [1920, 1080] };
+    const MARK_ORDER = ['UPD', 'NEW', 'NONE'];
+
+    // glows: [x, y, radius (share of width), r, g, b, alpha]
+    const POSTER_THEMES = {
+        siteDark: {
+            bg: '#0a0a0f', glows: [[0.86, -0.05, 0.6, 139, 92, 246, 0.3], [-0.05, 1.08, 0.55, 59, 130, 246, 0.24], [0.5, 0.55, 0.5, 99, 102, 241, 0.07]],
+            dots: 'rgba(255,255,255,0.05)', vignette: 'rgba(0,0,0,0.38)', topGlow: 'rgba(255,255,255,0.04)',
+            text: '#ffffff', muted: 'rgba(255,255,255,0.62)', soft: 'rgba(255,255,255,0.07)', onAccent: '#ffffff',
+            cardGlass: 'rgba(26,26,36,0.74)', cardFlat: 'rgba(24,24,34,0.97)', strokeGlass: 'rgba(255,255,255,0.13)', strokeFlat: 'rgba(255,255,255,0.09)',
+            gloss: 'rgba(255,255,255,0.07)', inner: ['rgba(255,255,255,0.05)', 'rgba(139,92,246,0.07)', 'rgba(10,10,20,0.18)'],
+            frameFill: 'rgba(255,255,255,0.02)', frameStroke: 'rgba(255,255,255,0.08)',
+            iconBg: 'rgba(255,255,255,0.08)', iconStroke: 'rgba(255,255,255,0.22)', shadow: 'rgba(0,0,0,0.5)', accentA: '#8b5cf6', accentB: '#3b82f6'
+        },
+        siteLight: {
+            bg: '#f8fafc', glows: [[0.86, -0.05, 0.6, 139, 92, 246, 0.2], [-0.05, 1.08, 0.55, 59, 130, 246, 0.17], [0.5, 0.55, 0.5, 99, 102, 241, 0.05]],
+            dots: 'rgba(15,23,42,0.06)', vignette: 'rgba(15,23,42,0.06)', topGlow: 'rgba(255,255,255,0.5)',
+            text: '#0f172a', muted: '#64748b', soft: 'rgba(15,23,42,0.05)', onAccent: '#ffffff',
+            cardGlass: 'rgba(255,255,255,0.78)', cardFlat: 'rgba(255,255,255,0.98)', strokeGlass: 'rgba(15,23,42,0.11)', strokeFlat: 'rgba(15,23,42,0.1)',
+            gloss: 'rgba(255,255,255,0.75)', inner: ['rgba(255,255,255,0.65)', 'rgba(139,92,246,0.05)', 'rgba(255,255,255,0.35)'],
+            frameFill: 'rgba(255,255,255,0.35)', frameStroke: 'rgba(15,23,42,0.07)',
+            iconBg: 'rgba(15,23,42,0.05)', iconStroke: 'rgba(15,23,42,0.12)', shadow: 'rgba(30,41,90,0.16)', accentA: '#7c3aed', accentB: '#3b82f6'
+        },
+        menuClassic: {
+            grad: ['#1b2452', '#314f9d', '#4f76c6', '#5f88d8'], glows: [[0.14, 0.14, 0.52, 108, 173, 255, 0.28], [0.86, 0.16, 0.5, 132, 141, 255, 0.26], [0.62, 0.86, 0.46, 78, 138, 255, 0.2]],
+            vignette: 'rgba(4,10,22,0.26)', topGlow: 'rgba(255,255,255,0.08)',
+            text: '#ffffff', muted: '#e6f5ff', soft: 'rgba(255,255,255,0.1)', onAccent: '#ffffff',
+            cardGlass: 'rgba(26,38,74,0.62)', cardFlat: 'rgba(24,34,66,0.86)', strokeGlass: 'rgba(196,222,255,0.54)', strokeFlat: 'rgba(130,164,233,0.36)',
+            gloss: 'rgba(255,255,255,0.14)', inner: ['rgba(255,255,255,0.07)', 'rgba(145,177,236,0.14)', 'rgba(24,34,68,0.2)'],
+            frameFill: 'rgba(214,229,255,0.08)', frameStroke: 'rgba(150,182,240,0.45)',
+            iconBg: 'rgba(223,236,255,0.56)', iconStroke: 'rgba(214,236,255,0.95)', shadow: 'rgba(8,16,40,0.4)', accentA: '#4e91f8', accentB: '#3fbef8'
+        },
+        menuPremium: {
+            grad: ['#101b3a', '#26417a', '#4063a9', '#4f76c6'], glows: [[0.14, 0.14, 0.52, 92, 162, 255, 0.22], [0.86, 0.16, 0.5, 126, 138, 255, 0.24], [0.62, 0.86, 0.46, 72, 124, 235, 0.16]],
+            vignette: 'rgba(4,10,22,0.26)', topGlow: 'rgba(255,255,255,0.08)',
+            text: '#ffffff', muted: '#e6f5ff', soft: 'rgba(255,255,255,0.1)', onAccent: '#ffffff',
+            cardGlass: 'rgba(25,31,58,0.68)', cardFlat: 'rgba(22,28,54,0.9)', strokeGlass: 'rgba(196,222,255,0.5)', strokeFlat: 'rgba(130,164,233,0.36)',
+            gloss: 'rgba(255,255,255,0.14)', inner: ['rgba(255,255,255,0.07)', 'rgba(145,177,236,0.14)', 'rgba(24,34,68,0.2)'],
+            frameFill: 'rgba(214,229,255,0.08)', frameStroke: 'rgba(150,182,240,0.45)',
+            iconBg: 'rgba(223,236,255,0.56)', iconStroke: 'rgba(214,236,255,0.95)', shadow: 'rgba(8,16,40,0.4)', accentA: '#4e91f8', accentB: '#3fbef8'
+        },
+        ultraDark: {
+            grad: ['#060911', '#0b142c', '#13254a', '#1c2f5f'], glows: [[0.14, 0.14, 0.52, 72, 116, 222, 0.22], [0.86, 0.16, 0.5, 116, 88, 218, 0.18], [0.62, 0.86, 0.46, 35, 70, 148, 0.16]],
+            vignette: 'rgba(2,4,10,0.35)', topGlow: 'rgba(255,255,255,0.05)',
+            text: '#ffffff', muted: '#cfe0ff', soft: 'rgba(255,255,255,0.08)', onAccent: '#ffffff',
+            cardGlass: 'rgba(12,17,34,0.72)', cardFlat: 'rgba(10,15,30,0.94)', strokeGlass: 'rgba(142,173,245,0.4)', strokeFlat: 'rgba(130,164,233,0.3)',
+            gloss: 'rgba(255,255,255,0.1)', inner: ['rgba(255,255,255,0.05)', 'rgba(100,140,230,0.1)', 'rgba(8,12,26,0.25)'],
+            frameFill: 'rgba(160,190,255,0.05)', frameStroke: 'rgba(142,173,245,0.35)',
+            iconBg: 'rgba(223,236,255,0.4)', iconStroke: 'rgba(214,236,255,0.8)', shadow: 'rgba(0,0,0,0.55)', accentA: '#6d7cff', accentB: '#3fbef8'
+        }
+    };
+    const CAT_EMOJI = { Russia: '🇷🇺', Social: '💬', Music: '🎵', Video: '🎬', Design: '🎨', Network: '🌍', Study: '📚', Office: '📋', Games: '🎮', Kids: '👶', Life: '💪', Money: '💰', Travel: '✈️', Themes: '🖼️', Other: '📦' };
+    const CAT_ALIAS = { networke: 'Network' };
+
+    const P = {
+        mode: 'list', apps: [], listApps: [], selected: null, hits: [], dataReady: false, dataLoading: false,
+        logoCache: new Map(), colorCache: new Map(), token: 0, footerTouched: false, brand: null
+    };
+    const pEl = {
+        frame: $('#posterFrame'), canvas: $('#posterCanvas'), status: $('#posterStatus'), source: $('#posterSource'), file: $('#posterFile'),
+        modeList: $('#posterModeList'), modeSingle: $('#posterModeSingle'), count: $('#posterCount'), title: $('#posterTitle'), showDate: $('#posterShowDate'), showVersion: $('#posterShowVersion'), showVersionSingle: $('#posterShowVersionSingle'),
+        fmtList: $('#posterFormatList'), fmtSingle: $('#posterFormatSingle'), mark: $('#posterMark'), footer: $('#posterFooter'),
+        style: $('#posterStyle'), glass: $('#posterGlass'), scale: $('#posterScale'), download: $('#posterDownload'),
+        text: $('#posterText'), copyText: $('#posterCopyText'), search: $('#posterAppSearch'), results: $('#posterResults'), hint: $('#posterHint')
+    };
+
+    /* ---------- data helpers ---------- */
+    const cleanName = (raw) => String(raw || '').split('\n')[0].trim();
+    function initialsOf(name) {
+        const words = String(name).replace(/[^\p{L}\p{N}\s]/gu, ' ').trim().split(/\s+/).filter(Boolean);
+        if (!words.length) return 'AP';
+        return ((words[0][0] || 'A') + ((words[1] && words[1][0]) || words[0][1] || 'P')).toUpperCase();
+    }
+    function appCategories(appName) {
+        const found = [], seen = new Set(), re = /#([A-Za-z0-9_]+)/g;
+        let m;
+        while ((m = re.exec(appName)) !== null) {
+            const raw = m[1];
+            const key = CAT_ALIAS[raw.toLowerCase()] || Object.keys(CAT_EMOJI).find(k => k.toLowerCase() === raw.toLowerCase()) || raw;
+            if (seen.has(key)) continue;
+            seen.add(key);
+            const label = t('cat.' + key);
+            found.push({ emoji: CAT_EMOJI[key] || '🏷️', name: label === 'cat.' + key ? key : label });
+        }
+        if (!found.length) found.push({ emoji: '📦', name: t('cat.Other') });
+        return found;
+    }
+    function parseVersion(str) {
+        let version = '—', size = '—', ios = '—';
+        String(str || '').split('|').map(p => p.trim()).forEach(part => {
+            if (/\d\s*(kb|mb|gb|tb)\b/i.test(part)) size = part;
+            else if (/ios/i.test(part)) ios = part.replace(/ios\s*/i, '').trim() || '—';
+            else if (part && version === '—') version = part;
+        });
+        return { version: version, size: size, ios: ios };
+    }
+    // описание -> абзацы: каждая строка исходного текста остаётся отдельным абзацем
+    function descriptionParagraphs(raw) {
+        const lines = String(raw || '').replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '').split(/\r?\n/);
+        const out = [];
+        let blank = false;
+        lines.forEach(line => {
+            const trimmed = line.replace(/[ \t]+/g, ' ').trim();
+            if (!trimmed) { blank = true; return; }
+            const bullet = /^[▎•▪●◦·*\-–—]/.test(trimmed);
+            out.push({ text: trimmed.replace(/^[▎•▪●◦·*\-–—]+\s*/, ''), bullet: bullet, gap: out.length === 0 ? 0 : (blank ? 0.6 : 0.28) });
+            blank = false;
+        });
+        return out.length ? out : [{ text: '—', bullet: false, gap: 0 }];
+    }
+    const pLocale = () => (lang === 'ru' ? 'ru-RU' : 'en-US');
+    function fmtDate(ts) {
+        if (!ts) return '';
+        return new Intl.DateTimeFormat(pLocale(), { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(ts));
+    }
+    function fmtDateShort(ts) {
+        if (!ts) return '';
+        return new Intl.DateTimeFormat(pLocale(), { year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(ts));
+    }
+    function prepareApps(raw) {
+        const list = Array.isArray(raw) ? raw : (raw && Array.isArray(raw.appRepositories) ? raw.appRepositories : null);
+        if (!list) throw new Error(t('poster.errJson'));
+        return list.filter(a => a && (a.appName || a.appImage || a.appUpdateTime)).map(a => {
+            const d = new Date(a.appUpdateTime);
+            return Object.assign({}, a, { _ts: Number.isNaN(d.getTime()) ? 0 : d.getTime(), _mark: 'UPD' });
+        }).sort((a, b) => b._ts - a._ts);
+    }
+
+    /* ---------- images ---------- */
+    function tryLoadImage(src, timeout) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.decoding = 'async'; img.crossOrigin = 'anonymous'; img.referrerPolicy = 'no-referrer';
+            const timer = setTimeout(() => { img.src = ''; reject(new Error('timeout')); }, timeout || 7000);
+            img.onload = () => { clearTimeout(timer); resolve(img); };
+            img.onerror = () => { clearTimeout(timer); reject(new Error('error')); };
+            img.src = src;
+        });
+    }
+    function loadLogo(src) {
+        const url = String(src || '').trim();
+        if (!url) return Promise.resolve(null);
+        if (P.logoCache.has(url)) return P.logoCache.get(url);
+        const noProto = url.replace(/^https?:\/\//i, '');
+        const isLocalHost = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+        const candidates = [
+            ...(isLocalHost ? [location.origin + '/__icon_proxy?u=' + encodeURIComponent(url)] : []),
+            url,
+            'https://wsrv.nl/?url=' + encodeURIComponent(noProto) + '&w=512&h=512&fit=cover&output=png',
+            'https://images.weserv.nl/?url=' + encodeURIComponent(noProto) + '&w=512&h=512&fit=cover&output=png',
+            'https://corsproxy.io/?' + encodeURIComponent(url)
+        ];
+        // кандидаты стартуют со сдвигом, первый успешный побеждает
+        const promise = new Promise((resolve) => {
+            let pending = candidates.length, done = false;
+            candidates.forEach((c, i) => setTimeout(() => {
+                if (done) { return; }
+                tryLoadImage(c).then(img => { if (!done) { done = true; resolve(img); } })
+                    .catch(() => { pending -= 1; if (pending === 0 && !done) { done = true; resolve(null); } });
+            }, i * 350));
+        });
+        P.logoCache.set(url, promise);
+        return promise;
+    }
+    function dominantColor(img, key) {
+        if (!img) return null;
+        if (P.colorCache.has(key)) return P.colorCache.get(key);
+        let result = null;
+        try {
+            const c = document.createElement('canvas'); c.width = c.height = 24;
+            const x = c.getContext('2d'); x.drawImage(img, 0, 0, 24, 24);
+            const d = x.getImageData(0, 0, 24, 24).data;
+            let r = 0, g = 0, b = 0, n = 0;
+            for (let i = 0; i < d.length; i += 4) {
+                const a = d[i + 3]; if (a < 200) continue;
+                const mx = Math.max(d[i], d[i + 1], d[i + 2]), mn = Math.min(d[i], d[i + 1], d[i + 2]);
+                const sat = mx === 0 ? 0 : (mx - mn) / mx;
+                const w = 0.25 + sat * 2 + (mx > 40 ? 0.5 : 0); // насыщенные цвета важнее
+                r += d[i] * w; g += d[i + 1] * w; b += d[i + 2] * w; n += w;
+            }
+            if (n > 0) result = [Math.round(r / n), Math.round(g / n), Math.round(b / n)];
+        } catch (e) { result = null; }
+        P.colorCache.set(key, result);
+        return result;
+    }
+
+    /* ---------- canvas helpers ---------- */
+    function rr(ctx, x, y, w, h, r) {
+        const k = Math.min(r, w / 2, h / 2);
+        ctx.beginPath();
+        ctx.moveTo(x + k, y); ctx.lineTo(x + w - k, y); ctx.quadraticCurveTo(x + w, y, x + w, y + k);
+        ctx.lineTo(x + w, y + h - k); ctx.quadraticCurveTo(x + w, y + h, x + w - k, y + h);
+        ctx.lineTo(x + k, y + h); ctx.quadraticCurveTo(x, y + h, x, y + h - k);
+        ctx.lineTo(x, y + k); ctx.quadraticCurveTo(x, y, x + k, y); ctx.closePath();
+    }
+    function fillRR(ctx, x, y, w, h, r, style) { rr(ctx, x, y, w, h, r); ctx.fillStyle = style; ctx.fill(); }
+    function strokeRR(ctx, x, y, w, h, r, style, lw) { rr(ctx, x, y, w, h, r); ctx.strokeStyle = style; ctx.lineWidth = lw || 1; ctx.stroke(); }
+    function squircle(ctx, x, y, size, n) {
+        const a = size / 2, cx = x + a, cy = y + a, steps = 90; n = n || 4.8;
+        ctx.beginPath();
+        for (let i = 0; i <= steps; i += 1) {
+            const th = (Math.PI * 2 * i) / steps, ct = Math.cos(th), st = Math.sin(th);
+            const px = cx + a * Math.sign(ct) * Math.pow(Math.abs(ct), 2 / n), py = cy + a * Math.sign(st) * Math.pow(Math.abs(st), 2 / n);
+            if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+    }
+    function accentGrad(ctx, th, x, y, w, h) {
+        const g = ctx.createLinearGradient(x, y, x + w, y + h);
+        g.addColorStop(0, th.accentA); g.addColorStop(1, th.accentB);
+        return g;
+    }
+    function truncate(ctx, text, maxW) {
+        if (ctx.measureText(text).width <= maxW) return text;
+        let out = text;
+        while (out.length > 1 && ctx.measureText(out + '…').width > maxW) out = out.slice(0, -1);
+        return out + '…';
+    }
+    // перенос по словам; последняя строка получает «…», если текст не поместился
+    function wrapText(ctx, text, maxW, maxLines) {
+        const lines = [];
+        const paragraphs = String(text).split('\n');
+        let overflow = false;
+        outer: for (let pi = 0; pi < paragraphs.length; pi += 1) {
+            const words = paragraphs[pi].split(/\s+/).filter(Boolean);
+            if (!words.length) { if (lines.length) lines.push(''); continue; }
+            let line = '';
+            for (let wi = 0; wi < words.length; wi += 1) {
+                let word = words[wi];
+                while (ctx.measureText(word).width > maxW) { // очень длинное слово
+                    let cut = word.length;
+                    while (cut > 1 && ctx.measureText(word.slice(0, cut)).width > maxW) cut -= 1;
+                    if (line) { lines.push(line); line = ''; if (lines.length >= maxLines) { overflow = true; break outer; } }
+                    lines.push(word.slice(0, cut)); word = word.slice(cut);
+                    if (lines.length >= maxLines) { overflow = true; break outer; }
+                }
+                const test = line ? line + ' ' + word : word;
+                if (ctx.measureText(test).width <= maxW) line = test;
+                else { lines.push(line); line = word; if (lines.length >= maxLines) { overflow = true; break outer; } }
+            }
+            if (line) { lines.push(line); if (lines.length >= maxLines && pi < paragraphs.length - 1) { overflow = true; break; } }
+            if (lines.length >= maxLines) { overflow = pi < paragraphs.length - 1 || overflow; break; }
+        }
+        while (lines.length && lines[lines.length - 1] === '') lines.pop();
+        const out = lines.slice(0, maxLines);
+        if (overflow && out.length) out[out.length - 1] = truncate(ctx, out[out.length - 1] + ' …', maxW).replace(/\s*…?$/, '') + '…';
+        return out;
+    }
+    function drawBackground(ctx, W, H, th) {
+        if (th.grad) {
+            const g = ctx.createLinearGradient(0, 0, W, H);
+            g.addColorStop(0, th.grad[0]); g.addColorStop(0.24, th.grad[1]); g.addColorStop(0.56, th.grad[2]); g.addColorStop(1, th.grad[3]);
+            ctx.fillStyle = g;
+        } else ctx.fillStyle = th.bg;
+        ctx.fillRect(0, 0, W, H);
+        const ref = Math.max(W, H * 1.2);
+        th.glows.forEach(([gx, gy, gr, r, g, b, a]) => {
+            const grd = ctx.createRadialGradient(W * gx, H * gy, 20, W * gx, H * gy, ref * gr);
+            grd.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')'); grd.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ',0)');
+            ctx.fillStyle = grd; ctx.fillRect(0, 0, W, H);
+        });
+        if (th.dots) {
+            ctx.fillStyle = th.dots;
+            for (let y = 22; y < H; y += 44) for (let x = 22; x < W; x += 44) ctx.fillRect(x, y, 2, 2);
+        }
+        const v = ctx.createRadialGradient(W * 0.5, H * 0.45, Math.min(W, H) * 0.35, W * 0.5, H * 0.5, Math.max(W, H) * 0.78);
+        v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, th.vignette);
+        ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+        const tg = ctx.createLinearGradient(0, 0, 0, H * 0.35);
+        tg.addColorStop(0, th.topGlow); tg.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = tg; ctx.fillRect(0, 0, W, H * 0.35);
+    }
+    function drawCard(ctx, x, y, w, h, r, th, glass, withShadow) {
+        if (withShadow) {
+            ctx.save(); ctx.shadowColor = th.shadow; ctx.shadowBlur = Math.max(16, h * 0.28); ctx.shadowOffsetY = Math.max(6, h * 0.1);
+            fillRR(ctx, x, y, w, h, r, glass ? th.cardGlass : th.cardFlat); ctx.restore();
+        } else fillRR(ctx, x, y, w, h, r, glass ? th.cardGlass : th.cardFlat);
+        if (glass) {
+            const ig = ctx.createLinearGradient(x, y, x + w, y + h);
+            ig.addColorStop(0, th.inner[0]); ig.addColorStop(0.45, th.inner[1]); ig.addColorStop(1, th.inner[2]);
+            fillRR(ctx, x + 1, y + 1, w - 2, h - 2, Math.max(2, r - 1), ig);
+            const gl = ctx.createLinearGradient(x, y, x, y + h * 0.5);
+            gl.addColorStop(0, th.gloss); gl.addColorStop(1, 'rgba(255,255,255,0)');
+            fillRR(ctx, x + 2, y + 2, w - 4, h * 0.5, Math.max(2, r - 2), gl);
+        }
+        strokeRR(ctx, x, y, w, h, r, glass ? th.strokeGlass : th.strokeFlat, 1.2);
+    }
+    function drawIcon(ctx, x, y, size, logo, name, th, shadow) {
+        if (shadow) {
+            ctx.save(); ctx.shadowColor = th.shadow; ctx.shadowBlur = size * 0.22; ctx.shadowOffsetY = size * 0.07;
+            squircle(ctx, x, y, size, 4.8); ctx.fillStyle = th.iconBg; ctx.fill(); ctx.restore();
+        } else { squircle(ctx, x, y, size, 4.8); ctx.fillStyle = th.iconBg; ctx.fill(); }
+        if (logo) {
+            ctx.save(); squircle(ctx, x, y, size, 4.8); ctx.clip(); ctx.drawImage(logo, x, y, size, size); ctx.restore();
+        } else {
+            squircle(ctx, x, y, size, 4.8); ctx.fillStyle = accentGrad(ctx, th, x, y, size, size); ctx.fill();
+            ctx.fillStyle = '#ffffff'; ctx.font = fnt(800, size * 0.36); ctx.textBaseline = 'middle'; ctx.textAlign = 'center';
+            ctx.fillText(initialsOf(name), x + size / 2, y + size / 2 + size * 0.02); ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+        }
+        squircle(ctx, x, y, size, 4.8); ctx.strokeStyle = th.iconStroke; ctx.lineWidth = Math.max(1, size * 0.012); ctx.stroke();
+    }
+    function markColors(mark, th, ctx, x, y, w, h) {
+        if (mark === 'NEW') { const g = ctx.createLinearGradient(x, y, x + w, y + h); g.addColorStop(0, '#34d399'); g.addColorStop(1, '#10b981'); return g; }
+        if (mark === 'NONE') return 'rgba(148,163,184,0.9)';
+        return accentGrad(ctx, th, x, y, w, h);
+    }
+    const markGlyph = (m) => (m === 'NEW' ? 'N' : m === 'NONE' ? '•' : 'U');
+    function drawBrandLogo(ctx, x, y, size) {
+        if (P.brand) {
+            ctx.save(); ctx.drawImage(P.brand, x, y, size, size); ctx.restore();
+        }
+    }
+    // заголовок: слово «iApps» с градиентом, остальное — цветом текста
+    function drawTitle(ctx, title, x, baseline, size, th) {
+        ctx.font = fnt(800, size); ctx.textBaseline = 'alphabetic';
+        const m = /^(iApps)(\s.*)?$/i.exec(title);
+        if (m) {
+            const wApps = ctx.measureText(m[1]).width;
+            ctx.fillStyle = accentGrad(ctx, th, x, baseline - size, wApps, size); ctx.fillText(m[1], x, baseline);
+            ctx.fillStyle = th.text; ctx.fillText(m[2] || '', x + wApps, baseline);
+        } else { ctx.fillStyle = th.text; ctx.fillText(title, x, baseline); }
+    }
+    function drawPill(ctx, x, y, h, text, fill, color, fontSize, padX) {
+        ctx.font = fnt(700, fontSize);
+        const w = ctx.measureText(text).width + padX * 2;
+        fillRR(ctx, x, y, w, h, h / 2, fill);
+        ctx.fillStyle = color; ctx.textBaseline = 'middle'; ctx.fillText(text, x + padX, y + h / 2 + 1); ctx.textBaseline = 'alphabetic';
+        return w;
+    }
+
+    /* ---------- list layout (порт исходного генератора) ---------- */
+    function splitRows(total, rowCount) {
+        const base = Math.floor(total / rowCount), extra = total % rowCount, rows = [];
+        for (let i = 0; i < rowCount; i += 1) rows.push(base + (i < extra ? 1 : 0));
+        return rows;
+    }
+    function bestRowCount(total, width, height) {
+        let best = 1, bestScore = -Infinity;
+        for (let rows = 1; rows <= Math.min(total, 8); rows += 1) {
+            const cols = Math.ceil(total / rows), cw = (width - (cols - 1) * 18) / cols, ch = (height - (rows - 1) * 18) / rows;
+            const score = cw * ch - Math.abs(cw / ch - 3.0) * 18000;
+            if (score > bestScore) { bestScore = score; best = rows; }
+        }
+        return best;
+    }
+    function posterGrid(total, uw, uh) {
+        const gapX = 18, gapY = 18;
+        if (total <= 6) {
+            const cols = total === 1 ? 1 : total <= 4 ? 2 : 3, rows = Math.ceil(total / cols);
+            const maxW = total === 1 ? uw * 0.62 : total <= 4 ? uw : 620, maxH = total === 1 ? 190 : total <= 4 ? 170 : 150;
+            const cardW = Math.min(maxW, (uw - gapX * (cols - 1)) / cols), cardH = Math.min(maxH, Math.max(124, (uh - gapY * (rows - 1)) / rows));
+            return { compact: true, cols: cols, rows: rows, gapX: gapX, gapY: gapY, cardW: cardW, cardH: cardH,
+                startY: (uh - (cardH * rows + gapY * (rows - 1))) / 2 };
+        }
+        const rowCount = bestRowCount(total, uw, uh);
+        return { compact: false, dist: splitRows(total, rowCount), gapX: gapX, gapY: gapY, rowH: (uh - gapY * (rowCount - 1)) / rowCount };
+    }
+    async function drawList(ctx, W, H, o) {
+        const th = o.th, apps = o.apps, glass = o.glass;
+        drawBackground(ctx, W, H, th);
+        if (glass) {
+            fillRR(ctx, 16, 16, W - 32, H - 32, 34, th.frameFill);
+            strokeRR(ctx, 16, 16, W - 32, H - 32, 34, th.frameStroke, 1);
+        }
+        const pad = 40, headH = 130, uw = W - pad * 2, uh = H - pad * 2 - headH;
+        const logoS = 84;
+        drawBrandLogo(ctx, pad, pad - 6, logoS);
+        drawTitle(ctx, o.title, pad + (P.brand ? logoS + 22 : 0), pad + 64, 66, th);
+
+        const logos = await Promise.all(apps.map(a => loadLogo(a.appImage)));
+        const layout = posterGrid(apps.length, uw, uh);
+        const rows = layout.compact ? layout.rows : layout.dist.length;
+        const hits = [];
+        let idx = 0;
+        for (let row = 0; row < rows; row += 1) {
+            const inRow = layout.compact ? Math.min(layout.cols, apps.length - idx) : layout.dist[row];
+            const cardW = layout.compact ? layout.cardW : (uw - layout.gapX * (inRow - 1)) / inRow;
+            const rowH = layout.compact ? layout.cardH : layout.rowH;
+            const rowW = cardW * inRow + layout.gapX * (inRow - 1);
+            const xBase = layout.compact ? pad + (uw - rowW) / 2 : pad;
+            const y = pad + headH + (layout.compact ? layout.startY : 0) + row * (rowH + layout.gapY);
+            for (let col = 0; col < inRow; col += 1) {
+                const app = apps[idx], x = xBase + col * (cardW + layout.gapX), name = cleanName(app.appName);
+                drawCard(ctx, x, y, cardW, rowH, 24, th, glass, !glass || th === POSTER_THEMES.siteLight);
+                const ls = Math.round(Math.min(rowH - 24, Math.max(84, rowH * 0.4), Math.max(84, cardW * 0.3))), lx = x + 20, ly = y + (rowH - ls) / 2;
+                drawIcon(ctx, lx, ly, ls, logos[idx], name, th, false);
+                // метка
+                const cr = Math.max(13, Math.round(ls * 0.16)), cx = lx + ls - cr * 0.15, cy = ly + cr * 0.8, st = app._mark || 'UPD';
+                if (st !== 'NONE' || true) {
+                    ctx.beginPath(); ctx.arc(cx, cy, cr, 0, Math.PI * 2); ctx.fillStyle = markColors(st, th, ctx, cx - cr, cy - cr, cr * 2, cr * 2); ctx.fill();
+                    ctx.lineWidth = 1.6; ctx.strokeStyle = 'rgba(255,255,255,0.92)'; ctx.stroke();
+                    ctx.fillStyle = '#fff'; ctx.font = fnt(800, cr * 1.08); ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                    ctx.fillText(markGlyph(st), cx, cy + 1); ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+                }
+                const tx = lx + ls + 26, tw = Math.max(80, cardW - (tx - x) - 16), tf = Math.max(17, Math.min(Math.min(38, Math.max(24, rowH * 0.11), Math.max(24, cardW * 0.07)), rowH * 0.28));
+                const sub = [];
+                if (o.showVersion) { const v = parseVersion(app.appVersion).version; if (v && v !== '—') sub.push(/^\d/.test(v) ? 'v' + v : v); }
+                if (o.showDate && app._ts) sub.push(fmtDateShort(app._ts));
+                ctx.fillStyle = th.text; ctx.font = fnt(800, tf);
+                const nameLines = wrapText(ctx, name, tw, tf >= 28 ? 2 : 1);
+                const lh = tf * 1.15, subSize = Math.max(12, tf * 0.62), subH = sub.length ? subSize * 1.6 : 0;
+                const ty = y + (rowH - (nameLines.length * lh + subH)) / 2;
+                ctx.textBaseline = 'middle';
+                nameLines.forEach((ln, li) => ctx.fillText(ln, tx, ty + lh * (li + 0.5)));
+                if (sub.length) {
+                    ctx.fillStyle = th.muted; ctx.font = fnt(600, subSize);
+                    ctx.fillText(truncate(ctx, sub.join('  ·  '), tw), tx, ty + nameLines.length * lh + subSize * 0.85);
+                }
+                ctx.textBaseline = 'alphabetic';
+                hits.push({ x: x, y: y, w: cardW, h: rowH, app: app });
+                idx += 1;
+            }
+        }
+        return hits;
+    }
+
+    /* ---------- single app ---------- */
+    async function drawSingle(ctx, W, H, o) {
+        const th = o.th, glass = o.glass, app = o.app, name = cleanName(app.appName);
+        const logo = await loadLogo(app.appImage);
+        const ver = parseVersion(app.appVersion), cats = appCategories(app.appName), descParas = descriptionParagraphs(app.appDescription);
+        const dom = dominantColor(logo, app.appImage || name);
+        drawBackground(ctx, W, H, th);
+        const landscape = W > H * 1.2;
+        const pad = Math.round(Math.min(W, H) * 0.06);
+
+        // фон-свечение цвета иконки
+        const glowRGB = dom || null;
+        function iconGlow(cx, cy, r) {
+            const g = ctx.createRadialGradient(cx, cy, r * 0.1, cx, cy, r);
+            if (glowRGB) { g.addColorStop(0, 'rgba(' + glowRGB.join(',') + ',0.55)'); g.addColorStop(1, 'rgba(' + glowRGB.join(',') + ',0)'); }
+            else { g.addColorStop(0, th.accentA + '88'); g.addColorStop(1, th.accentA + '00'); }
+            ctx.fillStyle = g; ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+        }
+
+        function brandRow(x, y) {
+            const s = Math.round(Math.min(W, H) * 0.058);
+            drawBrandLogo(ctx, x, y, s);
+            ctx.font = fnt(800, s * 0.62); ctx.fillStyle = accentGrad(ctx, th, x + s, y, s * 2, s); ctx.textBaseline = 'middle';
+            ctx.fillText('iApps', x + s + 12, y + s / 2 + 1); ctx.textBaseline = 'alphabetic';
+            return s;
+        }
+        function markPill(rightX, y, h) {
+            if (o.mark === 'NONE') return;
+            const text = o.mark === 'NEW' ? t('poster.badgeNew') : t('poster.badgeUpd');
+            ctx.font = fnt(800, h * 0.46);
+            const w = ctx.measureText(text).width + h * 0.9;
+            fillRR(ctx, rightX - w, y, w, h, h / 2, markColors(o.mark, th, ctx, rightX - w, y, w, h));
+            ctx.fillStyle = '#ffffff'; ctx.textBaseline = 'middle'; ctx.textAlign = 'center';
+            ctx.fillText(text, rightX - w / 2, y + h / 2 + 1); ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+        }
+        function chipsRow(x, y, maxW, align, size) {
+            const h = size * 1.9, gap = size * 0.55, rows = [[]];
+            let rw = 0;
+            ctx.font = fnt(700, size);
+            cats.forEach(c => {
+                const label = c.emoji + '  ' + c.name, w = ctx.measureText(label).width + size * 1.7;
+                if (rw + w > maxW && rows[rows.length - 1].length) { rows.push([]); rw = 0; }
+                rows[rows.length - 1].push({ label: label, w: w }); rw += w + gap;
+            });
+            let yy = y;
+            rows.forEach(row => {
+                const total = row.reduce((s, c) => s + c.w, 0) + gap * (row.length - 1);
+                let xx = align === 'center' ? x + (maxW - total) / 2 : x;
+                row.forEach(c => {
+                    fillRR(ctx, xx, yy, c.w, h, h / 2, th.soft); strokeRR(ctx, xx, yy, c.w, h, h / 2, glass ? th.strokeGlass : th.strokeFlat, 1.2);
+                    ctx.fillStyle = th.text; ctx.font = fnt(700, size); ctx.textBaseline = 'middle'; ctx.fillText(c.label, xx + size * 0.85, yy + h / 2 + 1); ctx.textBaseline = 'alphabetic';
+                    xx += c.w + gap;
+                });
+                yy += h + gap;
+            });
+            return yy - y - gap;
+        }
+        function statTiles(x, y, w, h) {
+            const items = [['📱', 'iOS ' + ver.ios, t('poster.minIos')], ['📦', ver.size, t('poster.size')]];
+            if (o.showVersionSingle) items.push(['🏷️', ver.version, t('poster.version')]);
+            const gap = Math.round(w * 0.03), tw = (w - gap * (items.length - 1)) / items.length;
+            items.forEach((it, i) => {
+                const tx = x + i * (tw + gap);
+                drawCard(ctx, tx, y, tw, h, Math.min(26, h * 0.22), th, glass, true);
+                ctx.textAlign = 'center';
+                ctx.font = fnt(400, h * 0.28); ctx.fillStyle = th.text; ctx.textBaseline = 'middle'; ctx.fillText(it[0], tx + tw / 2, y + h * 0.28);
+                ctx.font = fnt(800, h * 0.2); ctx.fillStyle = th.text;
+                ctx.fillText(truncate(ctx, it[1], tw - 20), tx + tw / 2, y + h * 0.58);
+                ctx.font = fnt(700, h * 0.1); ctx.fillStyle = th.muted; ctx.fillText(it[2].toUpperCase(), tx + tw / 2, y + h * 0.82);
+                ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+            });
+        }
+        function descLayout(w, fs) {
+            const ip = Math.round(Math.min(34, w * 0.045));
+            const labelSize = Math.max(15, Math.round(w * 0.0175));
+            const lineH = fs * 1.42, indent = fs * 0.95;
+            ctx.font = fnt(500, fs);
+            const items = [];
+            let body = 0;
+            descParas.forEach(p => {
+                const lines = wrapText(ctx, p.text, w - ip * 2 - (p.bullet ? indent : 0), 40);
+                lines.forEach((ln, li) => {
+                    const gap = li === 0 ? p.gap * lineH : 0;
+                    items.push({ text: ln, bullet: p.bullet && li === 0, indent: p.bullet ? indent : 0, y: body + gap });
+                    body += gap + lineH;
+                });
+            });
+            return { ip: ip, labelSize: labelSize, fs: fs, lineH: lineH, items: items, needed: Math.ceil(ip + labelSize + fs * 0.2 + body + ip * 0.8) + 6 };
+        }
+        // подбираем размер шрифта, чтобы описание поместилось в карточку
+        function fitFs(w, fsMax, ratio, maxCardH) {
+            let fs = Math.max(20, Math.min(fsMax, w * ratio));
+            while (fs > 20 && descLayout(w, fs).needed > maxCardH) fs -= 2;
+            return fs;
+        }
+        function descCard(x, y, w, h, fs) {
+            const m = descLayout(w, fs);
+            drawCard(ctx, x, y, w, h, 28, th, glass, true);
+            ctx.font = fnt(800, m.labelSize); ctx.fillStyle = th.muted;
+            ctx.fillText('—  ' + t('poster.desc').toUpperCase(), x + m.ip, y + m.ip + m.labelSize * 0.85);
+            const firstTop = y + m.ip + m.labelSize + m.fs * 0.2, limit = y + h - m.ip * 0.8;
+            const vis = [];
+            for (let i = 0; i < m.items.length; i += 1) { if (firstTop + m.items[i].y + m.lineH > limit + 1) break; vis.push(m.items[i]); }
+            const cut = vis.length < m.items.length;
+            ctx.font = fnt(500, m.fs);
+            vis.forEach((it, i) => {
+                let text = it.text;
+                if (cut && i === vis.length - 1) text = truncate(ctx, text.replace(/…$/, '') + '…', w - m.ip * 2 - it.indent);
+                const base = firstTop + it.y + m.fs;
+                if (it.bullet) fillRR(ctx, x + m.ip, base - m.fs * 0.8, Math.max(3, m.fs * 0.15), m.fs * 0.88, m.fs * 0.08, accentGrad(ctx, th, x + m.ip, base - m.fs, 8, m.fs));
+                ctx.fillStyle = th.text; ctx.font = fnt(500, m.fs);
+                ctx.fillText(text, x + m.ip + it.indent, base);
+            });
+        }
+        function footer(x, y, w, h) {
+            ctx.textBaseline = 'middle';
+            ctx.font = fnt(600, h * 0.4); ctx.fillStyle = th.muted;
+            const upd = app._ts ? t('poster.updated') + ': ' + fmtDate(app._ts) : '';
+            ctx.fillText(upd, x, y + h / 2);
+            if (o.footer) {
+                ctx.font = fnt(800, h * 0.4);
+                const tw = ctx.measureText(o.footer).width + h * 0.9;
+                fillRR(ctx, x + w - tw, y, tw, h, h / 2, accentGrad(ctx, th, x + w - tw, y, tw, h));
+                ctx.fillStyle = th.onAccent; ctx.textAlign = 'center'; ctx.fillText(o.footer, x + w - tw / 2, y + h / 2 + 1); ctx.textAlign = 'left';
+            }
+            ctx.textBaseline = 'alphabetic';
+        }
+
+        if (!landscape) {
+            const k = H / 1080;
+            const bs = brandRow(pad, pad);
+            markPill(W - pad, pad + (bs - bs * 0.78) / 2, bs * 0.78);
+            const footH = Math.round(Math.min(W, H) * 0.044);
+            const topY = pad + bs + Math.round(H * 0.03), botY = H - pad - footH - Math.round(H * 0.022);
+            const nameSize = Math.round(Math.min(78, 62 * Math.max(1, k * 0.85)));
+            ctx.font = fnt(800, nameSize);
+            const nameLines = wrapText(ctx, name, W - pad * 2, 2), nameH = nameLines.length * nameSize * 1.1;
+            const chipSize = Math.round(24 * Math.max(1, k * 0.9));
+            const chipsH = chipsRow(pad, -9999, W - pad * 2, 'center', chipSize);
+            const tileH = Math.round(Math.min(190, 116 * Math.max(1, k * 0.95)));
+            const g1 = Math.round(H * 0.03), g2 = Math.round(H * 0.016), g3 = Math.round(H * 0.03), g4 = Math.round(H * 0.024);
+            let S = Math.round(Math.min(W * 0.34, H * 0.2));
+            const fixed = g1 + nameH + g2 + chipsH + g3 + tileH + g4, avail = botY - topY;
+            const descFs = fitFs(W - pad * 2, k > 1.3 ? 34 : 30, 0.036, avail - fixed - S * 0.65);
+            const dm = descLayout(W - pad * 2, descFs);
+            let descH = Math.max(150, Math.min(dm.needed, avail - fixed - S * 0.65));
+            let leftover = avail - (S + fixed + descH);
+            if (leftover > 0) { const grow = Math.min(leftover * 0.5, S * 0.45); S += grow; leftover -= grow; }
+            else if (leftover < 0) {
+                const shrink = Math.min(-leftover, S * 0.4); S -= shrink; leftover += shrink;
+                if (leftover < 0) { descH = Math.max(110, descH + leftover); leftover = 0; }
+            }
+            S = Math.round(S);
+            let y = topY + Math.max(0, leftover) / 2;
+            iconGlow(W / 2, y + S / 2, S * 1.35);
+            drawIcon(ctx, (W - S) / 2, y, S, logo, name, th, true);
+            y += S + g1;
+            ctx.font = fnt(800, nameSize); ctx.fillStyle = th.text; ctx.textAlign = 'center';
+            nameLines.forEach((ln, i) => ctx.fillText(ln, W / 2, y + nameSize * 0.85 + i * nameSize * 1.1));
+            ctx.textAlign = 'left';
+            y += nameH + g2;
+            chipsRow(pad, y, W - pad * 2, 'center', chipSize);
+            y += chipsH + g3;
+            statTiles(pad, y, W - pad * 2, tileH);
+            y += tileH + g4;
+            descCard(pad, y, W - pad * 2, descH, descFs);
+            footer(pad, H - pad - footH, W - pad * 2, footH);
+        } else {
+            const bs = brandRow(pad, pad);
+            const colGap = 40, leftW = Math.round((W - pad * 2 - colGap) * 0.5), rx = pad + leftW + colGap, rw = W - pad - rx;
+            const footH = 46, topY = pad + bs + 30, botY = H - pad - footH - 24;
+            // левая колонка: иконка, название, метки
+            const S = 300, blockH = S;
+            const cy = topY + (botY - topY - blockH) / 2;
+            iconGlow(pad + S / 2, cy + S / 2, S * 1.4);
+            drawIcon(ctx, pad, cy, S, logo, name, th, true);
+            const tx = pad + S + 36, tw = leftW - S - 36;
+            const nameSize = 62;
+            ctx.font = fnt(800, nameSize); ctx.fillStyle = th.text;
+            const nameLines = wrapText(ctx, name, tw, 3);
+            const nh = nameLines.length * nameSize * 1.1;
+            const chipSize = 22;
+            const ch = chipsRow(0, -9999, tw, 'left', chipSize); // измеряем высоту
+            const total = nh + 20 + ch;
+            let ty = cy + (S - total) / 2;
+            ctx.font = fnt(800, nameSize); ctx.fillStyle = th.text;
+            nameLines.forEach((ln, i) => ctx.fillText(ln, tx, ty + nameSize * 0.85 + i * nameSize * 1.1));
+            chipsRow(tx, ty + nh + 20, tw, 'left', chipSize);
+            markPill(W - pad, pad + (bs - bs * 0.78) / 2, bs * 0.78);
+            // правая колонка
+            const tileH = 150;
+            statTiles(rx, topY, rw, tileH);
+            const dY = topY + tileH + 24, dH = botY - dY;
+            descCard(rx, dY, rw, dH, fitFs(rw, 40, 0.046, dH));
+            footer(pad, H - pad - footH, W - pad * 2, footH);
+        }
+        return [];
+    }
+
+    /* ---------- render pipeline ---------- */
+    function posterSize() {
+        return P.mode === 'list' ? (LIST_FORMATS[pEl.fmtList.value] || LIST_FORMATS['21:9']) : (SINGLE_FORMATS[pEl.fmtSingle.value] || SINGLE_FORMATS['1:1']);
+    }
+    function posterOpts() {
+        const th = POSTER_THEMES[pEl.style.value] || POSTER_THEMES.siteDark;
+        return {
+            th: th, glass: pEl.glass.value !== 'off', title: (pEl.title.value || 'iApps Repo Updates').trim(),
+            showDate: pEl.showDate.checked, showVersion: pEl.showVersion.checked, showVersionSingle: pEl.showVersionSingle.checked, apps: P.listApps, app: P.selected, mark: pEl.mark.value, footer: pEl.footer.value.trim()
+        };
+    }
+    async function ensureFonts() {
+        try {
+            if (document.fonts && document.fonts.load) {
+                await Promise.all([document.fonts.load('800 40px Inter'), document.fonts.load('700 24px Inter'), document.fonts.load('500 24px Inter'), document.fonts.load('600 24px Inter')]);
+            }
+        } catch (e) { /* системный шрифт */ }
+    }
+    async function ensureBrand() {
+        if (P.brand !== null) return;
+        P.brand = false;
+        try { P.brand = await tryLoadImage('../Images/Profile.PNG', 6000); } catch (e) { P.brand = null; }
+    }
+    async function paint(canvas, scale, collectHits) {
+        const size = posterSize(), W = size[0], H = size[1], o = posterOpts();
+        canvas.width = Math.round(W * scale); canvas.height = Math.round(H * scale);
+        const ctx = canvas.getContext('2d');
+        ctx.setTransform(scale, 0, 0, scale, 0, 0);
+        ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+        let hits = [];
+        if (P.mode === 'list') hits = await drawList(ctx, W, H, o);
+        else await drawSingle(ctx, W, H, o);
+        if (collectHits) P.hits = hits;
+    }
+    let renderQueued = false;
+    function scheduleRender() {
+        if (renderQueued) return;
+        renderQueued = true;
+        requestAnimationFrame(() => { renderQueued = false; renderPreview(); });
+    }
+    async function renderPreview() {
+        const token = ++P.token;
+        if (!P.dataReady) return;
+        if (P.mode === 'list' && !P.listApps.length) { setPosterStatus(t('poster.empty'), 'error'); return; }
+        if (P.mode === 'single' && !P.selected) { setPosterStatus(t('poster.pickApp'), ''); return; }
+        pEl.frame.classList.add('is-busy');
+        try {
+            await ensureFonts(); await ensureBrand();
+            const tmp = document.createElement('canvas');
+            await paint(tmp, 1, true);
+            if (token !== P.token) return; // пришёл более новый запрос
+            const size = posterSize();
+            pEl.canvas.width = size[0]; pEl.canvas.height = size[1];
+            pEl.canvas.getContext('2d').drawImage(tmp, 0, 0);
+            if (P.mode === 'list') pEl.text.value = buildText(P.listApps);
+            setPosterStatus(P.mode === 'list' ? t('poster.readyList', { n: P.listApps.length }) : t('poster.readySingle'), 'ok');
+        } catch (e) {
+            console.error(e); setPosterStatus(t('poster.errRender'), 'error');
+        } finally { if (token === P.token) pEl.frame.classList.remove('is-busy'); }
+    }
+    function setPosterStatus(text, cls) {
+        pEl.status.textContent = text || '';
+        pEl.status.className = 'status' + (cls ? ' ' + cls : '');
+        pEl.status.style.textAlign = 'left';
+    }
+    function buildText(apps) {
+        const verSuffix = (a) => {
+            if (!pEl.showVersion.checked) return '';
+            const v = parseVersion(a.appVersion).version;
+            return v && v !== '—' ? ' — ' + (/^\d/.test(v) ? 'v' + v : v) : '';
+        };
+        const news = apps.filter(a => a._mark === 'NEW').map(a => '• ' + cleanName(a.appName) + verSuffix(a));
+        const upds = apps.filter(a => a._mark === 'UPD').map(a => '• ' + cleanName(a.appName) + verSuffix(a));
+        return ['🆕 Новые приложения | New Apps'].concat(news.length ? news : ['• —'], ['', '🔄 Обновления | Updates'], upds.length ? upds : ['• —']).join('\n');
+    }
+    function rebuildList() {
+        const n = Math.max(1, Math.min(100, Number(pEl.count.value) || 20));
+        // сохраняем уже выставленные метки, если приложение осталось в списке
+        const old = new Map(P.listApps.map(a => [a.appName + '|' + a.appUpdateTime, a._mark]));
+        P.listApps = P.apps.slice(0, n);
+        P.listApps.forEach(a => { const m = old.get(a.appName + '|' + a.appUpdateTime); if (m) a._mark = m; });
+    }
+
+    /* ---------- UI ---------- */
+    function setMode(mode) {
+        P.mode = mode;
+        pEl.modeList.setAttribute('aria-pressed', String(mode === 'list'));
+        pEl.modeSingle.setAttribute('aria-pressed', String(mode === 'single'));
+        $$('#tool-posters [data-only]').forEach(el => { el.hidden = el.dataset.only !== mode; });
+        pEl.hint.textContent = mode === 'list' ? t('poster.hintList') : t('poster.hintSingle');
+        pEl.canvas.style.cursor = 'default';
+        scheduleRender();
+    }
+    function setSource(text) { pEl.source.textContent = text; }
+    function onDataLoaded(apps, label) {
+        P.apps = apps; P.dataReady = true;
+        P.selected = P.selected && apps.find(a => a.appName === P.selected.appName) || apps[0] || null;
+        if (P.selected) pEl.search.value = cleanName(P.selected.appName);
+        rebuildList();
+        setSource(label + ' · ' + t('poster.nApps', { n: apps.length }));
+        scheduleRender();
+    }
+    async function posterLoadSite() {
+        if (P.dataLoading || P.dataReady) return;
+        P.dataLoading = true;
+        try {
+            const resp = await fetch('../Repo.json', { cache: 'no-cache' });
+            if (!resp.ok) throw new Error('HTTP ' + resp.status);
+            onDataLoaded(prepareApps(await resp.json()), 'Repo.json');
+        } catch (e) {
+            setSource(t('poster.siteFail'));
+            setPosterStatus(t('poster.siteFailHint'), 'error');
+        } finally { P.dataLoading = false; }
+    }
+    function posterActivated() { posterLoadSite(); scheduleRender(); }
+    function posterOnLang() {
+        if (!P.footerTouched) pEl.footer.value = t('poster.defaultFooter');
+        pEl.hint.textContent = P.mode === 'list' ? t('poster.hintList') : t('poster.hintSingle');
+        if (P.dataReady) { setSource('Repo.json · ' + t('poster.nApps', { n: P.apps.length })); scheduleRender(); }
+        else if (!P.dataLoading) setSource(t('poster.loading'));
+    }
+
+    pEl.file.addEventListener('change', async function () {
+        const file = this.files[0]; if (!file) return;
+        try {
+            const apps = prepareApps(JSON.parse(await file.text()));
+            onDataLoaded(apps, file.name);
+        } catch (e) { setPosterStatus(e.message || t('poster.errJson'), 'error'); }
+        this.value = '';
+    });
+    pEl.modeList.addEventListener('click', () => setMode('list'));
+    pEl.modeSingle.addEventListener('click', () => setMode('single'));
+    [pEl.fmtList, pEl.fmtSingle, pEl.style, pEl.glass, pEl.mark, pEl.showDate, pEl.showVersion, pEl.showVersionSingle].forEach(el => el.addEventListener('change', scheduleRender));
+    pEl.count.addEventListener('input', () => { rebuildList(); scheduleRender(); });
+    pEl.title.addEventListener('input', scheduleRender);
+    pEl.footer.addEventListener('input', () => { P.footerTouched = true; scheduleRender(); });
+
+    // выбор приложения
+    function showResults() {
+        const q = pEl.search.value.trim().toLowerCase();
+        const base = q ? P.apps.filter(a => cleanName(a.appName).toLowerCase().includes(q)) : P.apps;
+        const items = base.slice(0, 8);
+        pEl.results.innerHTML = '';
+        items.forEach(a => {
+            const b = document.createElement('button');
+            b.type = 'button'; b.className = 'picker__item';
+            const img = document.createElement('img'); img.alt = ''; img.loading = 'lazy'; img.referrerPolicy = 'no-referrer'; img.src = a.appImage || '';
+            img.onerror = () => { img.style.visibility = 'hidden'; };
+            const s = document.createElement('span'); s.textContent = cleanName(a.appName);
+            b.append(img, s);
+            b.addEventListener('mousedown', (e) => e.preventDefault());
+            b.addEventListener('click', () => {
+                P.selected = a; pEl.search.value = cleanName(a.appName); pEl.results.hidden = true; scheduleRender();
+            });
+            pEl.results.appendChild(b);
+        });
+        pEl.results.hidden = items.length === 0;
+    }
+    pEl.search.addEventListener('focus', () => { pEl.search.select(); showResults(); });
+    pEl.search.addEventListener('input', showResults);
+    pEl.search.addEventListener('blur', () => setTimeout(() => { pEl.results.hidden = true; }, 120));
+    pEl.search.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { const first = pEl.results.querySelector('.picker__item'); if (first) { e.preventDefault(); first.click(); pEl.search.blur(); } }
+        if (e.key === 'Escape') { pEl.results.hidden = true; }
+    });
+
+    // клик по карточке в списке меняет метку: UPD → NEW → без метки
+    function canvasPoint(e) {
+        const r = pEl.canvas.getBoundingClientRect(), size = posterSize();
+        return { x: (e.clientX - r.left) * (size[0] / r.width), y: (e.clientY - r.top) * (size[1] / r.height) };
+    }
+    const hitAt = (p) => P.hits.find(h => p.x >= h.x && p.x <= h.x + h.w && p.y >= h.y && p.y <= h.y + h.h);
+    pEl.canvas.addEventListener('click', (e) => {
+        if (P.mode !== 'list') return;
+        const h = hitAt(canvasPoint(e)); if (!h) return;
+        h.app._mark = MARK_ORDER[(MARK_ORDER.indexOf(h.app._mark || 'UPD') + 1) % MARK_ORDER.length];
+        scheduleRender();
+    });
+    pEl.canvas.addEventListener('mousemove', (e) => { pEl.canvas.style.cursor = P.mode === 'list' && hitAt(canvasPoint(e)) ? 'pointer' : 'default'; });
+
+    pEl.copyText.addEventListener('click', async () => toast((await copyText(pEl.text.value)) ? t('copied') : t('copyFail')));
+    pEl.download.addEventListener('click', async () => {
+        if (!P.dataReady) return;
+        try {
+            setPosterStatus(t('poster.preparing'), '');
+            await ensureFonts(); await ensureBrand();
+            const c = document.createElement('canvas');
+            await paint(c, Number(pEl.scale.value) || 1, false);
+            const blob = await new Promise((res, rej) => c.toBlob(b => (b ? res(b) : rej(new Error('toBlob'))), 'image/png'));
+            const slug = P.mode === 'single' && P.selected ? cleanName(P.selected.appName).toLowerCase().replace(/[^a-z0-9а-яё]+/gi, '-').replace(/^-|-$/g, '').slice(0, 40) : 'list';
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob); a.download = 'iapps-poster-' + slug + '-' + Date.now() + '.png';
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+            setPosterStatus(t('poster.saved'), 'ok');
+        } catch (e) { console.error(e); setPosterStatus(t('poster.errExport'), 'error'); }
+    });
+
     /* ===================== language ===================== */
     function applyLang() {
         html.lang = lang;
@@ -716,7 +1801,7 @@
         $$('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
         $('#langCode').textContent = lang.toUpperCase();
         if (!parserData) { jsonBox.classList.add('empty'); }
-        updateOutput(); updateTimestamp(); updateDate();
+        updateOutput(); updateTimestamp(); updateDate(); posterOnLang();
     }
     $('#langBtn').addEventListener('click', () => {
         lang = lang === 'ru' ? 'en' : 'ru';
@@ -731,6 +1816,7 @@
     updateNow();
     let startTool = location.hash.slice(1);
     if (TOOLS.indexOf(startTool) === -1) { try { startTool = localStorage.getItem('repotoolsTool') || TOOLS[0]; } catch (e) { startTool = TOOLS[0]; } }
+    setMode('list');
     setTool(startTool, false);
     applyLang();
 })();
