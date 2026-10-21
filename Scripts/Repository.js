@@ -311,6 +311,13 @@ function getAppCategories(appName) {
     return found;
 }
 
+// иконки для плиток «iOS / Размер / Версия» (в стиле сайта: линия 1.8, скруглённые концы)
+const META_ICONS = {
+    ios: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 5.6h3M10.5 18.4h3"/></svg>',
+    size: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 3.5 7v10l8.5 4.5 8.5-4.5V7L12 2.5z"/><path d="M3.5 7 12 11.5 20.5 7M12 11.5v10"/></svg>',
+    version: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12.1V5A1.5 1.5 0 0 1 5 3.5h7.1a1.5 1.5 0 0 1 1.06.44l7.4 7.4a1.5 1.5 0 0 1 0 2.12l-7.2 7.2a1.5 1.5 0 0 1-2.12 0l-7.4-7.4A1.5 1.5 0 0 1 3.5 12.1z"/><circle cx="8" cy="8" r="1.3"/></svg>'
+};
+
 function renderAppModal(app) {
     const cleanedAppName = app.appName.split('\n')[0];
     const versionInfo = parseAppVersion(app.appVersion);
@@ -328,21 +335,25 @@ function renderAppModal(app) {
             </div>
             <div class="app-detail__meta">
                 <div class="app-detail__meta-item">
-                    <span class="app-detail__meta-icon">📱</span>
+                    <span class="app-detail__meta-icon">${META_ICONS.ios}</span>
                     <span class="app-detail__meta-value">${versionInfo.ios}</span>
                     <span class="app-detail__meta-label">iOS</span>
                 </div>
                 <div class="app-detail__meta-item">
-                    <span class="app-detail__meta-icon">📦</span>
+                    <span class="app-detail__meta-icon">${META_ICONS.size}</span>
                     <span class="app-detail__meta-value">${versionInfo.size}</span>
                     <span class="app-detail__meta-label">${T('app.size', 'Размер')}</span>
                 </div>
                 <div class="app-detail__meta-item">
-                    <span class="app-detail__meta-icon">🏷️</span>
+                    <span class="app-detail__meta-icon">${META_ICONS.version}</span>
                     <span class="app-detail__meta-value">${versionInfo.version}</span>
                     <span class="app-detail__meta-label">${T('app.version', 'Версия')}</span>
                 </div>
             </div>
+            <button type="button" class="btn btn--primary btn--full app-detail__access" id="appGetAccess">
+                <span>${T('app.access', 'Получить доступ')}</span>
+                <svg viewBox="0 0 24 24" width="20" height="20"><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"/></svg>
+            </button>
             <div class="app-detail__section">
                 <h3 class="app-detail__section-title">${T('app.desc', 'Описание')}</h3>
                 <p class="app-detail__description">${app.appDescription}</p>
@@ -351,10 +362,6 @@ function renderAppModal(app) {
                 <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm1-8h4v2h-6V7h2v5z"/></svg>
                 <span>${T('app.updated', 'Обновлено:')} ${formatDate(app.appUpdateTime)}</span>
             </div>
-            <button type="button" class="btn btn--primary btn--full app-detail__access" id="appGetAccess">
-                <span>${T('app.access', 'Получить доступ')}</span>
-                <svg viewBox="0 0 24 24" width="20" height="20"><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"/></svg>
-            </button>
         </div>
     `;
     
