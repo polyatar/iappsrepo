@@ -8,7 +8,7 @@
     <title data-i18n="page.title">iApps - Сертификат разработчика Apple и приложения для iPhone</title>
     <link rel="icon" type="image/png" href="Images/Profile.PNG">
     <link rel="apple-touch-icon" href="Images/Profile.PNG">
-    <link rel="stylesheet" href="Styles/Style.css?v=15">
+    <link rel="stylesheet" href="Styles/Style.css?v=20">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -199,12 +199,15 @@
     <style id="menu-styles">
         .mobile-menu__info { display: flex; align-items: center; min-height: 56px; }
         .mobile-menu__name { line-height: 1; }
-        .mobile-menu__link-icon svg { width: 20px; height: 20px; fill: var(--accent); transition: fill var(--transition); }
-        .mobile-menu__link:hover .mobile-menu__link-icon svg { fill: #fff; }
+        /* тёмная плитка с тонкой рамкой в тон сайта и мягкий белый значок (не слепит) */
+        .mobile-menu__link-icon { width: 42px; height: 42px; border-radius: 14px; background: linear-gradient(145deg, #1d1d2a, #12121b); border: 1px solid rgba(139, 92, 246, 0.32); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06); }
+        .mobile-menu__link-icon svg { width: 22px; height: 22px; color: #d9dce8; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        [data-theme="light"] .mobile-menu__link-icon { border-color: rgba(15, 23, 42, 0.22); box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18); }
+        /* на градиентной строке (наведение, «Получить доступ») плитка остаётся тёмной */
+        .mobile-menu__link:hover .mobile-menu__link-icon, .mobile-menu__link--cta .mobile-menu__link-icon { background: rgba(10, 10, 20, 0.38); border-color: rgba(255, 255, 255, 0.22); box-shadow: none; }
+        .mobile-menu__link:hover .mobile-menu__link-icon svg, .mobile-menu__link--cta .mobile-menu__link-icon svg { fill: none; stroke: currentColor; color: #e6e8f2; }
         .mobile-menu__link--cta { color: #fff; border-color: transparent; box-shadow: 0 10px 28px var(--accent-glow); }
         .mobile-menu__link--cta::before { opacity: 1; }
-        .mobile-menu__link--cta .mobile-menu__link-icon { background: rgba(255, 255, 255, 0.18); }
-        .mobile-menu__link--cta .mobile-menu__link-icon svg { fill: #fff; }
         .mobile-menu__link--cta .mobile-menu__link-arrow { fill: #fff; opacity: 0.9; }
         .mobile-menu__nav { padding-bottom: 0; }
         @media (max-width: 480px) { .mobile-menu__info { min-height: 48px; } }
@@ -240,13 +243,15 @@
         @media (prefers-reduced-motion: reduce) { .hero__logo { animation: none; } }
     </style>
     <style id="app-detail-styles">
-        .app-detail__meta-icon { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 14px; font-size: 0; filter: none; background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(59, 130, 246, 0.2)); border: 1px solid rgba(139, 92, 246, 0.3); }
-        .app-detail__meta-icon svg { width: 23px; height: 23px; fill: none; stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-        .app-detail__meta-item:hover .app-detail__meta-icon { background: var(--gradient-1); border-color: transparent; }
-        .app-detail__meta-item:hover .app-detail__meta-icon svg { stroke: #fff; }
+        .app-detail__meta-icon { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 14px; font-size: 0; filter: none; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); transition: background var(--transition), border-color var(--transition); }
+        .app-detail__meta-icon svg { width: 24px; height: 24px; fill: none; stroke: #38bdf8; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        .app-detail__meta-item:hover .app-detail__meta-icon { background: rgba(56, 189, 248, 0.22); border-color: rgba(56, 189, 248, 0.6); }
+        [data-theme="light"] .app-detail__meta-icon { background: rgba(14, 165, 233, 0.1); border-color: rgba(2, 132, 199, 0.3); }
+        [data-theme="light"] .app-detail__meta-icon svg { stroke: #0284c7; }
+        [data-theme="light"] .app-detail__meta-item:hover .app-detail__meta-icon { background: rgba(14, 165, 233, 0.18); border-color: rgba(2, 132, 199, 0.5); }
         @media (max-width: 480px) {
             .app-detail__meta-icon { width: 38px; height: 38px; border-radius: 12px; }
-            .app-detail__meta-icon svg { width: 19px; height: 19px; }
+            .app-detail__meta-icon svg { width: 20px; height: 20px; }
         }
     </style>
 </head>
@@ -299,22 +304,22 @@
         </div>
         <nav class="mobile-menu__nav">
             <a href="#pricing" class="mobile-menu__link mobile-menu__link--cta">
-                <span class="mobile-menu__link-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.917 13C12.441 15.838 9.973 18 7 18c-3.314 0-6-2.686-6-6s2.686-6 6-6c2.973 0 5.441 2.162 5.917 5H23v2h-2v4h-2v-4h-2v4h-2v-4h-1.083zM7 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg></span>
+                <span class="mobile-menu__link-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="3"/><path d="M8 10.5V7.6a4 4 0 0 1 7.5-1.9"/><path d="M12 15v2"/></svg></span>
                 <span class="mobile-menu__link-text" data-i18n="menu.access">Получить доступ</span>
                 <svg class="mobile-menu__link-arrow" viewBox="0 0 24 24" width="18" height="18"><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"/></svg>
             </a>
             <a href="#apps" class="mobile-menu__link">
-                <span class="mobile-menu__link-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm8-2h8v8h-8v-8zm2 2v4h4v-4h-4z"/></svg></span>
+                <span class="mobile-menu__link-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg></span>
                 <span class="mobile-menu__link-text" data-i18n="menu.apps">Приложения</span>
                 <svg class="mobile-menu__link-arrow" viewBox="0 0 24 24" width="18" height="18"><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"/></svg>
             </a>
             <a href="https://t.me/iapps_ipa" class="mobile-menu__link" target="_blank" rel="noopener">
-                <span class="mobile-menu__link-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-3.11-8.83l.013-.007.87 2.87c.112.311.266.367.453.341.188-.025.287-.126.41-.244l1.188-1.148 2.55 1.888c.466.257.801.124.917-.432l1.657-7.822c.183-.728-.137-1.02-.702-.788l-9.733 3.76c-.664.266-.66.638-.12.803l2.497.78z"/></svg></span>
+                <span class="mobile-menu__link-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.7 3.6 3.9 10.1c-.7.3-.7 1.3 0 1.5l4.2 1.4 1.5 4.7c.2.6 1 .8 1.4.3l2.2-2.1 4.1 3c.5.4 1.2.1 1.4-.5l3-14.2c.2-.8-.6-1.4-1.3-1.1z"/><path d="M8.2 13.1 16.5 7.6"/></svg></span>
                 <span class="mobile-menu__link-text" data-i18n="menu.channel">Telegram канал</span>
                 <svg class="mobile-menu__link-arrow" viewBox="0 0 24 24" width="18" height="18"><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"/></svg>
             </a>
             <a href="https://t.me/iappspay_bot" class="mobile-menu__link" target="_blank" rel="noopener">
-                <span class="mobile-menu__link-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2zM7.5 13a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zm9 0a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"/></svg></span>
+                <span class="mobile-menu__link-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="7.5" width="15" height="12" rx="4.2"/><path d="M12 7.5V4.4"/><circle cx="12" cy="3.3" r="1.1"/><circle cx="9" cy="12.4" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="12.4" r="1.2" fill="currentColor" stroke="none"/><path d="M9.6 16.1c.7.6 1.5.9 2.4.9s1.7-.3 2.4-.9"/><path d="M2.5 12.2v3.2M21.5 12.2v3.2"/></svg></span>
                 <span class="mobile-menu__link-text" data-i18n="menu.bot">Telegram бот</span>
                 <svg class="mobile-menu__link-arrow" viewBox="0 0 24 24" width="18" height="18"><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"/></svg>
             </a>
@@ -1161,8 +1166,8 @@
     if (btn) btn.addEventListener('click', () => window.i18n.toggle());
 })();
 </script>
-    <script src="Scripts/Script.js?v=15"></script>
-    <script src="Scripts/Repository.js?v=15"></script>
+    <script src="Scripts/Script.js?v=20"></script>
+    <script src="Scripts/Repository.js?v=20"></script>
     <script>
 (function () {
 

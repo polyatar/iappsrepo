@@ -311,10 +311,10 @@ function getAppCategories(appName) {
     return found;
 }
 
-// иконки для плиток «iOS / Размер / Версия» (в стиле сайта: линия 1.8, скруглённые концы)
+// иконки для плиток «iOS / Размер / Версия»: тонкая линия, небесно-голубой цвет
 const META_ICONS = {
-    ios: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 5.6h3M10.5 18.4h3"/></svg>',
-    size: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 3.5 7v10l8.5 4.5 8.5-4.5V7L12 2.5z"/><path d="M3.5 7 12 11.5 20.5 7M12 11.5v10"/></svg>',
+    ios: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="2.5" width="11" height="19" rx="3"/><path d="M10.2 5.7h3.6"/><path d="M10.5 18.3h3"/></svg>',
+    size: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 8.2 5.1 4.6A1.5 1.5 0 0 1 6.5 3.7h11a1.5 1.5 0 0 1 1.4.9l1.6 3.6"/><rect x="3.5" y="8.2" width="17" height="12.3" rx="2"/><path d="M9.8 12.6h4.4"/></svg>',
     version: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12.1V5A1.5 1.5 0 0 1 5 3.5h7.1a1.5 1.5 0 0 1 1.06.44l7.4 7.4a1.5 1.5 0 0 1 0 2.12l-7.2 7.2a1.5 1.5 0 0 1-2.12 0l-7.4-7.4A1.5 1.5 0 0 1 3.5 12.1z"/><circle cx="8" cy="8" r="1.3"/></svg>'
 };
 
