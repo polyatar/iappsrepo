@@ -8,7 +8,7 @@
     <title data-i18n="page.title">iApps - Сертификат разработчика Apple и приложения для iPhone</title>
     <link rel="icon" type="image/png" href="Images/Profile.PNG">
     <link rel="apple-touch-icon" href="Images/Profile.PNG">
-    <link rel="stylesheet" href="Styles/Style.css?v=24">
+    <link rel="stylesheet" href="Styles/Style.css?v=25">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -253,10 +253,12 @@
         #app-list .app-item::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 22% -12%, rgba(255, 255, 255, 0.12), transparent 58%); pointer-events: none; }
         [data-theme="light"] #app-list .app-item::before { background: radial-gradient(ellipse at 22% -12%, rgba(139, 92, 246, 0.1), transparent 58%); }
         #app-list .app-item > * { position: relative; }
-        #app-list .app-item:hover { transform: translateY(-5px); border-color: rgba(139, 92, 246, 0.55);
-            background: linear-gradient(160deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.07) 100%);
-            box-shadow: 0 22px 56px rgba(0, 0, 0, 0.4), 0 10px 40px var(--accent-glow), var(--glass-hi); }
-        [data-theme="light"] #app-list .app-item:hover { background: rgba(255, 255, 255, 0.96); box-shadow: 0 20px 50px rgba(15, 23, 42, 0.14), 0 10px 36px var(--accent-glow); }
+        @media (hover: hover) {
+            #app-list .app-item:hover { transform: translateY(-5px); border-color: rgba(139, 92, 246, 0.55);
+                background: linear-gradient(160deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.07) 100%);
+                box-shadow: 0 22px 56px rgba(0, 0, 0, 0.4), 0 10px 40px var(--accent-glow), var(--glass-hi); }
+            [data-theme="light"] #app-list .app-item:hover { background: rgba(255, 255, 255, 0.96); box-shadow: 0 20px 50px rgba(15, 23, 42, 0.14), 0 10px 36px var(--accent-glow); }
+        }
         #app-list .app-header { align-items: flex-start; gap: 0.875rem; margin-bottom: 0; }
         #app-list .app-header img { width: 64px; height: 64px; border-radius: 17px; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.14); }
         #app-list .app-header__info h3 { font-size: 1.0625rem; font-weight: 800; margin-bottom: 0; }
@@ -277,7 +279,7 @@
         .search-bar .settings-btn { background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-hi); }
         .search-bar .settings-btn:hover { background: var(--gradient-1); border-color: transparent; color: #fff; box-shadow: 0 10px 28px var(--accent-glow); }
         .category-bar .cat-chip { background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-hi); }
-        .category-bar .cat-chip:hover { border-color: rgba(139, 92, 246, 0.55); color: var(--text-primary); transform: translateY(-1px); }
+        @media (hover: hover) { .category-bar .cat-chip:hover { border-color: rgba(139, 92, 246, 0.55); color: var(--text-primary); } }
         .category-bar .cat-chip.is-active { background: var(--gradient-1); border-color: rgba(255, 255, 255, 0.3); color: #fff; box-shadow: 0 8px 24px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.3); }
         .category-bar .cat-arrow { background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-hi); }
         .category-bar .cat-arrow:hover { background: var(--gradient-1); border-color: transparent; }
@@ -311,6 +313,7 @@
         .modal .modal__content--app .modal__close { pointer-events: auto; background: rgba(255, 255, 255, 0.18); border: 1px solid rgba(255, 255, 255, 0.36); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
         .modal .modal__content--app .modal__close:hover { background: rgba(255, 255, 255, 0.3); border-color: rgba(255, 255, 255, 0.6); }
         .modal .modal__content--app .modal__close svg { fill: #fff; }
+        .modal .modal__content.modal__content--app { overscroll-behavior: none; touch-action: pan-y; }
         .modal .modal__content--app .modal__body { padding: 2.5rem 1.5rem 1.5rem; }
 
         .modal__content--app .app-detail { position: relative; align-items: center; text-align: center; gap: 1.1rem; color: #fff; }
@@ -326,12 +329,12 @@
 
         /* плашки iOS / размер / версия: полупрозрачные, значок белым */
         .modal__content--app .app-detail .app-detail__meta { width: 100%; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
-        .modal__content--app .app-detail .app-detail__meta-item { flex-direction: row; justify-content: center; gap: 0.6rem; padding: 0.75rem 0.8rem; background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.28); border-radius: 9999px; text-align: left; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .modal__content--app .app-detail .app-detail__meta-item { flex-direction: row; justify-content: flex-start; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.28); border-radius: 16px; text-align: left; min-width: 0; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
         .modal__content--app .app-detail .app-detail__meta-item:hover { background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.45); transform: translateY(-2px); }
-        .modal__content--app .app-detail .app-detail__meta-icon { display: grid; place-items: center; width: 24px; height: 24px; flex-shrink: 0; background: none; border: 0; box-shadow: none; border-radius: 0; filter: none; }
-        .modal__content--app .app-detail .app-detail__meta-icon svg { width: 22px; height: 22px; color: #fff; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        .modal__content--app .app-detail .app-detail__meta-icon { display: grid; place-items: center; width: 20px; height: 20px; flex-shrink: 0; background: none; border: 0; box-shadow: none; border-radius: 0; filter: none; }
+        .modal__content--app .app-detail .app-detail__meta-icon svg { width: 20px; height: 20px; color: #fff; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
         .modal__content--app .app-detail .app-detail__meta-text { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
-        .modal__content--app .app-detail .app-detail__meta-value { color: #fff; font-size: 0.9375rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .modal__content--app .app-detail .app-detail__meta-value { color: #fff; font-size: 0.875rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .modal__content--app .app-detail .app-detail__meta-label { color: rgba(255, 255, 255, 0.72); font-size: 0.5625rem; }
 
         /* белая кнопка с цветным текстом */
@@ -352,9 +355,10 @@
             .modal__content--app .app-detail .app-detail__icon { width: 108px; height: 108px; border-radius: 26px; }
             .modal__content--app .app-detail .app-detail__name { font-size: 1.35rem; }
             .modal__content--app .app-detail .app-detail__meta { gap: 0.4rem; }
-            .modal__content--app .app-detail .app-detail__meta-item { flex-direction: column; gap: 0.25rem; padding: 0.7rem 0.3rem; border-radius: 20px; text-align: center; }
-            .modal__content--app .app-detail .app-detail__meta-text { align-items: center; }
-            .modal__content--app .app-detail .app-detail__meta-value { font-size: 0.8125rem; }
+            .modal__content--app .app-detail .app-detail__meta-item { gap: 0.4rem; padding: 0.45rem 0.55rem; border-radius: 14px; }
+            .modal__content--app .app-detail .app-detail__meta-icon, .modal__content--app .app-detail .app-detail__meta-icon svg { width: 18px; height: 18px; }
+            .modal__content--app .app-detail .app-detail__meta-value { font-size: 0.78rem; }
+            .modal__content--app .app-detail .app-detail__meta-label { font-size: 0.5rem; }
         }
     </style>
 </head>
@@ -1269,8 +1273,8 @@
     if (btn) btn.addEventListener('click', () => window.i18n.toggle());
 })();
 </script>
-    <script src="Scripts/Script.js?v=24"></script>
-    <script src="Scripts/Repository.js?v=24"></script>
+    <script src="Scripts/Script.js?v=25"></script>
+    <script src="Scripts/Repository.js?v=25"></script>
     <script>
 (function () {
 
@@ -1500,8 +1504,11 @@
             c.classList.toggle('is-active', on);
             c.setAttribute('aria-pressed', on ? 'true' : 'false');
             if (on && center) {
-                const left = c.offsetLeft - (scroller.clientWidth - c.offsetWidth) / 2;
-                scroller.scrollTo({ left: Math.max(0, left), behavior: 'smooth' });
+                const sr = scroller.getBoundingClientRect(), cr = c.getBoundingClientRect(), edge = 40;
+                if (cr.left < sr.left + edge || cr.right > sr.right - edge) {   // чип виден не целиком: подвинуть строку
+                    const left = c.offsetLeft - (scroller.clientWidth - c.offsetWidth) / 2;
+                    scroller.scrollTo({ left: Math.max(0, left), behavior: 'smooth' });
+                }
             }
         });
     }
@@ -1533,7 +1540,7 @@
     window.addEventListener('load', updateEdges);
 
     // перетаскивание мышью
-    let down = false, moved = false, startX = 0, startLeft = 0;
+    let down = false, moved = false, startX = 0, startLeft = 0, suppressClick = false;
     scroller.addEventListener('pointerdown', (e) => {
         if (e.pointerType !== 'mouse' || e.button !== 0) return;
         down = true; moved = false; startX = e.clientX; startLeft = scroller.scrollLeft;
@@ -1541,14 +1548,19 @@
     window.addEventListener('pointermove', (e) => {
         if (!down) return;
         const dx = e.clientX - startX;
-        if (!moved && Math.abs(dx) > 5) { moved = true; scroller.classList.add('is-dragging'); }
+        if (!moved && Math.abs(dx) > 9) { moved = true; scroller.classList.add('is-dragging'); }   // лёгкое дрожание руки не считается перетаскиванием
         if (moved) scroller.scrollLeft = startLeft - dx;
     });
     window.addEventListener('pointerup', () => {
         if (!down) return;
         down = false;
-        if (moved) setTimeout(() => scroller.classList.remove('is-dragging'), 0);
+        if (moved) {
+            suppressClick = true;
+            setTimeout(() => { suppressClick = false; scroller.classList.remove('is-dragging'); }, 0);
+        }
     });
+    // после настоящего перетаскивания клик по чипу не выбирает категорию; обычный клик всегда срабатывает с первого раза
+    scroller.addEventListener('click', (e) => { if (suppressClick) { e.preventDefault(); e.stopPropagation(); } }, true);
 
     updateEdges();
 })();

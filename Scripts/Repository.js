@@ -380,6 +380,21 @@ function applyAppColor(rgb) {
     box.style.setProperty('--app-dark', 'rgb(' + m(0.55) + ')');
 }
 
+// карточку приложения нельзя «оттянуть» за верхний и нижний край (иначе открывается пустота): остаётся только прокрутка описания
+(function lockModalOverscroll() {
+    const box = appModal.querySelector('.modal__content--app');
+    if (!box) return;
+    let lastY = 0;
+    box.addEventListener('touchstart', (e) => { lastY = e.touches[0].clientY; }, { passive: true });
+    box.addEventListener('touchmove', (e) => {
+        const y = e.touches[0].clientY, step = y - lastY;
+        lastY = y;
+        const atTop = box.scrollTop <= 0, atBottom = box.scrollTop + box.clientHeight >= box.scrollHeight - 1;
+        const noScroll = box.scrollHeight <= box.clientHeight + 1;
+        if ((noScroll || (atTop && step > 0) || (atBottom && step < 0)) && e.cancelable) e.preventDefault();
+    }, { passive: false });
+})();
+
 function renderAppModal(app) {
     const cleanedAppName = app.appName.split('\n')[0];
     const versionInfo = parseAppVersion(app.appVersion);
