@@ -198,7 +198,6 @@ function displayApps() {
                     <h3>${cleanedAppName}</h3>
                     <div class="app-pills">${pills}</div>
                 </div>
-                <span class="app-item__go" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"/></svg></span>
             </div>
             <hr>
             <p class="app-description">${formattedDescription}</p>
