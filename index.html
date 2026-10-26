@@ -8,7 +8,7 @@
     <title data-i18n="page.title">iApps - Сертификат разработчика Apple и приложения для iPhone</title>
     <link rel="icon" type="image/png" href="Images/Profile.PNG">
     <link rel="apple-touch-icon" href="Images/Profile.PNG">
-    <link rel="stylesheet" href="Styles/Style.css?v=21">
+    <link rel="stylesheet" href="Styles/Style.css?v=22">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -243,15 +243,71 @@
         @media (prefers-reduced-motion: reduce) { .hero__logo { animation: none; } }
     </style>
     <style id="app-detail-styles">
-        /* тёмная плитка с рамкой в тон сайта и мягкий белый значок, как в боковом меню */
-        .app-detail__meta-icon { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 14px; font-size: 0; filter: none; background: linear-gradient(145deg, #1d1d2a, #12121b); border: 1px solid rgba(139, 92, 246, 0.32); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06); transition: border-color var(--transition), box-shadow var(--transition); }
-        .app-detail__meta-icon svg { width: 24px; height: 24px; color: #d9dce8; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-        .app-detail__meta-item:hover .app-detail__meta-icon { border-color: rgba(139, 92, 246, 0.6); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 6px 18px var(--accent-glow); }
-        [data-theme="light"] .app-detail__meta-icon { border-color: rgba(15, 23, 42, 0.22); box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18); }
-        [data-theme="light"] .app-detail__meta-item:hover .app-detail__meta-icon { border-color: rgba(15, 23, 42, 0.4); box-shadow: 0 6px 16px rgba(15, 23, 42, 0.26); }
+        /* ===== окно приложения: цветная карточка в стиле постеров (цвет берётся из иконки) ===== */
+        @property --app-top { syntax: '<color>'; inherits: true; initial-value: #4f46e5; }
+        @property --app-bot { syntax: '<color>'; inherits: true; initial-value: #1e1b4b; }
+        @property --app-dark { syntax: '<color>'; inherits: true; initial-value: #312e81; }
+        .modal .modal__content.modal__content--app {
+            --app-rgb: 99, 102, 241;
+            background: linear-gradient(165deg, var(--app-top) 0%, var(--app-bot) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 40px 110px rgba(var(--app-rgb), 0.5), 0 0 0 1px rgba(0, 0, 0, 0.2);
+            color: #fff;
+            transition: --app-top 0.4s ease, --app-bot 0.4s ease, --app-dark 0.4s ease, transform var(--transition);
+        }
+        /* мягкий блик сверху вместо фиолетового пятна */
+        .modal .modal__content--app::before { top: 0; right: 0; left: 0; width: auto; height: 440px; background: radial-gradient(ellipse at 30% 0%, rgba(255, 255, 255, 0.34), transparent 62%); }
+        /* заголовок со словом «Приложение» не нужен: остаётся только кнопка закрытия */
+        .modal .modal__content--app .modal__header { position: absolute; top: 0; left: 0; right: 0; justify-content: flex-end; padding: 1rem; border: 0; background: transparent; pointer-events: none; z-index: 5; }
+        .modal .modal__content--app .modal__title { display: none; }
+        .modal .modal__content--app .modal__close { pointer-events: auto; background: rgba(255, 255, 255, 0.18); border: 1px solid rgba(255, 255, 255, 0.36); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .modal .modal__content--app .modal__close:hover { background: rgba(255, 255, 255, 0.3); border-color: rgba(255, 255, 255, 0.6); }
+        .modal .modal__content--app .modal__close svg { fill: #fff; }
+        .modal .modal__content--app .modal__body { padding: 2.5rem 1.5rem 1.5rem; }
+
+        .modal__content--app .app-detail { position: relative; align-items: center; text-align: center; gap: 1.1rem; color: #fff; }
+        .modal__content--app .app-detail__tag { position: absolute; top: -1.5rem; left: 0; padding: 0.4rem 0.9rem; border-radius: 9999px; background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.45); color: #fff; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.08em; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 2; }
+
+        /* иконка с сиянием и название по центру */
+        .modal__content--app .app-detail .app-detail__header { flex-direction: column; align-items: center; gap: 1rem; padding: 0; width: 100%; }
+        .modal__content--app .app-detail .app-detail__header::before { top: -34px; left: 50%; transform: translateX(-50%); width: 320px; height: 320px; background: radial-gradient(circle, rgba(255, 255, 255, 0.42) 0%, transparent 68%); opacity: 1; }
+        .modal__content--app .app-detail .app-detail__icon { width: 132px; height: 132px; border-radius: 30px; box-shadow: 0 26px 60px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(255, 255, 255, 0.22); }
+        .modal__content--app .app-detail .app-detail__info { align-items: center; gap: 0.75rem; flex: none; width: 100%; }
+        .modal__content--app .app-detail .app-detail__name { color: #fff; font-size: 1.7rem; text-shadow: 0 2px 22px rgba(0, 0, 0, 0.28); }
+        .modal__content--app .app-detail .app-detail__categories { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem; }
+        .modal__content--app .app-detail .app-detail__category { background: rgba(255, 255, 255, 0.16); border: 1px solid rgba(255, 255, 255, 0.34); color: #fff; box-shadow: none; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+
+        /* плашки iOS / размер / версия: полупрозрачные, значок белым */
+        .modal__content--app .app-detail .app-detail__meta { width: 100%; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+        .modal__content--app .app-detail .app-detail__meta-item { flex-direction: row; justify-content: center; gap: 0.6rem; padding: 0.75rem 0.8rem; background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.28); border-radius: 9999px; text-align: left; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .modal__content--app .app-detail .app-detail__meta-item:hover { background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.45); transform: translateY(-2px); }
+        .modal__content--app .app-detail .app-detail__meta-icon { display: grid; place-items: center; width: 24px; height: 24px; flex-shrink: 0; background: none; border: 0; box-shadow: none; border-radius: 0; filter: none; }
+        .modal__content--app .app-detail .app-detail__meta-icon svg { width: 22px; height: 22px; color: #fff; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        .modal__content--app .app-detail .app-detail__meta-text { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
+        .modal__content--app .app-detail .app-detail__meta-value { color: #fff; font-size: 0.9375rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .modal__content--app .app-detail .app-detail__meta-label { color: rgba(255, 255, 255, 0.72); font-size: 0.5625rem; }
+
+        /* белая кнопка с цветным текстом */
+        .modal .modal__content--app .app-detail__access { background: rgba(255, 255, 255, 0.96) !important; background-image: none !important; color: var(--app-dark) !important; border: 0 !important; box-shadow: 0 16px 38px rgba(0, 0, 0, 0.3) !important; font-weight: 800; }
+        .modal .modal__content--app .app-detail__access svg { fill: currentColor; }
+        .modal .modal__content--app .app-detail__access:hover { background: #fff !important; transform: translateY(-2px); }
+
+        /* описание и дата в стеклянных панелях */
+        .modal__content--app .app-detail .app-detail__section { width: 100%; text-align: left; background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.26); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+        .modal__content--app .app-detail .app-detail__section-title { color: rgba(255, 255, 255, 0.78); }
+        .modal__content--app .app-detail .app-detail__section-title::before { background: rgba(255, 255, 255, 0.85); }
+        .modal__content--app .app-detail .app-detail__description { color: rgba(255, 255, 255, 0.92); }
+        .modal__content--app .app-detail .app-detail__updated { background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.28); color: #fff; }
+        .modal__content--app .app-detail .app-detail__updated svg { fill: #fff; }
+
         @media (max-width: 480px) {
-            .app-detail__meta-icon { width: 38px; height: 38px; border-radius: 12px; }
-            .app-detail__meta-icon svg { width: 20px; height: 20px; }
+            .modal .modal__content--app .modal__body { padding: 2.25rem 1rem 1.25rem; }
+            .modal__content--app .app-detail .app-detail__icon { width: 108px; height: 108px; border-radius: 26px; }
+            .modal__content--app .app-detail .app-detail__name { font-size: 1.35rem; }
+            .modal__content--app .app-detail .app-detail__meta { gap: 0.4rem; }
+            .modal__content--app .app-detail .app-detail__meta-item { flex-direction: column; gap: 0.25rem; padding: 0.7rem 0.3rem; border-radius: 20px; text-align: center; }
+            .modal__content--app .app-detail .app-detail__meta-text { align-items: center; }
+            .modal__content--app .app-detail .app-detail__meta-value { font-size: 0.8125rem; }
         }
     </style>
 </head>
@@ -1166,8 +1222,8 @@
     if (btn) btn.addEventListener('click', () => window.i18n.toggle());
 })();
 </script>
-    <script src="Scripts/Script.js?v=21"></script>
-    <script src="Scripts/Repository.js?v=21"></script>
+    <script src="Scripts/Script.js?v=22"></script>
+    <script src="Scripts/Repository.js?v=22"></script>
     <script>
 (function () {
 

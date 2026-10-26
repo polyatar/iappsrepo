@@ -318,14 +318,77 @@ const META_ICONS = {
     version: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12.1V5A1.5 1.5 0 0 1 5 3.5h7.1a1.5 1.5 0 0 1 1.06.44l7.4 7.4a1.5 1.5 0 0 1 0 2.12l-7.2 7.2a1.5 1.5 0 0 1-2.12 0l-7.4-7.4A1.5 1.5 0 0 1 3.5 12.1z"/><circle cx="8" cy="8" r="1.3"/></svg>'
 };
 
+// ---- цвет окна приложения: берём из иконки; если браузер не даёт прочитать картинку, цвет получается из названия ----
+const appColorCache = new Map();
+const mixRgb = (a, b, k) => [Math.round(a[0] + (b[0] - a[0]) * k), Math.round(a[1] + (b[1] - a[1]) * k), Math.round(a[2] + (b[2] - a[2]) * k)];
+
+function hashColor(name) {
+    let hsh = 0;
+    for (let i = 0; i < name.length; i += 1) hsh = (hsh * 31 + name.charCodeAt(i)) >>> 0;
+    const h = (hsh % 360) / 360, s = 0.62, l = 0.5;
+    const f = (n) => { const k = (n + h * 12) % 12, a = s * Math.min(l, 1 - l); return l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)); };
+    return [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
+}
+
+function extractIconColor(url) {
+    return new Promise((resolve) => {
+        if (!url) { resolve(null); return; }
+        const img = new Image();
+        const timer = setTimeout(() => resolve(null), 4000);
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+            clearTimeout(timer);
+            try {
+                const S = 40, c = document.createElement('canvas');
+                c.width = c.height = S;
+                const g = c.getContext('2d', { willReadFrequently: true });
+                g.drawImage(img, 0, 0, S, S);
+                const d = g.getImageData(0, 0, S, S).data;
+                let r = 0, gr = 0, b = 0, wsum = 0;
+                for (let i = 0; i < d.length; i += 4) {
+                    if (d[i + 3] < 128) continue;
+                    const mx = Math.max(d[i], d[i + 1], d[i + 2]), mn = Math.min(d[i], d[i + 1], d[i + 2]);
+                    const lum = (mx + mn) / 510, sat = mx ? (mx - mn) / mx : 0;
+                    if (lum > 0.93 || lum < 0.06) continue;             // белый и чёрный фон иконки не считаем
+                    const w = 0.15 + sat * sat * 2;
+                    r += d[i] * w; gr += d[i + 1] * w; b += d[i + 2] * w; wsum += w;
+                }
+                if (wsum < 1) { resolve(null); return; }
+                let col = [Math.round(r / wsum), Math.round(gr / wsum), Math.round(b / wsum)];
+                const mx = Math.max(...col), mn = Math.min(...col);
+                if (mx && (mx - mn) / mx < 0.18) col = mixRgb(col, [99, 102, 241], 0.5);   // серые иконки чуть подкрашиваем цветом сайта
+                resolve(col);
+            } catch (e) { resolve(null); }                              // браузер запретил чтение картинки (CORS)
+        };
+        img.onerror = () => { clearTimeout(timer); resolve(null); };
+        img.src = url;
+    });
+}
+
+function applyAppColor(rgb) {
+    const box = appModal.querySelector('.modal__content--app');
+    if (!box) return;
+    const m = (k) => mixRgb(rgb, [0, 0, 0], k).join(',');
+    box.style.setProperty('--app-rgb', rgb.join(','));
+    box.style.setProperty('--app-top', 'rgb(' + m(0.28) + ')');
+    box.style.setProperty('--app-bot', 'rgb(' + m(0.72) + ')');
+    box.style.setProperty('--app-dark', 'rgb(' + m(0.55) + ')');
+}
+
 function renderAppModal(app) {
     const cleanedAppName = app.appName.split('\n')[0];
     const versionInfo = parseAppVersion(app.appVersion);
     const categories = getAppCategories(app.appName);
     
+    // метка UPD для недавно обновлённых приложений (за последние две недели)
+    const ageDays = (Date.now() - new Date(app.appUpdateTime).getTime()) / 86400000;
+    const fresh = isFinite(ageDays) && ageDays >= 0 && ageDays <= 14;
+    const initial = hashColor(cleanedAppName);
+
     appModalTitle.textContent = cleanedAppName;
     appModalBody.innerHTML = `
         <div class="app-detail">
+            ${fresh ? '<span class="app-detail__tag">UPD</span>' : ''}
             <div class="app-detail__header">
                 <img class="app-detail__icon" src="${app.appImage}" alt="${cleanedAppName}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%236366f1%22 width=%22100%22 height=%22100%22 rx=%2220%22/><text x=%2250%22 y=%2255%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22white%22>📱</text></svg>'">
                 <div class="app-detail__info">
@@ -336,18 +399,15 @@ function renderAppModal(app) {
             <div class="app-detail__meta">
                 <div class="app-detail__meta-item">
                     <span class="app-detail__meta-icon">${META_ICONS.ios}</span>
-                    <span class="app-detail__meta-value">${versionInfo.ios}</span>
-                    <span class="app-detail__meta-label">iOS</span>
+                    <span class="app-detail__meta-text"><span class="app-detail__meta-value">${versionInfo.ios}</span><span class="app-detail__meta-label">iOS</span></span>
                 </div>
                 <div class="app-detail__meta-item">
                     <span class="app-detail__meta-icon">${META_ICONS.size}</span>
-                    <span class="app-detail__meta-value">${versionInfo.size}</span>
-                    <span class="app-detail__meta-label">${T('app.size', 'Размер')}</span>
+                    <span class="app-detail__meta-text"><span class="app-detail__meta-value">${versionInfo.size}</span><span class="app-detail__meta-label">${T('app.size', 'Размер')}</span></span>
                 </div>
                 <div class="app-detail__meta-item">
                     <span class="app-detail__meta-icon">${META_ICONS.version}</span>
-                    <span class="app-detail__meta-value">${versionInfo.version}</span>
-                    <span class="app-detail__meta-label">${T('app.version', 'Версия')}</span>
+                    <span class="app-detail__meta-text"><span class="app-detail__meta-value">${versionInfo.version}</span><span class="app-detail__meta-label">${T('app.version', 'Версия')}</span></span>
                 </div>
             </div>
             <button type="button" class="btn btn--primary btn--full app-detail__access" id="appGetAccess">
@@ -364,7 +424,19 @@ function renderAppModal(app) {
             </div>
         </div>
     `;
-    
+
+    // цвет окна: сразу из кэша (или по названию), затем уточняем по иконке
+    const cacheKey = app.appImage || cleanedAppName;
+    const cached = appColorCache.get(cacheKey);
+    applyAppColor(cached || initial);
+    if (!cached) {
+        extractIconColor(app.appImage).then((col) => {
+            const color = col || initial;
+            appColorCache.set(cacheKey, color);
+            if (currentApp === app && appModal.classList.contains('active')) applyAppColor(color);
+        });
+    }
+
     const accessBtn = document.getElementById('appGetAccess');
     if (accessBtn) {
         accessBtn.addEventListener('click', () => {
