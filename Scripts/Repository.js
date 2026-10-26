@@ -395,6 +395,17 @@ function applyAppColor(rgb) {
     }, { passive: false });
 })();
 
+// значения в плашках iOS / размер / версия не должны обрезаться: если не помещаются, включаем более плотные ступени
+function fitMetaPills() {
+    const meta = appModalBody.querySelector('.app-detail__meta');
+    if (!meta) return;
+    meta.classList.remove('is-tight', 'is-tighter');
+    const cut = () => [...meta.querySelectorAll('.app-detail__meta-value')].some(v => v.scrollWidth > v.clientWidth + 0.5);
+    if (cut()) { meta.classList.add('is-tight'); if (cut()) meta.classList.add('is-tighter'); }
+}
+window.addEventListener('resize', fitMetaPills);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitMetaPills);
+
 function renderAppModal(app) {
     const cleanedAppName = app.appName.split('\n')[0];
     const versionInfo = parseAppVersion(app.appVersion);
@@ -440,6 +451,8 @@ function renderAppModal(app) {
             </div>
         </div>
     `;
+
+    fitMetaPills();
 
     // цвет окна: сразу из кэша (или по названию), затем уточняем по иконке
     const cacheKey = app.appImage || cleanedAppName;

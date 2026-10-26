@@ -8,7 +8,7 @@
     <title data-i18n="page.title">iApps - Сертификат разработчика Apple и приложения для iPhone</title>
     <link rel="icon" type="image/png" href="Images/Profile.PNG">
     <link rel="apple-touch-icon" href="Images/Profile.PNG">
-    <link rel="stylesheet" href="Styles/Style.css?v=25">
+    <link rel="stylesheet" href="Styles/Style.css?v=26">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -328,7 +328,8 @@
         .modal__content--app .app-detail .app-detail__category { background: rgba(255, 255, 255, 0.16); border: 1px solid rgba(255, 255, 255, 0.34); color: #fff; box-shadow: none; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 
         /* плашки iOS / размер / версия: полупрозрачные, значок белым */
-        .modal__content--app .app-detail .app-detail__meta { width: 100%; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+        .modal__content--app .app-detail .app-detail__meta { display: flex; flex-wrap: nowrap; width: 100%; gap: 0.6rem; }
+        .modal__content--app .app-detail .app-detail__meta-item { flex: 1 1 0; }
         .modal__content--app .app-detail .app-detail__meta-item { flex-direction: row; justify-content: flex-start; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.28); border-radius: 16px; text-align: left; min-width: 0; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
         .modal__content--app .app-detail .app-detail__meta-item:hover { background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.45); transform: translateY(-2px); }
         .modal__content--app .app-detail .app-detail__meta-icon { display: grid; place-items: center; width: 20px; height: 20px; flex-shrink: 0; background: none; border: 0; box-shadow: none; border-radius: 0; filter: none; }
@@ -355,11 +356,17 @@
             .modal__content--app .app-detail .app-detail__icon { width: 108px; height: 108px; border-radius: 26px; }
             .modal__content--app .app-detail .app-detail__name { font-size: 1.35rem; }
             .modal__content--app .app-detail .app-detail__meta { gap: 0.4rem; }
+            .modal__content--app .app-detail .app-detail__meta-item { flex: 1 1 auto; }   /* на телефоне ширина плашки зависит от длины значения, чтобы размер не обрезался */
             .modal__content--app .app-detail .app-detail__meta-item { gap: 0.4rem; padding: 0.45rem 0.55rem; border-radius: 14px; }
             .modal__content--app .app-detail .app-detail__meta-icon, .modal__content--app .app-detail .app-detail__meta-icon svg { width: 18px; height: 18px; }
             .modal__content--app .app-detail .app-detail__meta-value { font-size: 0.78rem; }
             .modal__content--app .app-detail .app-detail__meta-label { font-size: 0.5rem; }
         }
+        /* если значения всё равно не помещаются, скрипт включает эти ступени: сначала плотнее, затем без значков */
+        .modal__content--app .app-detail .app-detail__meta.is-tight .app-detail__meta-item { gap: 0.3rem; padding: 0.45rem 0.45rem; }
+        .modal__content--app .app-detail .app-detail__meta.is-tight .app-detail__meta-icon, .modal__content--app .app-detail .app-detail__meta.is-tight .app-detail__meta-icon svg { width: 16px; height: 16px; }
+        .modal__content--app .app-detail .app-detail__meta.is-tight .app-detail__meta-value { font-size: 0.72rem; }
+        .modal__content--app .app-detail .app-detail__meta.is-tighter .app-detail__meta-icon { display: none; }
     </style>
 </head>
 <body>
@@ -1273,8 +1280,8 @@
     if (btn) btn.addEventListener('click', () => window.i18n.toggle());
 })();
 </script>
-    <script src="Scripts/Script.js?v=25"></script>
-    <script src="Scripts/Repository.js?v=25"></script>
+    <script src="Scripts/Script.js?v=26"></script>
+    <script src="Scripts/Repository.js?v=26"></script>
     <script>
 (function () {
 
