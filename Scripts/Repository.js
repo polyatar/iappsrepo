@@ -195,7 +195,7 @@ function displayApps() {
         appItem.style.cursor = 'pointer';
         appItem.innerHTML = `
             <div class="app-header">
-                <img src="${app.appImage}" alt="${cleanedAppName}" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%236366f1%22 width=%22100%22 height=%22100%22 rx=%2220%22/><text x=%2250%22 y=%2255%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22white%22>📱</text></svg>'">
+                <img src="${app.appImage}" data-orig="${app.appImage}" alt="${cleanedAppName}" loading="lazy" onerror="iconFallback(this)">
                 <div class="app-header__info">
                     <h3>${cleanedAppName}</h3>
                     <div class="app-pills">${pills}</div>
@@ -325,6 +325,23 @@ const META_ICONS = {
     version: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12.1V5A1.5 1.5 0 0 1 5 3.5h7.1a1.5 1.5 0 0 1 1.06.44l7.4 7.4a1.5 1.5 0 0 1 0 2.12l-7.2 7.2a1.5 1.5 0 0 1-2.12 0l-7.4-7.4A1.5 1.5 0 0 1 3.5 12.1z"/><circle cx="8" cy="8" r="1.3"/></svg>'
 };
 
+// ---- иконки на GitHub: файлы из релизов отдаются как application/octet-stream, и браузер часто не показывает их как картинки.
+// Если иконка не загрузилась, пробуем тот же адрес через прокси-сервис изображений, и только потом ставим заглушку.
+const ICON_PLACEHOLDER = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%236366f1' width='100' height='100' rx='20'/><text x='50' y='55' font-size='40' text-anchor='middle' fill='white'>📱</text></svg>";
+function iconProxies(url) {
+    const enc = encodeURIComponent(url);
+    return ['https://wsrv.nl/?url=' + enc + '&w=256&h=256&fit=cover&output=png', 'https://images.weserv.nl/?url=' + enc + '&w=256&h=256&fit=cover&output=png'];
+}
+function iconFallback(img) {
+    const orig = img.dataset.orig || '';
+    const stage = Number(img.dataset.stage || 0);
+    const list = /^https?:/i.test(orig) ? iconProxies(orig) : [];
+    if (stage < list.length) { img.dataset.stage = String(stage + 1); img.src = list[stage]; return; }
+    img.onerror = null;
+    img.src = ICON_PLACEHOLDER;
+}
+window.iconFallback = iconFallback;
+
 // ---- цвет окна приложения: берём из иконки; если браузер не даёт прочитать картинку, цвет получается из названия ----
 const appColorCache = new Map();
 const mixRgb = (a, b, k) => [Math.round(a[0] + (b[0] - a[0]) * k), Math.round(a[1] + (b[1] - a[1]) * k), Math.round(a[2] + (b[2] - a[2]) * k)];
@@ -419,7 +436,7 @@ function renderAppModal(app) {
     appModalBody.innerHTML = `
         <div class="app-detail">
             <div class="app-detail__header">
-                <img class="app-detail__icon" src="${app.appImage}" alt="${cleanedAppName}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%236366f1%22 width=%22100%22 height=%22100%22 rx=%2220%22/><text x=%2250%22 y=%2255%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22white%22>📱</text></svg>'">
+                <img class="app-detail__icon" src="${app.appImage}" data-orig="${app.appImage}" alt="${cleanedAppName}" onerror="iconFallback(this)">
                 <div class="app-detail__info">
                     <h2 class="app-detail__name">${cleanedAppName}</h2>
                     <div class="app-detail__categories">${categories.map(c => `<span class="app-detail__category">${c.emoji} ${c.name}</span>`).join('')}</div>
@@ -461,7 +478,7 @@ function renderAppModal(app) {
     const cached = appColorCache.get(cacheKey);
     applyAppColor(cached || initial);
     if (!cached) {
-        extractIconColor(app.appImage).then((col) => {
+        extractIconColor(app.appImage).then((col) => col || (/^https?:/i.test(app.appImage || '') ? extractIconColor(iconProxies(app.appImage)[0]) : null)).then((col) => {
             const color = col || initial;
             appColorCache.set(cacheKey, color);
             if (currentApp === app && appModal.classList.contains('active')) applyAppColor(color);

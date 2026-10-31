@@ -8,7 +8,7 @@
     <title data-i18n="page.title">iApps - Сертификат разработчика Apple и приложения для iPhone</title>
     <link rel="icon" type="image/png" href="Images/Profile.PNG">
     <link rel="apple-touch-icon" href="Images/Profile.PNG">
-    <link rel="stylesheet" href="Styles/Style.css?v=28">
+    <link rel="stylesheet" href="Styles/Style.css?v=30">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -83,14 +83,14 @@
         .category-bar { position: relative; max-width: 600px; margin: 0 auto 2.5rem; }
         .category-bar__scroll { --sl: 0px; --fl: 0px; --sr: 0px; --fr: 0px; display: flex; gap: 0.5rem; position: relative; padding: 14px 12px; margin: -14px -12px; scroll-padding: 0 12px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; scrollbar-width: none; cursor: grab; -webkit-mask-image: linear-gradient(90deg, transparent 0, transparent var(--sl), #000 var(--fl), #000 calc(100% - var(--fr)), transparent calc(100% - var(--sr)), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, transparent var(--sl), #000 var(--fl), #000 calc(100% - var(--fr)), transparent calc(100% - var(--sr)), transparent 100%); }
         .category-bar__scroll::-webkit-scrollbar { display: none; }
-        .category-bar__scroll.fade-l { --sl: 34px; --fl: 66px; }
-        .category-bar__scroll.fade-r { --sr: 34px; --fr: 66px; }
+        .category-bar__scroll.fade-l { --sl: 58px; --fl: 108px; }
+        .category-bar__scroll.fade-r { --sr: 58px; --fr: 108px; }
         @media (hover: none) { .category-bar__scroll.fade-l { --sl: 0px; --fl: 28px; } .category-bar__scroll.fade-r { --sr: 0px; --fr: 28px; } }   /* на телефоне стрелок нет: обычное лёгкое затухание */
         .category-bar__scroll.is-dragging { cursor: grabbing; scroll-snap-type: none; }
         .category-bar__scroll.is-dragging .cat-chip { pointer-events: none; }
         .cat-chip { touch-action: manipulation; flex: 0 0 auto; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 9999px; color: var(--text-secondary); font-size: 0.875rem; font-weight: 600; white-space: nowrap; scroll-snap-align: start; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); transition: all var(--transition); }
         .cat-chip:hover { border-color: var(--border-hover); color: var(--text-primary); }
-        .cat-chip.is-active { background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%); border-color: transparent; color: #fff; box-shadow: none; }
+        .cat-chip.is-active { background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%); background-origin: border-box; border-color: transparent; color: #fff; box-shadow: none; }
         .cat-chip__emoji { font-size: 1rem; line-height: 1; }
         .cat-arrow { position: absolute; top: 50%; z-index: 3; width: 32px; height: 32px; margin-top: -16px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-secondary); border: 1px solid var(--border-hover); box-shadow: var(--shadow-md); transition: all var(--transition); }
         .cat-arrow[hidden] { display: none; }
@@ -255,10 +255,10 @@
         [data-theme="light"] #app-list .app-item::before { background: radial-gradient(ellipse at 22% -12%, rgba(139, 92, 246, 0.1), transparent 58%); }
         #app-list .app-item > * { position: relative; }
         @media (hover: hover) {
-            #app-list .app-item:hover { transform: translateY(-5px); border-color: #38bdf8;
+            #app-list .app-item:hover { transform: translateY(-5px); border-color: rgba(37, 99, 235, 0.85);
                 background: linear-gradient(160deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.07) 100%);
-                box-shadow: 0 22px 56px rgba(0, 0, 0, 0.4), 0 10px 40px rgba(56, 189, 248, 0.16), var(--glass-hi); }
-            [data-theme="light"] #app-list .app-item:hover { background: rgba(255, 255, 255, 0.96); box-shadow: 0 20px 50px rgba(15, 23, 42, 0.14), 0 10px 36px rgba(56, 189, 248, 0.18); }
+                box-shadow: 0 22px 56px rgba(0, 0, 0, 0.4), 0 10px 40px rgba(37, 99, 235, 0.16), var(--glass-hi); }
+            [data-theme="light"] #app-list .app-item:hover { background: rgba(255, 255, 255, 0.96); box-shadow: 0 20px 50px rgba(15, 23, 42, 0.14), 0 10px 36px rgba(37, 99, 235, 0.16); }
         }
         #app-list .app-header { align-items: flex-start; gap: 0.875rem; margin-bottom: 0; }
         #app-list .app-header img { width: 64px; height: 64px; border-radius: 17px; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.14); }
@@ -276,14 +276,18 @@
 
         /* поиск, кнопка фильтров и строка категорий в том же стиле */
         .search-bar .search__input { background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-hi); }
-        .search-bar .search__input:focus { border-color: rgba(139, 92, 246, 0.6); box-shadow: 0 0 0 4px var(--accent-glow), 0 14px 40px rgba(0, 0, 0, 0.3), var(--glass-hi); }
+        .search-bar .search__input:focus { border-color: rgba(56, 189, 248, 0.7); box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.16), 0 14px 40px rgba(0, 0, 0, 0.3), var(--glass-hi); }
         .search-bar .settings-btn { background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-hi); }
-        .search-bar .settings-btn:hover { background: var(--gradient-1); border-color: transparent; color: #fff; box-shadow: 0 10px 28px var(--accent-glow); }
+        .search-bar .settings-btn:hover { background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%); background-origin: border-box; border-color: transparent; color: #fff; box-shadow: none; }
+        .search-bar .search:focus-within .search__icon, .search-bar .search__input:focus ~ .search__icon { fill: #38bdf8; }
+        /* окно фильтров: выбранное окрашено так же, как выбранная категория, без свечения */
+        .chip input:checked + span, .category-chip:has(input:checked) { background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%); background-origin: border-box; border-color: transparent; color: #fff; box-shadow: none; }
+        @media (hover: hover) { .chip:hover span, .category-chip:hover { border-color: rgba(56, 189, 248, 0.6); } }
         .category-bar .cat-chip { background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-hi); }
         @media (hover: hover) { .category-bar .cat-chip:hover { border-color: rgba(56, 189, 248, 0.65); color: var(--text-primary); } .category-bar .cat-chip.is-active:hover { border-color: transparent; color: #fff; } }
-        .category-bar .cat-chip.is-active { background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%); border-color: transparent; color: #fff; box-shadow: none; }
+        .category-bar .cat-chip.is-active { background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%); background-origin: border-box; border-color: transparent; color: #fff; box-shadow: none; }
         .category-bar .cat-arrow { background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-hi); }
-        .category-bar .cat-arrow:hover { background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%); border-color: transparent; }
+        .category-bar .cat-arrow:hover { background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%); background-origin: border-box; border-color: transparent; }
         @media (max-width: 768px) { #app-list .app-header img { width: 58px; height: 58px; } }
         @media (max-width: 480px) {
             #app-list .app-item { padding: 1rem; border-radius: 22px; }
@@ -292,6 +296,33 @@
             .app-pill { font-size: 0.68rem; padding: 0.2rem 0.5rem; }
         }
         @media (max-width: 360px) { #app-list .app-header img { width: 46px; height: 46px; } }
+    </style>
+    <style id="faq-styles">
+        /* ===== кнопка «Как это работает?» и окно с вопросами ===== */
+        .btn--glass { background: var(--glass-bg, rgba(255, 255, 255, 0.07)); border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.14)); color: var(--text-primary); box-shadow: var(--glass-hi, none); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+        .btn--glass svg { fill: none; stroke: #38bdf8; }
+        @media (hover: hover) { .btn--glass:hover { border-color: rgba(56, 189, 248, 0.65); transform: translateY(-2px); } }
+        .modal .modal__content--faq { width: min(780px, 100%); max-width: 780px; }
+        .faq-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .faq-chip { padding: 0.6rem 1.15rem; border-radius: 9999px; background: var(--glass-bg, rgba(255, 255, 255, 0.07)); border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.14)); color: var(--text-secondary); font-size: 0.875rem; font-weight: 700; touch-action: manipulation; transition: all var(--transition); }
+        @media (hover: hover) { .faq-chip:hover { border-color: rgba(56, 189, 248, 0.6); color: var(--text-primary); } }
+        .faq-chip.is-active { background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%); background-origin: border-box; border-color: transparent; color: #fff; }
+        .faq-heading { margin: 0 0 0.25rem; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; color: var(--text-primary); }
+        .faq-item { border-bottom: 1px solid var(--border); }
+        .faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.1rem 0; text-align: left; font-size: 1.0625rem; font-weight: 700; line-height: 1.35; color: var(--text-primary); background: none; border: 0; cursor: pointer; touch-action: manipulation; }
+        .faq-q svg { flex-shrink: 0; fill: var(--text-secondary); transition: transform 0.3s ease, fill 0.3s ease; }
+        .faq-item.is-open .faq-q svg { transform: rotate(180deg); fill: #38bdf8; }
+        .faq-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.3s ease; }
+        .faq-item.is-open .faq-a { grid-template-rows: 1fr; }
+        .faq-a__inner { min-height: 0; overflow: hidden; }
+        .faq-a__inner p { margin: 0 0 0.85rem; font-size: 0.9688rem; line-height: 1.65; color: var(--text-secondary); }
+        .faq-a__inner p:last-child { margin-bottom: 1.1rem; }
+        .faq-a__inner strong { color: var(--text-primary); }
+        @media (max-width: 480px) {
+            .faq-heading { font-size: 1.25rem; }
+            .faq-q { font-size: 1rem; padding: 1rem 0; }
+            .faq-chip { padding: 0.5rem 0.95rem; font-size: 0.8125rem; }
+        }
     </style>
     <style id="app-detail-styles">
         /* ===== окно приложения: цветная карточка в стиле постеров (цвет берётся из иконки) ===== */
@@ -466,6 +497,10 @@
                 <a href="#pricing" class="btn btn--sky btn--lg">
                     <span data-i18n="hero.plans">Тарифы</span>
                 </a>
+                <button type="button" class="btn btn--glass btn--lg" id="faqBtn" aria-haspopup="dialog">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.6 2.2c-.8.4-1.2 1-1.2 1.9"/><path d="M12 17h.01"/></svg>
+                    <span data-i18n="hero.how">Как это работает?</span>
+                </button>
             </div>
         </div>
     </section>
@@ -1001,6 +1036,23 @@
         </div>
     </div>
 
+    <div class="modal" id="faqModal" role="dialog" aria-modal="true" aria-labelledby="faqModalTitle">
+        <div class="modal__backdrop" id="faqModalBackdrop"></div>
+        <div class="modal__content modal__content--faq">
+            <div class="modal__header">
+                <h3 class="modal__title" id="faqModalTitle" data-i18n="faq.title">Как это работает?</h3>
+                <button class="modal__close" id="closeFaqModal" aria-label="Закрыть" data-i18n-attr="aria-label:aria.close">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"/></svg>
+                </button>
+            </div>
+            <div class="modal__body">
+                <div class="faq-chips" id="faqChips" role="tablist"></div>
+                <h4 class="faq-heading" id="faqHeading"></h4>
+                <div class="faq-list" id="faqList"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal" id="appModal">
         <div class="modal__backdrop" id="appModalBackdrop"></div>
         <div class="modal__content modal__content--app">
@@ -1035,6 +1087,8 @@
   "hero.subtitle": "Большой каталог приложений — банки, удаленные из App Store, разблокированные на платные функции, моды, игры и другие. Работает с iPhone и iPad.",
   "hero.browse": "Смотреть приложения",
   "hero.plans": "Тарифы",
+  "hero.how": "Как это работает?",
+  "faq.title": "Как это работает?",
   "pricing.title": "Тарифные планы",
   "pricing.descDefault": "Выберите товар и подходящий тариф",
   "pricing.descRepo": "Доступ ко всем приложениям каталога",
@@ -1146,6 +1200,8 @@
   "hero.subtitle": "A big catalog of apps — banks, apps removed from the App Store, apps unlocked with paid features, mods, games and more. Works with iPhone and iPad.",
   "hero.browse": "Browse apps",
   "hero.plans": "Pricing",
+  "hero.how": "How does it work?",
+  "faq.title": "How does it work?",
   "pricing.title": "Pricing Plans",
   "pricing.descDefault": "Choose a product and a plan that suits you",
   "pricing.descRepo": "Access to all apps in the catalog",
@@ -1281,8 +1337,8 @@
     if (btn) btn.addEventListener('click', () => window.i18n.toggle());
 })();
 </script>
-    <script src="Scripts/Script.js?v=28"></script>
-    <script src="Scripts/Repository.js?v=28"></script>
+    <script src="Scripts/Script.js?v=30"></script>
+    <script src="Scripts/Repository.js?v=30"></script>
     <script>
 (function () {
 
@@ -1625,6 +1681,177 @@
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && modal.classList.contains('active')) close();
     });
+})();
+</script>
+    <script>
+(function () {
+    /* ===================== «Как это работает?»: окно с вопросами ===================== */
+    (function () {
+        const btn = document.getElementById('faqBtn');
+        const modal = document.getElementById('faqModal');
+        if (!btn || !modal) return;
+        const chipsEl = document.getElementById('faqChips'), headEl = document.getElementById('faqHeading'), listEl = document.getElementById('faqList');
+        const A_CERT = {
+            ru: 'Сертификат даёт возможность установки приложений вне App Store без ограничений по количеству и без ПК. Разработчики используют сертификат для установки и тестирования собственных приложений. Мы используем его в своих целях. К примеру, вы сможете установить удалённые приложения из App Store, приложения с разблокированным платным функционалом, модификации с расширенным функционалом, платные игры и приложения и т. д. Сертификат регистрируется по UDID устройства.',
+            en: 'A certificate lets you install apps outside the App Store without limits on the number of apps and without a PC. Developers use certificates to install and test their own apps. We use it for our own purposes. For example, you can install apps removed from the App Store, apps with unlocked paid features, mods with extended functionality, paid games and apps, and more. A certificate is registered to the UDID of your device.'
+        };
+        const A_REPO = {
+            ru: 'Наш каталог приложений, в котором 1500+ приложений. В каталог входят удалённые приложения из App Store, банки, моды, приложения, активированные на подписку/покупку, платные приложения/игры из App Store и другие. Для использования репозитория и возможности установки приложений требуется сертификат разработчика.',
+            en: 'Our app catalog with 1500+ apps. It includes apps removed from the App Store, banking apps, mods, apps with an activated subscription/purchase, paid App Store apps and games, and others. A developer certificate is required to use the repository and install apps.'
+        };
+        const A_ICLOUD = {
+            ru: ['Нет. Вам не нужно входить в сторонние аккаунты Apple. Также нам не нужны ваши данные iCloud, пароли и прочее. Никогда не передавайте свои данные и не входите в чужие аккаунты Apple: злоумышленники могут воспользоваться вашей неопытностью и заблокировать ваше устройство.', 'С сертификатом вы никогда не допустите такую ошибку, так как этот способ не требует входа в учётные записи.'],
+            en: ['No. You don\u2019t need to sign in to third-party Apple accounts. We also don\u2019t need your iCloud details, passwords or anything like that. Never share your data and never sign in to other people\u2019s Apple accounts: scammers can take advantage of your inexperience and lock your device.', 'With a certificate you will never make such a mistake, because this method doesn\u2019t require signing in to any account.']
+        };
+        const A_UDID = {
+            ru: 'UDID — уникальный идентификатор каждого устройства Apple, по которому сертификат регистрируется именно к вашему iPhone или iPad.',
+            en: 'A UDID is a unique identifier of every Apple device. The certificate is registered to it, so it works with your specific iPhone or iPad.'
+        };
+        const A_SAFE = {
+            ru: 'Да. Все приложения проверяются перед добавлением в каталог. Сертификат выдаётся официально через Apple. Джейлбрейк не требуется. Сертификат не влияет на функционал вашего устройства или гарантию.',
+            en: 'Yes. All apps are checked before being added to the catalog. The certificate is issued officially through Apple. No jailbreak is required. The certificate does not affect your device\u2019s functionality or warranty.'
+        };
+        const A_WAIT_CERT = {
+            ru: 'регистрация занимает 1–5 минут. В редких случаях выдача сертификата может быть дольше, если Apple проводит технические работы, мероприятия или презентации.',
+            en: 'registration takes 1\u20135 minutes. In rare cases it can take longer if Apple is doing maintenance, events or presentations.'
+        };
+        // В ответе строка — абзац, объект { b, t } — абзац с жирным началом
+        const FAQ = {
+            ru: [
+                { name: 'Общие', items: [
+                    { q: 'Что такое сертификат?', a: [A_CERT.ru] },
+                    { q: 'Что такое репозиторий?', a: [A_REPO.ru] },
+                    { q: 'Нужно ли мне входить в чужой iCloud?', a: A_ICLOUD.ru },
+                    { q: 'Что такое UDID?', a: [A_UDID.ru] },
+                    { q: 'Это безопасно?', a: [A_SAFE.ru] },
+                    { q: 'Сколько ждать после оплаты?', a: [{ b: 'Сертификат —', t: A_WAIT_CERT.ru }, { b: 'Репозиторий —', t: 'выдача всегда происходит моментально.' }] },
+                    { q: 'Сколько устройств можно подключить?', a: ['К одному сертификату можно подключить только одно устройство: сертификат привязан к UDID — уникальному идентификатору, который у каждого устройства свой. Для второго устройства нужен отдельный сертификат.'] }
+                ] },
+                { name: 'Сертификат', items: [
+                    { q: 'Что такое сертификат?', a: [A_CERT.ru] },
+                    { q: 'Что такое UDID?', a: [A_UDID.ru] },
+                    { q: 'Сколько ожидать выдачу сертификата?', a: [{ b: 'Сертификат —', t: A_WAIT_CERT.ru }] },
+                    { q: 'Какой срок действия сертификата?', a: ['Сертификат работает с момента покупки и до 1 года максимум. В течение этого периода вы сможете устанавливать и использовать любые приложения на своём устройстве.'] },
+                    { q: 'Какое количество приложений я смогу установить?', a: ['С помощью сертификата разработчика вы сможете установить любое количество приложений. Ограничений нет.'] },
+                    { q: 'Какие приложения я могу установить?', a: ['Вы сможете устанавливать любые модифицированные или платные приложения и игры, как из наших каналов, так и скачанные в интернете.'] },
+                    { q: 'Могу ли я использовать сертификат на своём другом iPhone или iPad?', a: ['Сертификат регистрируется под определённое устройство по UDID (уникальному идентификатору). Использовать сертификат вы сможете только на том устройстве, под которое его приобрели.'] },
+                    { q: 'Я сменил устройство на другое, возможно ли заменить сертификат?', a: ['К сожалению, замена невозможна. Apple технически не предоставляет возможности изменить UDID после регистрации. Для нового устройства нужен новый сертификат.'] },
+                    { q: 'Нужен ли мне ПК для установки приложений?', a: ['Нет, ПК не нужен. С сертификатом разработчика приложения можно устанавливать прямо с iPhone или iPad.'] },
+                    { q: 'Могу ли я обновлять iOS?', a: ['Да, сертификат вас никак не ограничивает: вы можете обновлять iOS в любой момент на актуальную версию. Рекомендуем воздержаться от установки бета-версий. Часто там бывают баги, и не все разработчики успевают выпустить обновления своих приложений, чтобы они поддерживали бета-версию.'] }
+                ] },
+                { name: 'Репозиторий', items: [
+                    { q: 'Что такое репозиторий?', a: [A_REPO.ru] },
+                    { q: 'Какие тарифы у репозитория?', a: ['У нас два основных тарифа — «Подписка» и «Постоянный».', { b: 'Подписка —', t: 'доступна пользователям, которые имеют наш или сторонний сертификат либо используют другой способ установки. Вы можете приобрести подписку на 3, 6, 12, 24 и 60 месяцев.' }, { b: 'Постоянный —', t: 'доступен только владельцам сертификатов iApps, оплачивается один раз и действует, пока вы пользуетесь нашим сертификатом. С покупкой нового сертификата доступ продлевается бесплатно.' }] },
+                    { q: 'Как предоставляется доступ к репозиторию?', a: ['Репозиторий iApps работает через приложения GBox, Feather, LiveContainer (SideStore/AltStore). Мы предоставим все инструкции и поможем, если у вас возникнут трудности с установкой или использованием.'] }
+                ] },
+                { name: 'Безопасность', items: [
+                    { q: 'Это безопасно?', a: [A_SAFE.ru] },
+                    { q: 'Влияет ли сертификат на гарантию?', a: ['Нет! Сертификат выдаётся официально Apple. Это не джейлбрейк и не другое вмешательство в работу устройства и его системы. На гарантию, учётные записи и что-либо другое сертификат никак не влияет.'] },
+                    { q: 'Нужно ли мне входить в чужой iCloud?', a: A_ICLOUD.ru }
+                ] }
+            ],
+            en: [
+                { name: 'General', items: [
+                    { q: 'What is a certificate?', a: [A_CERT.en] },
+                    { q: 'What is the repository?', a: [A_REPO.en] },
+                    { q: 'Do I need to sign in to someone else\u2019s iCloud?', a: A_ICLOUD.en },
+                    { q: 'What is a UDID?', a: [A_UDID.en] },
+                    { q: 'Is it safe?', a: [A_SAFE.en] },
+                    { q: 'How long do I wait after payment?', a: [{ b: 'Certificate \u2014', t: A_WAIT_CERT.en }, { b: 'Repository \u2014', t: 'access is always issued instantly.' }] },
+                    { q: 'How many devices can I connect?', a: ['Only one device per certificate: the certificate is tied to the UDID, a unique identifier that every device has. A second device needs a separate certificate.'] }
+                ] },
+                { name: 'Certificate', items: [
+                    { q: 'What is a certificate?', a: [A_CERT.en] },
+                    { q: 'What is a UDID?', a: [A_UDID.en] },
+                    { q: 'How long do I wait for the certificate?', a: [{ b: 'Certificate \u2014', t: A_WAIT_CERT.en }] },
+                    { q: 'How long is the certificate valid?', a: ['The certificate works from the moment of purchase for up to 1 year. During this period you can install and use any apps on your device.'] },
+                    { q: 'How many apps can I install?', a: ['With a developer certificate you can install any number of apps. There are no limits.'] },
+                    { q: 'Which apps can I install?', a: ['You can install any modified or paid apps and games, both from our channels and downloaded from the internet.'] },
+                    { q: 'Can I use the certificate on my other iPhone or iPad?', a: ['The certificate is registered to a specific device by its UDID (unique identifier). You can only use it on the device it was purchased for.'] },
+                    { q: 'I changed my device. Can the certificate be replaced?', a: ['Unfortunately, replacement is not possible. Apple technically doesn\u2019t allow changing a UDID after registration. A new device needs a new certificate.'] },
+                    { q: 'Do I need a PC to install apps?', a: ['No, a PC isn\u2019t needed. With a developer certificate you can install apps directly from your iPhone or iPad.'] },
+                    { q: 'Can I update iOS?', a: ['Yes, the certificate doesn\u2019t limit you in any way: you can update iOS to the latest version at any time. We recommend avoiding beta versions. They often have bugs, and not all developers manage to update their apps in time to support a beta.'] }
+                ] },
+                { name: 'Repository', items: [
+                    { q: 'What is the repository?', a: [A_REPO.en] },
+                    { q: 'What plans does the repository have?', a: ['We have two main plans: \u201cSubscription\u201d and \u201cPermanent\u201d.', { b: 'Subscription \u2014', t: 'available to users who have our or a third-party certificate, or use another way of installing. You can buy a subscription for 3, 6, 12, 24 or 60 months.' }, { b: 'Permanent \u2014', t: 'available only to owners of iApps certificates, paid once and valid while you use our certificate. When you buy a new certificate, access is extended for free.' }] },
+                    { q: 'How is repository access provided?', a: ['The iApps repository works through the GBox, Feather and LiveContainer (SideStore/AltStore) apps. We will provide all instructions and help if you have any trouble installing or using it.'] }
+                ] },
+                { name: 'Security', items: [
+                    { q: 'Is it safe?', a: [A_SAFE.en] },
+                    { q: 'Does the certificate affect the warranty?', a: ['No! The certificate is issued officially by Apple. This is not a jailbreak or any other interference with the device and its system. The certificate has no effect on the warranty, accounts or anything else.'] },
+                    { q: 'Do I need to sign in to someone else\u2019s iCloud?', a: A_ICLOUD.en }
+                ] }
+            ]
+        };
+        const CHEVRON = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 15.5l-6-6 1.4-1.4 4.6 4.6 4.6-4.6L18 9.5z"/></svg>';
+        let cat = 0, scrollPos = 0;
+        const data = () => FAQ[(window.i18n && window.i18n.lang) === 'en' ? 'en' : 'ru'];
+
+        function renderChips() {
+            chipsEl.innerHTML = '';
+            data().forEach((c, i) => {
+                const b = document.createElement('button');
+                b.type = 'button'; b.className = 'faq-chip' + (i === cat ? ' is-active' : ''); b.textContent = c.name;
+                b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', String(i === cat));
+                b.addEventListener('click', () => { cat = i; render(); });
+                chipsEl.appendChild(b);
+            });
+        }
+        function renderList() {
+            const c = data()[cat];
+            headEl.textContent = c.name;
+            listEl.innerHTML = '';
+            c.items.forEach((it, i) => {
+                const item = document.createElement('div'); item.className = 'faq-item';
+                const q = document.createElement('button'); q.type = 'button'; q.className = 'faq-q'; q.setAttribute('aria-expanded', 'false');
+                q.id = 'faqQ' + i; q.setAttribute('aria-controls', 'faqA' + i);
+                const qt = document.createElement('span'); qt.textContent = it.q; q.appendChild(qt); q.insertAdjacentHTML('beforeend', CHEVRON);
+                const a = document.createElement('div'); a.className = 'faq-a'; a.id = 'faqA' + i; a.setAttribute('role', 'region'); a.setAttribute('aria-labelledby', q.id);
+                const inner = document.createElement('div'); inner.className = 'faq-a__inner';
+                it.a.forEach(par => {
+                    const p = document.createElement('p');
+                    if (typeof par === 'string') p.textContent = par;
+                    else { const s = document.createElement('strong'); s.textContent = par.b; p.append(s, ' ' + par.t); }
+                    inner.appendChild(p);
+                });
+                a.appendChild(inner); item.append(q, a);
+                q.addEventListener('click', () => {
+                    const open = !item.classList.contains('is-open');
+                    listEl.querySelectorAll('.faq-item.is-open').forEach(o => { o.classList.remove('is-open'); o.querySelector('.faq-q').setAttribute('aria-expanded', 'false'); });
+                    item.classList.toggle('is-open', open); q.setAttribute('aria-expanded', String(open));
+                });
+                listEl.appendChild(item);
+            });
+        }
+        function render() { renderChips(); renderList(); }
+
+        function open() {
+            cat = 0; render();
+            if (!document.body.classList.contains('modal-open')) {
+                scrollPos = window.pageYOffset;
+                document.body.classList.add('modal-open');
+                document.body.style.top = '-' + scrollPos + 'px';
+            }
+            modal.classList.add('active');
+            const body = modal.querySelector('.modal__content'); if (body) body.scrollTop = 0;
+            document.getElementById('closeFaqModal').focus({ preventScroll: true });
+        }
+        function close() {
+            modal.classList.remove('active');
+            if (!document.querySelector('.modal.active')) {
+                document.body.classList.remove('modal-open');
+                document.body.style.top = '';
+                window.scrollTo({ top: scrollPos, left: 0, behavior: 'instant' });
+            }
+            btn.focus({ preventScroll: true });
+        }
+        btn.addEventListener('click', open);
+        document.getElementById('closeFaqModal').addEventListener('click', close);
+        document.getElementById('faqModalBackdrop').addEventListener('click', close);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('active')) close(); });
+        document.addEventListener('iapps:lang', () => { if (modal.classList.contains('active')) render(); });
+    })();
 })();
 </script>
     <script>
