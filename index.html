@@ -8,7 +8,7 @@
     <title data-i18n="page.title">iApps - Сертификат разработчика Apple и приложения для iPhone</title>
     <link rel="icon" type="image/png" href="Images/Profile.PNG">
     <link rel="apple-touch-icon" href="Images/Profile.PNG">
-    <link rel="stylesheet" href="Styles/Style.css?v=30">
+    <link rel="stylesheet" href="Styles/Style.css?v=32">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -302,19 +302,29 @@
         .btn--glass { background: var(--glass-bg, rgba(255, 255, 255, 0.07)); border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.14)); color: var(--text-primary); box-shadow: var(--glass-hi, none); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
         .btn--glass svg { fill: none; stroke: #38bdf8; }
         @media (hover: hover) { .btn--glass:hover { border-color: rgba(56, 189, 248, 0.65); transform: translateY(-2px); } }
-        .modal .modal__content--faq { width: min(780px, 100%); max-width: 780px; }
-        .faq-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
-        .faq-chip { padding: 0.6rem 1.15rem; border-radius: 9999px; background: var(--glass-bg, rgba(255, 255, 255, 0.07)); border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.14)); color: var(--text-secondary); font-size: 0.875rem; font-weight: 700; touch-action: manipulation; transition: all var(--transition); }
+        .modal .modal__content--faq { width: min(780px, 100%); max-width: 780px; height: min(85vh, 760px); }   /* постоянная высота: окно не прыгает при смене категории */
+        .modal .modal__content--faq::before { top: 0; right: 0; }   /* декоративное пятно не выступает за край окна: нет лишней горизонтальной прокрутки */
+        .faq-chips { --fl: 0px; --fr: 0px; display: flex; flex-wrap: nowrap; gap: 0.5rem; margin: -2px -2px 1.25rem; padding: 2px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; -webkit-overflow-scrolling: touch; cursor: grab;
+            -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--fl), #000 calc(100% - var(--fr)), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 var(--fl), #000 calc(100% - var(--fr)), transparent 100%); }
+        .faq-chips::-webkit-scrollbar { display: none; }
+        .faq-chips.fade-l { --fl: 28px; }
+        .faq-chips.fade-r { --fr: 28px; }
+        .faq-chips.is-dragging { cursor: grabbing; user-select: none; }
+        .faq-chips.is-dragging .faq-chip { pointer-events: none; }
+        .faq-chip { flex: 0 0 auto; white-space: nowrap; padding: 0.6rem 1.15rem; border-radius: 9999px; background: var(--glass-bg, rgba(255, 255, 255, 0.07)); border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.14)); color: var(--text-secondary); font-size: 0.875rem; font-weight: 700; touch-action: manipulation; transition: all var(--transition); }
         @media (hover: hover) { .faq-chip:hover { border-color: rgba(56, 189, 248, 0.6); color: var(--text-primary); } }
         .faq-chip.is-active { background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%); background-origin: border-box; border-color: transparent; color: #fff; }
         .faq-heading { margin: 0 0 0.25rem; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; color: var(--text-primary); }
         .faq-item { border-bottom: 1px solid var(--border); }
-        .faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.1rem 0; text-align: left; font-size: 1.0625rem; font-weight: 700; line-height: 1.35; color: var(--text-primary); background: none; border: 0; cursor: pointer; touch-action: manipulation; }
-        .faq-q svg { flex-shrink: 0; fill: var(--text-secondary); transition: transform 0.3s ease, fill 0.3s ease; }
+        .faq-q { width: 100%; display: flex; align-items: center; gap: 1rem; padding: 1.1rem 0; text-align: left; font-size: 1.0625rem; font-weight: 700; line-height: 1.35; color: var(--text-primary); background: none; border: 0; cursor: pointer; touch-action: manipulation; }
+        .faq-num { flex-shrink: 0; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: var(--text-primary); color: var(--bg-primary); font-size: 0.9375rem; font-weight: 800; line-height: 1; }
+        .faq-q > span:nth-child(2) { flex: 1; min-width: 0; }
+        .faq-q svg { flex-shrink: 0; margin-left: auto; fill: var(--text-secondary); transition: transform 0.3s ease, fill 0.3s ease; }
         .faq-item.is-open .faq-q svg { transform: rotate(180deg); fill: #38bdf8; }
         .faq-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.3s ease; }
         .faq-item.is-open .faq-a { grid-template-rows: 1fr; }
         .faq-a__inner { min-height: 0; overflow: hidden; }
+        .faq-a__inner { padding-left: calc(38px + 1rem); }
         .faq-a__inner p { margin: 0 0 0.85rem; font-size: 0.9688rem; line-height: 1.65; color: var(--text-secondary); }
         .faq-a__inner p:last-child { margin-bottom: 1.1rem; }
         .faq-a__inner strong { color: var(--text-primary); }
@@ -322,6 +332,9 @@
             .faq-heading { font-size: 1.25rem; }
             .faq-q { font-size: 1rem; padding: 1rem 0; }
             .faq-chip { padding: 0.5rem 0.95rem; font-size: 0.8125rem; }
+            .faq-num { width: 34px; height: 34px; font-size: 0.875rem; }
+            .faq-q { gap: 0.8rem; }
+            .faq-a__inner { padding-left: calc(34px + 0.8rem); }
         }
     </style>
     <style id="app-detail-styles">
@@ -1337,8 +1350,8 @@
     if (btn) btn.addEventListener('click', () => window.i18n.toggle());
 })();
 </script>
-    <script src="Scripts/Script.js?v=30"></script>
-    <script src="Scripts/Repository.js?v=30"></script>
+    <script src="Scripts/Script.js?v=32"></script>
+    <script src="Scripts/Repository.js?v=32"></script>
     <script>
 (function () {
 
@@ -1722,10 +1735,8 @@
                     { q: 'Что такое сертификат?', a: [A_CERT.ru] },
                     { q: 'Что такое репозиторий?', a: [A_REPO.ru] },
                     { q: 'Нужно ли мне входить в чужой iCloud?', a: A_ICLOUD.ru },
-                    { q: 'Что такое UDID?', a: [A_UDID.ru] },
                     { q: 'Это безопасно?', a: [A_SAFE.ru] },
-                    { q: 'Сколько ждать после оплаты?', a: [{ b: 'Сертификат —', t: A_WAIT_CERT.ru }, { b: 'Репозиторий —', t: 'выдача всегда происходит моментально.' }] },
-                    { q: 'Сколько устройств можно подключить?', a: ['К одному сертификату можно подключить только одно устройство: сертификат привязан к UDID — уникальному идентификатору, который у каждого устройства свой. Для второго устройства нужен отдельный сертификат.'] }
+                    { q: 'Сколько ждать после оплаты?', a: [{ b: 'Сертификат —', t: A_WAIT_CERT.ru }, { b: 'Репозиторий —', t: 'выдача всегда происходит моментально.' }] }
                 ] },
                 { name: 'Сертификат', items: [
                     { q: 'Что такое сертификат?', a: [A_CERT.ru] },
@@ -1755,10 +1766,8 @@
                     { q: 'What is a certificate?', a: [A_CERT.en] },
                     { q: 'What is the repository?', a: [A_REPO.en] },
                     { q: 'Do I need to sign in to someone else\u2019s iCloud?', a: A_ICLOUD.en },
-                    { q: 'What is a UDID?', a: [A_UDID.en] },
                     { q: 'Is it safe?', a: [A_SAFE.en] },
-                    { q: 'How long do I wait after payment?', a: [{ b: 'Certificate \u2014', t: A_WAIT_CERT.en }, { b: 'Repository \u2014', t: 'access is always issued instantly.' }] },
-                    { q: 'How many devices can I connect?', a: ['Only one device per certificate: the certificate is tied to the UDID, a unique identifier that every device has. A second device needs a separate certificate.'] }
+                    { q: 'How long do I wait after payment?', a: [{ b: 'Certificate \u2014', t: A_WAIT_CERT.en }, { b: 'Repository \u2014', t: 'access is always issued instantly.' }] }
                 ] },
                 { name: 'Certificate', items: [
                     { q: 'What is a certificate?', a: [A_CERT.en] },
@@ -1788,16 +1797,70 @@
         let cat = 0, scrollPos = 0;
         const data = () => FAQ[(window.i18n && window.i18n.lang) === 'en' ? 'en' : 'ru'];
 
+        // строка категорий: листается пальцем и мышью, края затемняются; при выборе чипы не пересоздаются, чтобы прокрутка не сбрасывалась
+        let tap = null, lastTapSelect = 0, lastTapPoint = { x: -999, y: -999 }, down = false, moved = false, startX = 0, startLeft = 0, suppressClick = false;
+        function updateFades() {
+            const max = chipsEl.scrollWidth - chipsEl.clientWidth;
+            chipsEl.classList.toggle('fade-l', chipsEl.scrollLeft > 2);
+            chipsEl.classList.toggle('fade-r', max > 2 && chipsEl.scrollLeft < max - 2);
+        }
+        function reveal(chip) {
+            const sr = chipsEl.getBoundingClientRect(), cr = chip.getBoundingClientRect();
+            if (cr.left < sr.left + 24 || cr.right > sr.right - 24) chipsEl.scrollTo({ left: Math.max(0, chip.offsetLeft - (chipsEl.clientWidth - chip.offsetWidth) / 2), behavior: 'instant' });   // без анимации: нажатие во время неё могло теряться
+        }
+        function setCat(i, scroll) {
+            cat = i;
+            chipsEl.querySelectorAll('.faq-chip').forEach((c, k) => { c.classList.toggle('is-active', k === i); c.setAttribute('aria-selected', String(k === i)); });
+            if (scroll) reveal(chipsEl.children[i]);
+            renderList();
+        }
         function renderChips() {
+            const keep = chipsEl.scrollLeft;
             chipsEl.innerHTML = '';
             data().forEach((c, i) => {
                 const b = document.createElement('button');
-                b.type = 'button'; b.className = 'faq-chip' + (i === cat ? ' is-active' : ''); b.textContent = c.name;
+                b.type = 'button'; b.className = 'faq-chip' + (i === cat ? ' is-active' : ''); b.textContent = c.name; b.dataset.i = String(i);
                 b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', String(i === cat));
-                b.addEventListener('click', () => { cat = i; render(); });
                 chipsEl.appendChild(b);
             });
+            chipsEl.scrollLeft = keep; updateFades();
         }
+        chipsEl.addEventListener('scroll', updateFades, { passive: true });
+        window.addEventListener('resize', updateFades);
+        // мышь: перетаскивание (небольшое дрожание руки не считается перетаскиванием)
+        chipsEl.addEventListener('pointerdown', (e) => {
+            if (e.pointerType === 'mouse') { if (e.button !== 0) return; down = true; moved = false; startX = e.clientX; startLeft = chipsEl.scrollLeft; return; }
+            tap = { x: e.clientX, y: e.clientY, left: chipsEl.scrollLeft, t: performance.now(), chip: e.target.closest('.faq-chip') };
+        }, { passive: true });
+        window.addEventListener('pointermove', (e) => {
+            if (!down) return;
+            const dx = e.clientX - startX;
+            if (!moved && Math.abs(dx) > 9) { moved = true; chipsEl.classList.add('is-dragging'); }
+            if (moved) chipsEl.scrollLeft = startLeft - dx;
+        });
+        window.addEventListener('pointerup', () => {
+            if (!down) return;
+            down = false;
+            if (moved) { suppressClick = true; setTimeout(() => { suppressClick = false; chipsEl.classList.remove('is-dragging'); }, 0); }
+        });
+        chipsEl.addEventListener('pointercancel', () => { tap = null; }, { passive: true });
+        // палец: категория выбирается в момент отпускания, прокрутка выбором не считается
+        chipsEl.addEventListener('pointerup', (e) => {
+            if (e.pointerType === 'mouse' || !tap) return;
+            const s = tap; tap = null;
+            if (!s.chip) return;
+            if (Math.hypot(e.clientX - s.x, e.clientY - s.y) > 10 || Math.abs(chipsEl.scrollLeft - s.left) > 2 || performance.now() - s.t > 900) return;
+            lastTapSelect = performance.now(); lastTapPoint = { x: e.clientX, y: e.clientY };
+            setCat(Number(s.chip.dataset.i), true);
+        });
+        // «хвост» уже обработанного нажатия (click в той же точке) не должен попасть в окно под чипом; нажатия в других местах проходят
+        modal.addEventListener('click', (e) => { if (performance.now() - lastTapSelect < 600 && Math.hypot(e.clientX - lastTapPoint.x, e.clientY - lastTapPoint.y) < 24) { e.stopPropagation(); e.preventDefault(); } }, true);
+        chipsEl.addEventListener('click', (e) => {
+            if (suppressClick) { e.preventDefault(); e.stopPropagation(); return; }
+            if (performance.now() - lastTapSelect < 700) return;
+            const chip = e.target.closest('.faq-chip');
+            if (chip) setCat(Number(chip.dataset.i), true);
+        });
         function renderList() {
             const c = data()[cat];
             headEl.textContent = c.name;
@@ -1806,7 +1869,8 @@
                 const item = document.createElement('div'); item.className = 'faq-item';
                 const q = document.createElement('button'); q.type = 'button'; q.className = 'faq-q'; q.setAttribute('aria-expanded', 'false');
                 q.id = 'faqQ' + i; q.setAttribute('aria-controls', 'faqA' + i);
-                const qt = document.createElement('span'); qt.textContent = it.q; q.appendChild(qt); q.insertAdjacentHTML('beforeend', CHEVRON);
+                const num = document.createElement('span'); num.className = 'faq-num'; num.textContent = String(i + 1);
+                const qt = document.createElement('span'); qt.textContent = it.q; q.append(num, qt); q.insertAdjacentHTML('beforeend', CHEVRON);
                 const a = document.createElement('div'); a.className = 'faq-a'; a.id = 'faqA' + i; a.setAttribute('role', 'region'); a.setAttribute('aria-labelledby', q.id);
                 const inner = document.createElement('div'); inner.className = 'faq-a__inner';
                 it.a.forEach(par => {
@@ -1827,7 +1891,7 @@
         function render() { renderChips(); renderList(); }
 
         function open() {
-            cat = 0; render();
+            cat = 0; render(); chipsEl.scrollLeft = 0; updateFades();
             if (!document.body.classList.contains('modal-open')) {
                 scrollPos = window.pageYOffset;
                 document.body.classList.add('modal-open');
