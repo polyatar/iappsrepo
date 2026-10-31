@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="referrer" content="no-referrer">
+    <meta name="theme-color" content="#0a0a0f" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
+    <title>Узнать UDID — iApps</title>
+    <link rel="icon" type="image/png" href="../Images/Profile.PNG">
+    <link rel="apple-touch-icon" href="../Images/Profile.PNG">
+    <link rel="stylesheet" href="../Styles/Style.css?v=33">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        // тема и язык общие с главной страницей
+        (function () {
+            try { document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') === 'light' ? 'light' : 'dark'); } catch (e) {}
+        })();
+    </script>
+    <style>
+        :root { --glass-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.045) 100%); --glass-border: rgba(255, 255, 255, 0.13); --glass-hi: inset 0 1px 0 rgba(255, 255, 255, 0.09); --glass-shadow: 0 14px 40px rgba(0, 0, 0, 0.3); --sky: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%); }
+        [data-theme="light"] { --glass-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.92) 0%, rgba(244, 247, 252, 0.8) 100%); --glass-border: rgba(15, 23, 42, 0.1); --glass-hi: inset 0 1px 0 rgba(255, 255, 255, 0.9); --glass-shadow: 0 12px 34px rgba(15, 23, 42, 0.09); }
+        body { min-height: 100vh; min-height: 100dvh; }
+        .udid-bar { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: calc(0.75rem + env(safe-area-inset-top, 0px)) 1.25rem 0.75rem; background: var(--bg-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        .udid-brand { display: flex; align-items: center; gap: 0.625rem; font-weight: 800; letter-spacing: 0.04em; color: var(--text-primary); text-decoration: none; }
+        .udid-brand img { width: 32px; height: 32px; border-radius: 9px; object-fit: cover; }
+        .udid-tools { display: flex; gap: 0.5rem; }
+        .udid-tool { min-width: 40px; height: 40px; padding: 0 0.7rem; display: grid; place-items: center; border-radius: 9999px; background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-hi); color: var(--text-primary); font: inherit; font-size: 0.8125rem; font-weight: 800; cursor: pointer; text-decoration: none; touch-action: manipulation; }
+        .udid-tool svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+        @media (hover: hover) { .udid-tool:hover { border-color: rgba(56, 189, 248, 0.65); } }
+        .udid-main { width: 100%; max-width: 640px; margin: 0 auto; padding: 1.75rem 1rem calc(3rem + env(safe-area-inset-bottom, 0px)); display: grid; gap: 1rem; }
+        .udid-card { position: relative; overflow: hidden; padding: 1.75rem 1.5rem; border-radius: 28px; background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-hi); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .udid-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 22% -12%, rgba(56, 189, 248, 0.16), transparent 58%); pointer-events: none; }
+        .udid-card > * { position: relative; }
+        .udid-icon { width: 64px; height: 64px; display: grid; place-items: center; margin: 0 auto 1rem; border-radius: 20px; background: var(--sky); box-shadow: 0 12px 30px rgba(37, 99, 235, 0.35); }
+        .udid-icon svg { width: 32px; height: 32px; fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        .udid-card h1 { margin: 0 0 0.5rem; text-align: center; font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; color: var(--text-primary); }
+        .udid-lead { margin: 0 auto 1.25rem; max-width: 460px; text-align: center; line-height: 1.6; color: var(--text-secondary); }
+        .udid-warn { margin: 0 0 1.25rem; padding: 0.9rem 1rem; border-radius: 18px; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.4); color: var(--text-primary); font-size: 0.9375rem; line-height: 1.5; }
+        .udid-warn[hidden], .udid-card[hidden], .udid-after[hidden] { display: none; }
+        .udid-warn .udid-btn { margin-top: 0.75rem; }
+        .udid-steps { list-style: none; margin: 0 0 1.5rem; padding: 0; display: grid; gap: 0.9rem; }
+        .udid-steps li { display: flex; align-items: flex-start; gap: 0.9rem; line-height: 1.5; color: var(--text-primary); }
+        .udid-num { flex-shrink: 0; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: var(--text-primary); color: var(--bg-primary); font-size: 0.875rem; font-weight: 800; }
+        .udid-steps span:last-child { padding-top: 0.3rem; }
+        .udid-after { margin: 1rem 0 0; padding: 0.9rem 1rem; border-radius: 18px; background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.5; }
+        .udid-note { margin: 1rem 0 0; text-align: center; font-size: 0.8125rem; line-height: 1.5; color: var(--text-muted); }
+        .udid-label { margin: 0 0 0.6rem; text-align: center; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary); }
+        .udid-value { display: block; margin: 0 0 0.9rem; padding: 1.1rem 1rem; border-radius: 20px; background: rgba(0, 0, 0, 0.28); border: 1px solid var(--glass-border); text-align: center; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 1.25rem; font-weight: 700; letter-spacing: 0.04em; line-height: 1.4; color: var(--text-primary); word-break: break-all; user-select: all; -webkit-user-select: all; }
+        [data-theme="light"] .udid-value { background: rgba(15, 23, 42, 0.05); }
+        .udid-meta { margin: 0 0 1.25rem; text-align: center; font-size: 0.875rem; color: var(--text-secondary); }
+        .udid-actions { display: grid; gap: 0.6rem; }
+        .udid-btn { display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; padding: 1.05rem 1.5rem; border: 0; border-radius: 9999px; background: var(--sky); color: #fff; font: inherit; font-size: 1.0625rem; font-weight: 800; text-decoration: none; text-align: center; cursor: pointer; box-shadow: 0 12px 30px rgba(37, 99, 235, 0.35); transition: transform 0.2s ease, box-shadow 0.2s ease; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+        @media (hover: hover) { .udid-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(37, 99, 235, 0.45); } }
+        .udid-btn:active { transform: scale(0.98); }
+        .udid-btn--glass { background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-primary); box-shadow: var(--glass-hi); font-size: 0.9375rem; font-weight: 700; padding: 0.8rem 1.25rem; }
+        .udid-link { display: block; margin-top: 0.9rem; text-align: center; background: none; border: 0; font: inherit; font-size: 0.9375rem; font-weight: 600; color: var(--text-secondary); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+        .udid-error { border-color: rgba(248, 113, 113, 0.5); }
+        .udid-error h2 { margin: 0 0 0.4rem; font-size: 1.125rem; color: var(--text-primary); }
+        .udid-error p { margin: 0; color: var(--text-secondary); line-height: 1.55; }
+        @media (max-width: 480px) { .udid-card { padding: 1.5rem 1.15rem; border-radius: 24px; } .udid-card h1 { font-size: 1.5rem; } .udid-value { font-size: 1.0625rem; } }
+    </style>
+</head>
+<body>
+    <header class="udid-bar">
+        <a class="udid-brand" href="../" id="brandLink"><img src="../Images/Profile.PNG" alt=""><span>IAPPS</span></a>
+        <div class="udid-tools">
+            <button type="button" class="udid-tool" id="langBtn" aria-label="Language">RU</button>
+            <button type="button" class="udid-tool" id="themeBtn" aria-label="Theme">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="udid-main">
+        <!-- результат -->
+        <section class="udid-card" id="resultCard" hidden aria-live="polite">
+            <div class="udid-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+            <p class="udid-label" data-i18n="resLabel">Ваш UDID</p>
+            <code class="udid-value" id="udidValue"></code>
+            <p class="udid-meta" id="udidMeta"></p>
+            <div class="udid-actions">
+                <button type="button" class="udid-btn" id="copyBtn"><span data-i18n="copy">Копировать UDID</span></button>
+            </div>
+            <button type="button" class="udid-link" id="hideBtn" data-i18n="hide">Скрыть и начать заново</button>
+            <p class="udid-note" data-i18n="resNote">Мы не сохраняем UDID: он показывается только на этой странице и пропадёт, когда вы закроете вкладку.</p>
+        </section>
+
+        <!-- ошибка -->
+        <section class="udid-card udid-error" id="errorCard" hidden>
+            <h2 data-i18n="errTitle">Не удалось получить UDID</h2>
+            <p data-i18n="errText">Попробуйте ещё раз: нажмите «Получить UDID» и установите профиль до конца. Страницу нужно открывать в Safari.</p>
+        </section>
+
+        <!-- инструкция -->
+        <section class="udid-card" id="introCard">
+            <div class="udid-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="2.8" width="11" height="18.4" rx="2.8"/><path d="M10.5 18.4h3"/><path d="M9.6 9.4a2.4 2.4 0 1 1 4.8 0c0 2-.9 3.1-1.4 4.3"/><path d="M12 11v1.6"/></svg></div>
+            <h1 data-i18n="title">Узнать UDID</h1>
+            <p class="udid-lead" data-i18n="lead">UDID — уникальный номер вашего iPhone или iPad. Он нужен, чтобы оформить сертификат именно на ваше устройство.</p>
+
+            <div class="udid-warn" id="warnDevice" hidden><span data-i18n="warnDevice">Эта страница работает на iPhone и iPad. Откройте её на том устройстве, UDID которого нужно узнать.</span></div>
+            <div class="udid-warn" id="warnBrowser" hidden>
+                <span data-i18n="warnBrowser">Откройте эту страницу в Safari: в других браузерах iPhone не даёт установить профиль.</span>
+                <button type="button" class="udid-btn udid-btn--glass" id="copyLinkBtn"><span data-i18n="copyLink">Скопировать ссылку</span></button>
+            </div>
+
+            <ol class="udid-steps">
+                <li><span class="udid-num">1</span><span data-i18n="s1">Откройте эту страницу в Safari на iPhone или iPad.</span></li>
+                <li><span class="udid-num">2</span><span data-i18n="s2">Нажмите «Получить UDID» и разрешите загрузку профиля.</span></li>
+                <li><span class="udid-num">3</span><span data-i18n="s3">Откройте «Настройки» → «Профиль загружен» и нажмите «Установить».</span></li>
+                <li><span class="udid-num">4</span><span data-i18n="s4">Safari откроется снова, и здесь появится ваш UDID.</span></li>
+            </ol>
+
+            <a class="udid-btn" id="getBtn" href="/udid/api.php?a=profile"><span data-i18n="get">Получить UDID</span></a>
+            <div class="udid-after" id="afterBox" hidden data-i18n="after">Профиль загружен. Откройте «Настройки» → «Профиль загружен» (вверху списка) и нажмите «Установить». После установки вы вернётесь на эту страницу.</div>
+            <p class="udid-note" data-i18n="note">Профиль нужен один раз: он ничего не меняет в телефоне и не остаётся на устройстве.</p>
+        </section>
+    </main>
+
+    <script>
+    (function () {
+        const T = {
+            ru: {
+                title: 'Узнать UDID', pageTitle: 'Узнать UDID — iApps',
+                lead: 'UDID — уникальный номер вашего iPhone или iPad. Он нужен, чтобы оформить сертификат именно на ваше устройство.',
+                warnDevice: 'Эта страница работает на iPhone и iPad. Откройте её на том устройстве, UDID которого нужно узнать.',
+                warnBrowser: 'Откройте эту страницу в Safari: в других браузерах iPhone не даёт установить профиль.',
+                copyLink: 'Скопировать ссылку', copiedLink: 'Ссылка скопирована',
+                s1: 'Откройте эту страницу в Safari на iPhone или iPad.', s2: 'Нажмите «Получить UDID» и разрешите загрузку профиля.',
+                s3: 'Откройте «Настройки» → «Профиль загружен» и нажмите «Установить».', s4: 'Safari откроется снова, и здесь появится ваш UDID.',
+                get: 'Получить UDID', after: 'Профиль загружен. Откройте «Настройки» → «Профиль загружен» (вверху списка) и нажмите «Установить». После установки вы вернётесь на эту страницу.',
+                note: 'Профиль нужен один раз: он ничего не меняет в телефоне и не остаётся на устройстве.',
+                resLabel: 'Ваш UDID', copy: 'Копировать UDID', copied: 'Скопировано', hide: 'Скрыть и начать заново',
+                resNote: 'Мы не сохраняем UDID: он показывается только на этой странице и пропадёт, когда вы закроете вкладку.',
+                errTitle: 'Не удалось получить UDID', errText: 'Попробуйте ещё раз: нажмите «Получить UDID» и установите профиль до конца. Страницу нужно открывать в Safari.',
+                build: 'сборка'
+            },
+            en: {
+                title: 'Get your UDID', pageTitle: 'Get your UDID — iApps',
+                lead: 'A UDID is a unique number of your iPhone or iPad. It is needed to issue a certificate for your specific device.',
+                warnDevice: 'This page works on iPhone and iPad. Open it on the device whose UDID you need.',
+                warnBrowser: 'Open this page in Safari: iPhone does not let you install the profile from other browsers.',
+                copyLink: 'Copy link', copiedLink: 'Link copied',
+                s1: 'Open this page in Safari on your iPhone or iPad.', s2: 'Tap \u201cGet UDID\u201d and allow the profile download.',
+                s3: 'Open Settings \u2192 \u201cProfile Downloaded\u201d and tap \u201cInstall\u201d.', s4: 'Safari opens again and your UDID appears here.',
+                get: 'Get UDID', after: 'Profile downloaded. Open Settings \u2192 \u201cProfile Downloaded\u201d (at the top of the list) and tap \u201cInstall\u201d. When it is done you will return to this page.',
+                note: 'The profile is needed once: it changes nothing on your phone and is not kept on the device.',
+                resLabel: 'Your UDID', copy: 'Copy UDID', copied: 'Copied', hide: 'Hide and start over',
+                resNote: 'We do not store your UDID: it is shown only on this page and disappears when you close the tab.',
+                errTitle: 'Could not get the UDID', errText: 'Try again: tap \u201cGet UDID\u201d and finish installing the profile. The page must be opened in Safari.',
+                build: 'build'
+            }
+        };
+        const $ = (id) => document.getElementById(id);
+        let lang = 'ru';
+        try { lang = localStorage.getItem('lang') === 'en' ? 'en' : 'ru'; } catch (e) {}
+        const tt = (k) => T[lang][k];
+
+        // ---- адреса относительно папки страницы (работает и для /udid, и для /udid/) ----
+        const base = location.pathname.replace(/\/?(index\.html)?$/, '/');
+        $('getBtn').href = base + 'api.php?a=profile';
+
+        // ---- язык и тема ----
+        function applyLang() {
+            document.documentElement.lang = lang;
+            document.title = tt('pageTitle');
+            document.querySelectorAll('[data-i18n]').forEach(el => { if (T[lang][el.dataset.i18n] != null) el.textContent = T[lang][el.dataset.i18n]; });
+            $('langBtn').textContent = lang === 'ru' ? 'RU' : 'EN';
+            renderMeta();
+        }
+        $('langBtn').addEventListener('click', () => { lang = lang === 'ru' ? 'en' : 'ru'; try { localStorage.setItem('lang', lang); } catch (e) {} applyLang(); });
+        const SUN = '<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M18.7 5.3l-1.6 1.6M6.9 17.1l-1.6 1.6"/>';
+        const MOON = '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>';
+        function themeIcon() { $('themeBtn').firstElementChild.innerHTML = document.documentElement.getAttribute('data-theme') === 'light' ? SUN : MOON; }
+        $('themeBtn').addEventListener('click', () => {
+            const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', next); try { localStorage.setItem('theme', next); } catch (e) {} themeIcon();
+        });
+
+        // ---- устройство и браузер ----
+        const ua = navigator.userAgent || '';
+        const isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        const isSafari = isIOS && /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS|OPiOS|OPT\/|YaBrowser|GSA|DuckDuckGo|Instagram|FBAN|FBAV|Telegram|Line\//.test(ua);
+        $('warnDevice').hidden = isIOS;
+        $('warnBrowser').hidden = !(isIOS && !isSafari);
+
+        function copyText(text) {
+            if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+            return new Promise((resolve, reject) => {
+                const ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+                document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
+                try { document.execCommand('copy') ? resolve() : reject(new Error('copy')); } catch (e) { reject(e); } finally { ta.remove(); }
+            });
+        }
+        function flash(btn, key) {
+            const span = btn.querySelector('span'); const old = span.dataset.i18n;
+            span.textContent = tt(key); clearTimeout(btn._t);
+            btn._t = setTimeout(() => { span.textContent = tt(old); }, 1800);
+        }
+        $('copyLinkBtn').addEventListener('click', () => copyText(location.origin + location.pathname).then(() => flash($('copyLinkBtn'), 'copiedLink')).catch(() => {}));
+        $('copyBtn').addEventListener('click', () => { if (current) copyText(current.udid).then(() => flash($('copyBtn'), 'copied')).catch(() => {}); });
+        $('getBtn').addEventListener('click', () => { setTimeout(() => { $('afterBox').hidden = false; }, 600); });
+
+        // ---- результат ----
+        const KEY = 'iapps_udid';
+        let current = null;
+        function renderMeta() {
+            if (!current) return;
+            const parts = [];
+            if (current.product) parts.push(current.product);
+            if (current.version) parts.push(tt('build') + ' ' + current.version);
+            $('udidMeta').textContent = parts.join(' \u00b7 ');
+            $('udidMeta').hidden = parts.length === 0;
+        }
+        function show(info) {
+            current = info;
+            $('udidValue').textContent = info.udid;
+            renderMeta();
+            $('resultCard').hidden = false; $('errorCard').hidden = true; $('introCard').hidden = true;
+            window.scrollTo(0, 0);
+        }
+        function reset() {
+            current = null; try { sessionStorage.removeItem(KEY); } catch (e) {}
+            $('resultCard').hidden = true; $('errorCard').hidden = true; $('introCard').hidden = false; $('afterBox').hidden = true;
+        }
+        $('hideBtn').addEventListener('click', reset);
+
+        function parse(params) {
+            const udid = (params.get('udid') || '').trim();
+            if (!/^[0-9A-Fa-f-]{8,64}$/.test(udid)) return null;
+            const product = params.get('product') || '', version = params.get('version') || '';
+            return { udid, product: /^[A-Za-z0-9,._ -]{1,40}$/.test(product) ? product : '', version: /^[0-9A-Za-z._ ()-]{1,40}$/.test(version) ? version : '' };
+        }
+        // данные приходят в «#», поэтому не попадают ни в журналы сервера, ни в Referer; после чтения адрес очищаем.
+        // hashchange нужен, если вкладка с этой страницей уже открыта и Safari лишь меняет «#» без перезагрузки
+        function handleHash() {
+            if (!location.hash) return false;
+            const hash = new URLSearchParams(location.hash.replace(/^#/, ''));
+            const info = hash.has('udid') ? parse(hash) : null;
+            history.replaceState(null, '', location.pathname + location.search);
+            if (info) { try { sessionStorage.setItem(KEY, JSON.stringify(info)); } catch (e) {} show(info); return true; }
+            if (hash.has('error')) { $('resultCard').hidden = true; $('errorCard').hidden = false; $('introCard').hidden = false; window.scrollTo(0, 0); return true; }
+            return false;
+        }
+        window.addEventListener('hashchange', handleHash);
+        themeIcon(); applyLang();
+        if (!handleHash()) {
+            let saved = null;
+            try { saved = JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (e) {}
+            if (saved && /^[0-9A-Fa-f-]{8,64}$/.test(saved.udid || '')) show(saved);
+        }
+    })();
+    </script>
+</body>
+</html>
