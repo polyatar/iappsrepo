@@ -17,7 +17,9 @@ const T = (key, fallback) => {
 };
 let loadFailed = false;
 
-fetch('Repo.json')
+// Repo.json грузим «свежим»: адрес меняется раз в минуту, а браузер перед использованием копии всегда проверяет её на сервере.
+// Так новый файл появляется после одного обновления страницы, а не после нескольких (раньше мешали кэш браузера и CDN).
+fetch('Repo.json?v=' + Math.floor(Date.now() / 60000), { cache: 'no-cache' })
     .then(response => response.json())
     .then(data => {
         apps = data;
