@@ -8,14 +8,14 @@
     <title data-i18n="page.title">iApps - Сертификат разработчика Apple и приложения для iPhone</title>
     <link rel="icon" type="image/png" href="Images/Profile.PNG">
     <link rel="apple-touch-icon" href="Images/Profile.PNG">
-    <link rel="stylesheet" href="Styles/Style.css?v=34">
+    <link rel="stylesheet" href="Styles/Style.css?v=39">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style id="access-styles">
 /* ===== Access: switch + slider ===== */
 .access-switch { position: relative; display: grid; grid-template-columns: 1fr 1fr; padding: 0.375rem; margin: 0 auto 2rem; max-width: 420px; background: var(--bg-glass); border: 1px solid var(--border); border-radius: 9999px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
-.access-switch__thumb { position: absolute; top: 0.375rem; bottom: 0.375rem; left: 0.375rem; width: calc(50% - 0.375rem); background: var(--sel); border-radius: 9999px; box-shadow: 0 8px 24px var(--accent-glow); transition: transform var(--transition); pointer-events: none; background-origin: border-box; }
+.access-switch__thumb { position: absolute; top: 0.375rem; bottom: 0.375rem; left: 0.375rem; width: calc(50% - 0.375rem); background: var(--gradient-1); border-radius: 9999px; box-shadow: 0 8px 24px var(--accent-glow); transition: transform var(--transition); pointer-events: none; background-origin: border-box; }
 .access-switch[data-active="1"] .access-switch__thumb { transform: translateX(100%); }
 .access-switch__btn { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.75rem 0.5rem; border-radius: 9999px; font-weight: 700; font-size: 0.9375rem; color: var(--text-secondary); transition: color var(--transition); white-space: nowrap; }
 .access-switch__btn.is-active { color: #fff; }
@@ -90,7 +90,7 @@
         .category-bar__scroll.is-dragging .cat-chip { pointer-events: none; }
         .cat-chip { touch-action: manipulation; flex: 0 0 auto; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.55rem 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 9999px; color: var(--text-secondary); font-size: 0.875rem; font-weight: 600; white-space: nowrap; scroll-snap-align: start; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); transition: all var(--transition); }
         .cat-chip:hover { border-color: var(--border-hover); color: var(--text-primary); }
-        .cat-chip.is-active { background: var(--sel); background-origin: border-box; border-color: transparent; color: #fff; box-shadow: none; }
+        .cat-chip.is-active { background: var(--gradient-1); background-origin: border-box; border-color: transparent; color: #fff; box-shadow: none; }
         .cat-chip__emoji { font-size: 1rem; line-height: 1; }
         .cat-arrow { position: absolute; top: 50%; z-index: 3; width: 32px; height: 32px; margin-top: -16px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--bg-secondary); border: 1px solid var(--border-hover); box-shadow: var(--shadow-md); transition: all var(--transition); }
         .cat-arrow[hidden] { display: none; }
@@ -142,7 +142,7 @@
         .cert-card__cta { display: flex; align-items: center; justify-content: center; padding: 0.875rem; border-radius: 14px; background: var(--bg-tertiary); border: 1px solid var(--border); font-weight: 700; font-size: 0.9375rem; color: var(--text-primary); transition: all var(--transition); }
         .cert-card__cta-on { display: none; }
         .cert-card:hover .cert-card__cta { border-color: var(--border-hover); }
-        .cert-card.pricing__item--selected .cert-card__cta { background: var(--sel); border-color: transparent; color: #fff; box-shadow: 0 8px 24px var(--accent-glow); background-origin: border-box; }
+        .cert-card.pricing__item--selected .cert-card__cta { background: var(--sel); border-color: transparent; color: #fff; box-shadow: none; background-origin: border-box; }
         .cert-card.pricing__item--selected .cert-card__cta-off { display: none; }
         .cert-card.pricing__item--selected .cert-card__cta-on { display: inline; }
         .cert-card.pricing__item--selected .cert-card__name { color: var(--accent-soft); }
@@ -281,11 +281,11 @@
         .search-bar .settings-btn:hover { background: var(--sel); background-origin: border-box; border-color: transparent; color: #fff; box-shadow: none; }
         .search-bar .search:focus-within .search__icon, .search-bar .search__input:focus ~ .search__icon { fill: var(--accent); }
         /* окно фильтров: выбранное окрашено так же, как выбранная категория, без свечения */
-        .chip input:checked + span, .category-chip:has(input:checked) { background: var(--sel); background-origin: border-box; border-color: transparent; color: #fff; box-shadow: none; }
+        .chip input:checked + span, .category-chip:has(input:checked) { background: var(--gradient-1); background-origin: border-box; border-color: transparent; color: #fff; box-shadow: none; }
         @media (hover: hover) { .chip:hover span, .category-chip:hover { border-color: rgba(37, 99, 235, 0.6); } }
         .category-bar .cat-chip { background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-hi); }
         @media (hover: hover) { .category-bar .cat-chip:hover { border-color: rgba(37, 99, 235, 0.65); color: var(--text-primary); } .category-bar .cat-chip.is-active:hover { border-color: transparent; color: #fff; } }
-        .category-bar .cat-chip.is-active { background: var(--sel); background-origin: border-box; border-color: transparent; color: #fff; box-shadow: none; }
+        .category-bar .cat-chip.is-active { background: var(--gradient-1); background-origin: border-box; border-color: transparent; color: #fff; box-shadow: none; }
         .category-bar .cat-arrow { background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-hi); }
         .category-bar .cat-arrow:hover { background: var(--sel); background-origin: border-box; border-color: transparent; }
         @media (max-width: 768px) { #app-list .app-header img { width: 58px; height: 58px; } }
@@ -300,7 +300,7 @@
     <style id="faq-styles">
         /* ===== кнопка «Как это работает?» и окно с вопросами ===== */
         .btn--glass { background: var(--glass-bg, rgba(255, 255, 255, 0.07)); border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.14)); color: var(--text-primary); box-shadow: var(--glass-hi, none); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
-        .btn--glass svg { fill: none; stroke: var(--accent); }
+        .btn--glass svg { fill: none; stroke: var(--text-primary); }
         @media (hover: hover) { .btn--glass:hover { border-color: rgba(37, 99, 235, 0.65); transform: translateY(-2px); } }
         .modal .modal__content--faq { width: min(780px, 100%); max-width: 780px; height: min(85vh, 760px); }   /* постоянная высота: окно не прыгает при смене категории */
         .modal .modal__content--faq::before { top: 0; right: 0; }   /* декоративное пятно не выступает за край окна: нет лишней горизонтальной прокрутки */
@@ -313,7 +313,7 @@
         .faq-chips.is-dragging .faq-chip { pointer-events: none; }
         .faq-chip { flex: 0 0 auto; white-space: nowrap; padding: 0.6rem 1.15rem; border-radius: 9999px; background: var(--glass-bg, rgba(255, 255, 255, 0.07)); border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.14)); color: var(--text-secondary); font-size: 0.875rem; font-weight: 700; touch-action: manipulation; transition: all var(--transition); }
         @media (hover: hover) { .faq-chip:hover { border-color: rgba(37, 99, 235, 0.6); color: var(--text-primary); } }
-        .faq-chip.is-active { background: var(--sel); background-origin: border-box; border-color: transparent; color: #fff; }
+        .faq-chip.is-active { background: var(--gradient-1); background-origin: border-box; border-color: transparent; color: #fff; }
         .faq-heading { margin: 0 0 0.25rem; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; color: var(--text-primary); }
         .faq-item { border-bottom: 1px solid var(--border); }
         .faq-q { width: 100%; display: flex; align-items: center; gap: 1rem; padding: 1.1rem 0; text-align: left; font-size: 1.0625rem; font-weight: 700; line-height: 1.35; color: var(--text-primary); background: none; border: 0; cursor: pointer; touch-action: manipulation; }
@@ -336,6 +336,69 @@
             .faq-q { gap: 0.8rem; }
             .faq-a__inner { padding-left: calc(34px + 0.8rem); }
         }
+    </style>
+    <style id="pricing-styles">
+        /* ===== тарифы: без свечения, плавные блоки «Гарантия» и «Список прав» ===== */
+        .btn--glass svg { stroke: var(--text-primary); }
+        [data-theme="dark"] .btn--glass svg { stroke: #fff; }
+        @media (hover: none) { .pricing__item:hover { transform: none; } }
+        .cert-card__cta { transition: background-color var(--transition), border-color var(--transition), color var(--transition); }
+        .cert-card__rights-toggle { transition: border-color var(--transition), color var(--transition); touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+        .cert-card__rights-panel { transition: grid-template-rows 0.4s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.4s; }
+        .cert-card__rights.is-open .cert-card__rights-panel { transition: grid-template-rows 0.4s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s; }
+        .cert-card__rights-inner { opacity: 0; transition: opacity 0.2s ease; contain: paint; }
+        .cert-card__rights.is-open .cert-card__rights-inner { opacity: 1; transition: opacity 0.35s ease 0.08s; }
+        .cert-card__chev { transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); will-change: transform; }
+        .access-slider { overflow-anchor: none; }
+        /* размытие фона под переключателем заставляло телефон перерисовывать его на каждом кадре раскрытия блока */
+        @media (max-width: 768px), (hover: none) { .access-switch { backdrop-filter: none; -webkit-backdrop-filter: none; } }
+        @media (prefers-reduced-motion: reduce) { .cert-card__rights-panel, .cert-card__rights-inner, .cert-card__chev { transition: none; } }
+    </style>
+    <style id="pricing-glass">
+        /* ===== тарифы: стекло того же цвета, что кнопка «Как это работает?» (нейтральная прозрачная панель + яркая кромка) =====
+           Верхний слой с градиентом лежит отдельно и не меняет размер, когда блоки раскрываются: окно растёт без лишней перерисовки. */
+        .pricing__card {
+            border-radius: 44px;
+            background: rgba(255, 255, 255, 0.045);
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            box-shadow: inset 1.5px 1.5px 0 rgba(255, 255, 255, 0.3), inset -1px -1px 0 rgba(255, 255, 255, 0.12), 0 22px 56px rgba(0, 0, 0, 0.5);
+        }
+        .pricing__card::before { inset: auto; left: 0; right: 0; top: 0; height: 760px; will-change: transform;
+            background: linear-gradient(160deg, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0) 100%); }
+        .pricing__card::after { content: none; }
+        /* настоящее размытие фона только на компьютере; на телефоне оно давало рывки при раскрытии блоков */
+        @media (hover: hover) and (pointer: fine) { .pricing__card { -webkit-backdrop-filter: blur(26px) saturate(1.5); backdrop-filter: blur(26px) saturate(1.5); } }
+        .access-switch { background: rgba(255, 255, 255, 0.075); border: 1px solid rgba(255, 255, 255, 0.14); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 0 -1px 0 rgba(255, 255, 255, 0.04); }
+        .pricing__item { background: rgba(255, 255, 255, 0.065); border: 1px solid rgba(255, 255, 255, 0.13); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(255, 255, 255, 0.03); }
+        .pricing__item--selected { border-color: rgba(var(--accent-rgb), 0.8); box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
+        @media (max-width: 480px) { .pricing__card { border-radius: 34px; } }
+
+        [data-theme="light"] .pricing__card {
+            background: rgba(232, 243, 255, 0.76);
+            border-color: rgba(var(--accent-rgb), 0.22);
+            box-shadow: inset 1.5px 1.5px 0 #ffffff, inset -1px -1px 0 rgba(var(--accent-rgb), 0.2), 0 22px 56px rgba(20, 70, 160, 0.2);
+        }
+        [data-theme="light"] .pricing__card::before { background: linear-gradient(160deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 100%); }
+        [data-theme="light"] .access-switch { background: rgba(255, 255, 255, 0.6); border-color: rgba(var(--accent-rgb), 0.18); box-shadow: inset 0 1px 0 #fff, 0 6px 18px rgba(20, 70, 160, 0.08); }
+        [data-theme="light"] .pricing__item { background: rgba(255, 255, 255, 0.72); border-color: rgba(var(--accent-rgb), 0.16); box-shadow: inset 0 1px 0 #fff; }
+        [data-theme="light"] .pricing__item--selected { border-color: rgba(var(--accent-rgb), 0.75); box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.75), inset 0 1px 0 #fff; }
+    </style>
+    <style id="pricing-glass2">
+        /* ===== тарифы: стрелки, бейджи, кнопки «Выбрать», «Гарантия» и «Список прав» в том же стекле ===== */
+        .pricing__scroll-wrap .pricing__arrow { background: var(--glass-bg), var(--bg-secondary); border: 1px solid var(--glass-border); box-shadow: var(--glass-hi), 0 8px 20px rgba(0, 0, 0, 0.4); }
+        [data-theme="light"] .pricing__scroll-wrap .pricing__arrow { box-shadow: var(--glass-hi), 0 8px 20px rgba(20, 70, 160, 0.16); }
+        @media (hover: hover) { .pricing__scroll-wrap .pricing__arrow:hover { background: var(--sel); border-color: transparent; } }
+        .cert-card .cert-card__icon, .cert-card .cert-card__rights-count, .cert-card .cert-card__cta, .cert-card .cert-card__warranty-term {
+            background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-hi);
+        }
+        /* кнопка «Выбрать»: стекло, пока тариф не выбран; выбранный остаётся синим */
+        .cert-card.pricing__item--selected .cert-card__cta { background: var(--sel); border-color: transparent; box-shadow: none; }
+        /* «Гарантия» и «Список прав»: сплошная стеклянная кнопка вместо пунктирного контура, при открытии обводка по всему краю */
+        .cert-card .cert-card__rights-toggle { background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-hi); color: var(--text-primary); }
+        .cert-card .cert-card__rights-count { color: var(--text-primary); }
+        @media (hover: hover) { .cert-card .cert-card__rights-toggle:hover { border-color: rgba(var(--accent-rgb), 0.6); color: var(--text-primary); } }
+        .cert-card .cert-card__rights.is-open .cert-card__rights-toggle { border: 1px solid var(--accent); background: linear-gradient(160deg, rgba(var(--accent-rgb), 0.2), rgba(var(--accent-rgb), 0.07)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14); color: var(--text-primary); }
+        [data-theme="light"] .cert-card .cert-card__rights.is-open .cert-card__rights-toggle { background: linear-gradient(160deg, rgba(var(--accent-rgb), 0.14), rgba(var(--accent-rgb), 0.05)); box-shadow: inset 0 1px 0 #fff; }
     </style>
     <style id="app-detail-styles">
         /* ===== окно приложения: цветная карточка в стиле постеров (цвет берётся из иконки) ===== */
@@ -1350,8 +1413,8 @@
     if (btn) btn.addEventListener('click', () => window.i18n.toggle());
 })();
 </script>
-    <script src="Scripts/Script.js?v=34"></script>
-    <script src="Scripts/Repository.js?v=34"></script>
+    <script src="Scripts/Script.js?v=39"></script>
+    <script src="Scripts/Repository.js?v=39"></script>
     <script>
 (function () {
 
@@ -1475,9 +1538,21 @@
         });
     }
     
-    function syncSliderHeight() {
+    // Высота слайдера анимируется только при смене вкладки. Когда раскрывается «Гарантия» или «Список прав»,
+    // блок уже плавно растёт сам, и высота слайдера повторяет его сразу (две анимации подряд давали рывки на телефонах).
+    let sliderBusyUntil = 0;
+    function syncSliderHeight(animate) {
         if (!accessSlider || !accessPanels[activeAccess]) return;
-        accessSlider.style.height = (accessPanels[activeAccess].offsetHeight + 28) + 'px';
+        const height = (accessPanels[activeAccess].offsetHeight + 28) + 'px';
+        if (animate === true) {
+            accessSlider.style.transition = '';
+            sliderBusyUntil = performance.now() + 540;
+            setTimeout(() => syncSliderHeight(), 560);
+        } else {
+            if (performance.now() < sliderBusyUntil) return;
+            accessSlider.style.transition = 'none';
+        }
+        if (accessSlider.style.height !== height) accessSlider.style.height = height;
     }
     
     function refreshDesc() {
@@ -1496,7 +1571,7 @@
         });
         accessPanels.forEach((panel, i) => { panel.inert = i !== index; });
         refreshDesc();
-        syncSliderHeight();
+        syncSliderHeight(true);
     }
     
     if (accessSwitch && accessTrack) {

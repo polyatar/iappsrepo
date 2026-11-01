@@ -202,17 +202,18 @@ img { max-width: 100%; height: auto; display: block; }
 
 .pricing { padding: 6rem 0; position: relative; z-index: 1; }
 .pricing__container { max-width: 880px; margin: 0 auto; padding: 0 clamp(1rem, 5vw, 3rem); }
-.pricing__card { position: relative; background: var(--bg-card); border: 1px solid var(--border); border-radius: 40px; padding: clamp(1.75rem, 4vw, 3rem); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); overflow: hidden; }
-.pricing__card::before { content: ''; position: absolute; top: -120px; right: -120px; width: 320px; height: 320px; background: radial-gradient(circle, rgba(var(--accent-rgb), 0.18) 0%, transparent 70%); pointer-events: none; z-index: -1; }
+.pricing__card { position: relative; isolation: isolate; background: var(--glass-bg, var(--bg-card)); border: 1px solid var(--glass-border, var(--border)); border-radius: 40px; padding: clamp(1.75rem, 4vw, 3rem); box-shadow: var(--glass-shadow, none), var(--glass-hi, none); overflow: hidden; overflow-anchor: none; }
+.pricing__card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 22% -12%, rgba(255, 255, 255, 0.12), transparent 58%); pointer-events: none; z-index: -1; }
+[data-theme="light"] .pricing__card::before { background: radial-gradient(ellipse at 22% -12%, rgba(var(--accent-rgb), 0.1), transparent 58%); }
 .pricing__header { text-align: center; margin-bottom: 2.5rem; }
 .pricing__title { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 900; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
 .pricing__desc { color: var(--text-secondary); font-weight: 500; }
 .pricing__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
-.pricing__item { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; padding: 1.75rem; background: rgba(10, 10, 14, 0.68); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 24px; transition: all var(--transition); cursor: pointer; font: inherit; color: inherit; text-align: left; width: 100%; }
+.pricing__item { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; padding: 1.75rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 24px; transition: border-color var(--transition), background-color var(--transition), transform var(--transition), box-shadow var(--transition); cursor: pointer; font: inherit; color: inherit; text-align: left; width: 100%; }
 [data-theme="light"] .pricing__item { background: rgba(255, 255, 255, 0.72); border-color: rgba(42, 124, 245, 0.16); }
 .pricing__item:hover { border-color: rgba(var(--accent-rgb), 0.4); transform: translateY(-2px); }
-.pricing__item--popular { box-shadow: 0 0 30px rgba(var(--accent-rgb), 0.15); }
-.pricing__item--selected { border-width: 2px; border-color: rgba(var(--accent-rgb), 0.7); box-shadow: 0 0 36px rgba(var(--accent-rgb), 0.28), inset 0 0 0 1px rgba(var(--accent-rgb), 0.18); }
+.pricing__item--popular { box-shadow: none; }
+.pricing__item--selected { border-color: rgba(var(--accent-rgb), 0.75); box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.75); }   /* рамка без свечения; кольцо внутри, поэтому размер плитки не меняется */
 .pricing__item--selected .pricing__duration { color: var(--accent-soft); }
 .pricing__badge { position: absolute; top: 1rem; right: 1rem; left: auto; transform: none; padding: 0.25rem 0.625rem; background: var(--gradient-1); color: white; font-size: 0.625rem; font-weight: 700; border-radius: 9999px; text-transform: uppercase; letter-spacing: -0.02em; white-space: nowrap; background-origin: border-box; }
 .pricing__duration { font-size: 0.875rem; color: var(--text-secondary); font-weight: 600; margin-bottom: 0; }
