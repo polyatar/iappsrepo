@@ -173,8 +173,14 @@ function displayApps() {
                 <p style="font-size: 3rem; margin-bottom: 1rem;">🔍</p>
                 <p style="font-size: 1.25rem; margin-bottom: 0.5rem;">${T('empty.title', 'Ничего не найдено')}</p>
                 <p style="font-size: 0.875rem;">${T('empty.sub', 'Попробуйте изменить параметры поиска')}</p>
+                <button type="button" class="suggest-btn" id="suggestOpen">
+                    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+                    <span>${T('suggest.btn', 'Предложить приложение')}</span>
+                </button>
             </div>
         `;
+        const suggestBtn = document.getElementById('suggestOpen');
+        if (suggestBtn) suggestBtn.addEventListener('click', () => { if (window.openSuggest) window.openSuggest(searchInput.value.trim()); });
         pagination.innerHTML = '';
         return;
     }

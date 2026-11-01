@@ -8,7 +8,7 @@
     <title data-i18n="page.title">iApps - Сертификат разработчика Apple и приложения для iPhone</title>
     <link rel="icon" type="image/png" href="Images/Profile.PNG">
     <link rel="apple-touch-icon" href="Images/Profile.PNG">
-    <link rel="stylesheet" href="Styles/Style.css?v=45">
+    <link rel="stylesheet" href="Styles/Style.css?v=48">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -491,6 +491,59 @@
             box-shadow: 0 0 0 3px rgb(19, 19, 20), inset 0 1px 0 rgba(255, 255, 255, 0.5); }   /* цвет выреза = цвет окна вокруг, чтобы кромка плитки не просвечивала */
         .pricing__scroll .pricing__badge::before { content: '\2605'; font-size: 0.95em; line-height: 1; }
         [data-theme="light"] .pricing__scroll .pricing__badge { box-shadow: 0 0 0 3px rgba(243, 248, 255, 0.98), inset 0 1px 0 rgba(255, 255, 255, 0.6); }
+    </style>
+    <style id="suggest-styles">
+        /* ===== окна «Как это работает?» и «О товарах»: ровный тон без полос, высота по содержимому ===== */
+        .modal .modal__content--faq, #infoModal .modal__content { background: rgba(34, 34, 38, 0.94); }
+        .modal .modal__content--faq::before, #infoModal .modal__content::before { display: none; }
+        [data-theme="light"] .modal .modal__content--faq, [data-theme="light"] #infoModal .modal__content { background: rgba(236, 244, 255, 0.95); }
+        .modal .modal__content--faq { height: auto; align-self: flex-start; margin-top: clamp(0.5rem, 8vh, 4.5rem); }
+        /* окна почти непрозрачные, размытие фона под ними не нужно, а при смене высоты оно пересчитывалось на каждом кадре и давало рывки */
+        .modal .modal__content--faq, #infoModal .modal__content, .modal .modal__content--suggest { -webkit-backdrop-filter: none; backdrop-filter: none; }
+        .modal .modal__content--faq { box-shadow: inset 1.5px 1.5px 0 rgba(255, 255, 255, 0.3), inset -1px -1px 0 rgba(255, 255, 255, 0.12), 0 10px 26px rgba(0, 0, 0, 0.45); }
+        [data-theme="light"] .modal .modal__content--faq { box-shadow: inset 1.5px 1.5px 0 #ffffff, inset -1px -1px 0 rgba(var(--accent-rgb), 0.2), 0 10px 26px rgba(20, 70, 160, 0.22); }
+        /* пока открыто любое окно, бесконечные анимации страницы под ним стоят: размытый фон окна иначе пересчитывается на каждом кадре */
+        body.modal-open .bg-glow, body.modal-open .hero__logo, body.modal-open .hero__badge-dot { animation-play-state: paused; }
+        @media (hover: none) { .modal__backdrop { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(0, 0, 0, 0.78); } }
+        .faq-section { transition: opacity 0.16s ease, transform 0.16s ease; }
+        .faq-section.is-out { opacity: 0; transform: translateY(-4px); }
+        .faq-heading.is-entering, .faq-item.is-entering { animation: faqIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: calc(var(--i, 0) * 50ms); }
+        @keyframes faqIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+        @media (hover: hover) and (pointer: fine) { @keyframes faqIn { from { opacity: 0; filter: blur(5px); transform: translateY(8px); } to { opacity: 1; filter: blur(0); transform: none; } } }
+        @media (prefers-reduced-motion: reduce) { .faq-section, .faq-heading.is-entering, .faq-item.is-entering { transition: none; animation: none; } }
+
+        /* ===== «Предложить приложение» ===== */
+        .suggest-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 1.5rem; padding: 0.85rem 1.5rem; border-radius: 9999px; font: inherit; font-size: 0.9375rem; font-weight: 700; color: var(--text-primary); cursor: pointer;
+            background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-hi); touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: border-color var(--transition), transform var(--transition); }
+        .suggest-btn svg { color: var(--accent-soft); }
+        @media (hover: hover) { .suggest-btn:hover { border-color: rgba(var(--accent-rgb), 0.6); transform: translateY(-2px); } }
+        .modal .modal__content--suggest { width: min(560px, 100%); max-width: 560px; border-radius: 40px; background: rgba(34, 34, 38, 0.94); border: 1px solid rgba(255, 255, 255, 0.13);
+            box-shadow: inset 1.5px 1.5px 0 rgba(255, 255, 255, 0.3), inset -1px -1px 0 rgba(255, 255, 255, 0.12), 0 30px 80px rgba(0, 0, 0, 0.6); }
+        .modal .modal__content--suggest::before { display: none; }
+        [data-theme="light"] .modal .modal__content--suggest { background: rgba(236, 244, 255, 0.95); border-color: rgba(var(--accent-rgb), 0.22); box-shadow: inset 1.5px 1.5px 0 #ffffff, inset -1px -1px 0 rgba(var(--accent-rgb), 0.2), 0 30px 80px rgba(20, 70, 160, 0.28); }
+        .sg-field { margin-bottom: 1.35rem; }
+        .sg-label { margin: 0 0 0.6rem; font-size: 0.9375rem; font-weight: 800; color: var(--text-primary); }
+        .sg-input { width: 100%; padding: 0.9rem 1.05rem; border-radius: 18px; font: inherit; font-size: 1rem; color: var(--text-primary); background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-hi); outline: none; transition: border-color var(--transition), box-shadow var(--transition); }
+        .sg-input::placeholder { color: var(--text-muted); }
+        .sg-input:focus { border-color: rgba(var(--accent-rgb), 0.75); box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.18); }
+        .sg-input[hidden], .sg-textarea[hidden] { display: none; }
+        .sg-textarea { margin-top: 0.7rem; resize: none; line-height: 1.45; }
+        .sg-input + .sg-chips, .sg-chips + .sg-input { margin-top: 0.7rem; }
+        .sg-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .sg-chip { padding: 0.65rem 1.05rem; border-radius: 9999px; font: inherit; font-size: 0.875rem; font-weight: 700; color: var(--text-secondary); cursor: pointer; background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-hi); touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: color var(--transition), border-color var(--transition); }
+        @media (hover: hover) { .sg-chip:hover { border-color: rgba(var(--accent-rgb), 0.55); color: var(--text-primary); } }
+        .sg-chip.is-active { background: var(--gradient-1); background-origin: border-box; border-color: transparent; color: #fff; }
+        .sg-field.has-error .sg-input, .sg-field.has-error .sg-chip:not(.is-active) { border-color: rgba(248, 113, 113, 0.75); }
+        .sg-error { margin: 0 0 1rem; padding: 0.75rem 1rem; border-radius: 16px; font-size: 0.875rem; line-height: 1.45; color: #fecaca; background: rgba(248, 113, 113, 0.12); border: 1px solid rgba(248, 113, 113, 0.4); }
+        [data-theme="light"] .sg-error { color: #b91c1c; }
+        .sg-error[hidden] { display: none; }
+        .sg-submit { display: flex; align-items: center; justify-content: center; gap: 0.6rem; width: 100%; padding: 1.05rem 1.5rem; border: 0; border-radius: 9999px; font: inherit; font-size: 1.0625rem; font-weight: 800; color: #fff; cursor: pointer; background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%); background-origin: border-box; touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: transform 0.2s ease; }
+        @media (hover: hover) { .sg-submit:hover { transform: translateY(-2px); } }
+        .sg-submit:active { transform: scale(0.98); }
+        .sg-hint { margin: 0.9rem 0 0; text-align: center; font-size: 0.8125rem; line-height: 1.5; color: var(--text-muted); }
+        .sg-copy { display: block; margin: 0.6rem auto 0; background: none; border: 0; font: inherit; font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+        .sg-copy[hidden] { display: none; }
+        @media (max-width: 480px) { .modal .modal__content--suggest { border-radius: 32px; } .sg-chip { padding: 0.6rem 0.9rem; font-size: 0.8125rem; } }
     </style>
     <style id="app-detail-styles">
         /* ===== окно приложения: цветная карточка в стиле постеров (цвет берётся из иконки) ===== */
@@ -1222,8 +1275,45 @@
             </div>
             <div class="modal__body">
                 <div class="faq-chips" id="faqChips" role="tablist"></div>
-                <h4 class="faq-heading" id="faqHeading"></h4>
-                <div class="faq-list" id="faqList"></div>
+                <div class="faq-section" id="faqSection">
+                    <h4 class="faq-heading" id="faqHeading"></h4>
+                    <div class="faq-list" id="faqList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="suggestModal" role="dialog" aria-modal="true" aria-labelledby="suggestModalTitle">
+        <div class="modal__backdrop" id="suggestBackdrop"></div>
+        <div class="modal__content modal__content--suggest">
+            <div class="modal__header">
+                <h3 class="modal__title" id="suggestModalTitle" data-i18n="suggest.title">Предложить приложение</h3>
+                <button class="modal__close" id="closeSuggest" aria-label="Закрыть" data-i18n-attr="aria-label:aria.close">
+                    <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"/></svg>
+                </button>
+            </div>
+            <div class="modal__body">
+                <div class="sg-field">
+                    <label class="sg-label" for="sgApp" id="sgAppLabel"></label>
+                    <input class="sg-input" id="sgApp" type="text" maxlength="300" autocomplete="off" autocapitalize="off" spellcheck="false">
+                </div>
+                <div class="sg-field">
+                    <div class="sg-label" id="sgTaskLabel"></div>
+                    <div class="sg-chips" id="sgTask" role="radiogroup" aria-labelledby="sgTaskLabel"></div>
+                    <textarea class="sg-input sg-textarea" id="sgTaskOther" rows="3" maxlength="500" hidden></textarea>
+                </div>
+                <div class="sg-field">
+                    <div class="sg-label" id="sgDonateLabel"></div>
+                    <div class="sg-chips" id="sgDonate" role="radiogroup" aria-labelledby="sgDonateLabel"></div>
+                    <input class="sg-input" id="sgDonateOther" type="text" inputmode="numeric" maxlength="7" autocomplete="off" hidden>
+                </div>
+                <div class="sg-error" id="sgError" role="alert" hidden></div>
+                <button type="button" class="sg-submit" id="sgSend">
+                    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3c.3-1.1-.8-2-1.8-1.6L2.9 9.4c-1.2.5-1.1 2.2.1 2.6l4.3 1.4 1.7 5.3c.3 1 1.6 1.3 2.3.5l2.4-2.5 4.3 3.2c.8.6 1.9.1 2.1-.8l3.2-14.4zM9.4 12.8l8.2-5.1c.3-.2.5.2.3.4l-6.7 6.3-.3 3-1.5-4.6z"/></svg>
+                    <span id="sgSendText"></span>
+                </button>
+                <p class="sg-hint" id="sgHint"></p>
+                <button type="button" class="sg-copy" id="sgCopy" hidden></button>
             </div>
         </div>
     </div>
@@ -1264,6 +1354,8 @@
   "hero.plans": "Тарифы",
   "hero.how": "Как это работает?",
   "faq.title": "Как это работает?",
+  "suggest.btn": "Предложить приложение",
+  "suggest.title": "Предложить приложение",
   "pricing.title": "Тарифные планы",
   "pricing.descDefault": "Выберите товар и подходящий тариф",
   "pricing.descRepo": "Доступ ко всем приложениям каталога",
@@ -1377,6 +1469,8 @@
   "hero.plans": "Pricing",
   "hero.how": "How does it work?",
   "faq.title": "How does it work?",
+  "suggest.btn": "Suggest an app",
+  "suggest.title": "Suggest an app",
   "pricing.title": "Pricing Plans",
   "pricing.descDefault": "Choose a product and a plan that suits you",
   "pricing.descRepo": "Access to all apps in the catalog",
@@ -1512,8 +1606,8 @@
     if (btn) btn.addEventListener('click', () => window.i18n.toggle());
 })();
 </script>
-    <script src="Scripts/Script.js?v=45"></script>
-    <script src="Scripts/Repository.js?v=45"></script>
+    <script src="Scripts/Script.js?v=48"></script>
+    <script src="Scripts/Repository.js?v=48"></script>
     <script>
 (function () {
 
@@ -1984,11 +2078,43 @@
             const sr = chipsEl.getBoundingClientRect(), cr = chip.getBoundingClientRect();
             if (cr.left < sr.left + 24 || cr.right > sr.right - 24) chipsEl.scrollTo({ left: Math.max(0, chip.offsetLeft - (chipsEl.clientWidth - chip.offsetWidth) / 2), behavior: 'instant' });   // без анимации: нажатие во время неё могло теряться
         }
+        // Смена категории как в ролике: старый раздел размывается и гаснет, высота плавно подстраивается под новый,
+        // а новый раздел проявляется по пунктам. Окно по высоте всегда равно содержимому, пустот нет.
+        const sectionEl = document.getElementById('faqSection');
+        let switchToken = 0;
+        const wait = (ms) => new Promise(r => setTimeout(r, ms));
+        function markEntering() {
+            headEl.classList.remove('is-entering'); void headEl.offsetWidth; headEl.classList.add('is-entering');
+            listEl.querySelectorAll('.faq-item').forEach((it, k) => { it.style.setProperty('--i', String(k + 1)); it.classList.add('is-entering'); });
+        }
+        let heightAnim = null;
+        async function swapSection(i) {
+            const token = ++switchToken;
+            const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (heightAnim) { heightAnim.cancel(); heightAnim = null; }
+            if (reduce || !modal.classList.contains('active') || !sectionEl.animate) { cat = i; renderList(); return; }
+            const from = sectionEl.getBoundingClientRect().height;
+            sectionEl.style.overflow = 'hidden'; sectionEl.style.height = from + 'px';
+            sectionEl.classList.add('is-out');
+            await wait(150);
+            if (token !== switchToken) return;
+            cat = i; renderList(); markEntering();
+            sectionEl.classList.remove('is-out');
+            sectionEl.style.height = 'auto';
+            const to = sectionEl.getBoundingClientRect().height;
+            sectionEl.style.height = to + 'px';
+            const duration = Math.min(820, 460 + Math.abs(to - from) * 0.6);       // чем больше разница, тем дольше и плавнее
+            heightAnim = sectionEl.animate([{ height: from + 'px' }, { height: to + 'px' }], { duration, easing: 'cubic-bezier(0.45, 0, 0.2, 1)' });
+            await new Promise(r => { heightAnim.onfinish = r; heightAnim.oncancel = r; });
+            if (token !== switchToken) return;
+            heightAnim = null; sectionEl.style.height = ''; sectionEl.style.overflow = '';
+            listEl.querySelectorAll('.faq-item.is-entering').forEach(it => it.classList.remove('is-entering')); headEl.classList.remove('is-entering');
+        }
         function setCat(i, scroll) {
-            cat = i;
+            if (i === cat) { if (scroll) reveal(chipsEl.children[i]); return; }
             chipsEl.querySelectorAll('.faq-chip').forEach((c, k) => { c.classList.toggle('is-active', k === i); c.setAttribute('aria-selected', String(k === i)); });
             if (scroll) reveal(chipsEl.children[i]);
-            renderList();
+            swapSection(i);
         }
         function renderChips() {
             const keep = chipsEl.scrollLeft;
@@ -2067,6 +2193,7 @@
         function render() { renderChips(); renderList(); }
 
         function open() {
+            switchToken++; if (heightAnim) { heightAnim.cancel(); heightAnim = null; } sectionEl.style.height = ''; sectionEl.style.overflow = ''; sectionEl.classList.remove('is-out');
             cat = 0; render(); chipsEl.scrollLeft = 0; updateFades();
             if (!document.body.classList.contains('modal-open')) {
                 scrollPos = window.pageYOffset;
@@ -2092,6 +2219,107 @@
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('active')) close(); });
         document.addEventListener('iapps:lang', () => { if (modal.classList.contains('active')) render(); });
     })();
+})();
+</script>
+    <script>
+(function () {
+    const modal = document.getElementById('suggestModal');
+    if (!modal) return;
+    const $ = (id) => document.getElementById(id);
+    const T = {
+        ru: {
+            app: 'Название или ссылка на приложение', appPh: 'Например: Spotify или https://apps.apple.com/…',
+            task: 'Что нужно сделать?', tasks: ['Активировать подписку/покупку', 'Чистый IPA', 'Исправление вылета', 'Другое'], taskPh: 'Опишите, что нужно сделать',
+            donate: 'Донат за услугу', donates: ['300 ₽', '500 ₽', '1000 ₽', 'Другое'], donatePh: 'Сумма в рублях',
+            send: 'Оформить заявку', hint: 'Откроется Telegram с готовым сообщением: останется нажать «Отправить».',
+            sent: 'Telegram открыт. Нажмите «Отправить», и заявка придёт.', copy: 'Скопировать текст заявки', copied: 'Текст скопирован',
+            eApp: 'Укажите название приложения или ссылку.', eTask: 'Выберите, что нужно сделать.', eTaskOther: 'Опишите, что нужно сделать.', eDonate: 'Укажите сумму доната.'
+        },
+        en: {
+            app: 'App name or link', appPh: 'For example: Spotify or https://apps.apple.com/…',
+            task: 'What should be done?', tasks: ['Activate subscription/purchase', 'Clean IPA', 'Fix crashes', 'Other'], taskPh: 'Describe what should be done',
+            donate: 'Donation for the service', donates: ['300 \u20bd', '500 \u20bd', '1000 \u20bd', 'Other'], donatePh: 'Amount in rubles',
+            send: 'Submit request', hint: 'Telegram opens with the message ready: just tap \u201cSend\u201d.',
+            sent: 'Telegram is open. Tap \u201cSend\u201d and the request will reach us.', copy: 'Copy request text', copied: 'Text copied',
+            eApp: 'Enter the app name or a link.', eTask: 'Choose what should be done.', eTaskOther: 'Describe what should be done.', eDonate: 'Enter the donation amount.'
+        }
+    };
+    // сообщение всегда на русском: его читает владелец сайта
+    const RU = T.ru;
+    const state = { task: -1, donate: -1 };
+    let lastText = '';
+    const lang = () => ((window.i18n && window.i18n.lang) === 'en' ? 'en' : 'ru');
+    const t = (k) => T[lang()][k];
+
+    function chips(box, items, key, onPick) {
+        box.innerHTML = '';
+        items.forEach((label, i) => {
+            const b = document.createElement('button'); b.type = 'button'; b.className = 'sg-chip' + (state[key] === i ? ' is-active' : ''); b.textContent = label; b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', String(state[key] === i));
+            b.addEventListener('click', () => { state[key] = i; chips(box, items, key, onPick); onPick(); clearError(); });
+            box.appendChild(b);
+        });
+    }
+    function sync() {
+        $('sgTaskOther').hidden = state.task !== 3;
+        $('sgDonateOther').hidden = state.donate !== 3;
+    }
+    function texts() {
+        $('sgAppLabel').textContent = t('app'); $('sgApp').placeholder = t('appPh');
+        $('sgTaskLabel').textContent = t('task'); $('sgTaskOther').placeholder = t('taskPh');
+        $('sgDonateLabel').textContent = t('donate'); $('sgDonateOther').placeholder = t('donatePh');
+        $('sgSendText').textContent = t('send'); $('sgHint').textContent = lastText ? t('sent') : t('hint'); $('sgCopy').textContent = t('copy');
+        chips($('sgTask'), t('tasks'), 'task', sync); chips($('sgDonate'), t('donates'), 'donate', sync); sync();
+    }
+    function clearError() { $('sgError').hidden = true; modal.querySelectorAll('.has-error').forEach(e => e.classList.remove('has-error')); }
+    function fail(msgKey, fieldEl) {
+        const e = $('sgError'); e.textContent = t(msgKey); e.hidden = false;
+        const f = fieldEl && fieldEl.closest('.sg-field'); if (f) { f.classList.add('has-error'); const inp = f.querySelector('input:not([hidden]), textarea:not([hidden])'); if (inp) inp.focus({ preventScroll: false }); else f.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+        return false;
+    }
+    function build() {
+        clearError();
+        const app = $('sgApp').value.trim();
+        if (!app) return fail('eApp', $('sgApp'));
+        if (state.task < 0) return fail('eTask', $('sgTask'));
+        let task = RU.tasks[state.task];
+        if (state.task === 3) { const o = $('sgTaskOther').value.trim(); if (!o) return fail('eTaskOther', $('sgTaskOther')); task = 'Другое: ' + o; }
+        let donate = 'не указан';
+        if (state.donate >= 0 && state.donate < 3) donate = RU.donates[state.donate];
+        if (state.donate === 3) { const n = $('sgDonateOther').value.replace(/\D/g, ''); if (!n) return fail('eDonate', $('sgDonateOther')); donate = n + ' ₽'; }
+        return '\uD83D\uDCF2 Заявка на приложение (с сайта iApps)\n\n\uD83D\uDD39 Приложение: ' + app + '\n\uD83D\uDD39 Что нужно сделать: ' + task + '\n\uD83D\uDD39 Донат: ' + donate;
+    }
+    // Telegram открывается с готовым текстом (отправляет сам пользователь: сайту нельзя писать в Telegram от своего имени без сервера)
+    $('sgSend').addEventListener('click', () => {
+        const text = build(); if (!text) return;
+        lastText = text;
+        window.open('https://t.me/mdfurman?text=' + encodeURIComponent(text), '_blank', 'noopener');
+        $('sgHint').textContent = t('sent'); $('sgCopy').hidden = false;
+    });
+    $('sgCopy').addEventListener('click', () => {
+        const done = () => { $('sgCopy').textContent = t('copied'); setTimeout(() => { $('sgCopy').textContent = t('copy'); }, 1800); };
+        if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(lastText).then(done).catch(() => {});
+        else { const ta = document.createElement('textarea'); ta.value = lastText; ta.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) {} ta.remove(); }
+    });
+    $('sgDonateOther').addEventListener('input', (e) => { e.target.value = e.target.value.replace(/\D/g, ''); });
+    modal.addEventListener('input', clearError);
+
+    let scrollPos = 0;
+    window.openSuggest = function (query) {
+        state.task = -1; state.donate = -1; lastText = ''; $('sgCopy').hidden = true;
+        $('sgApp').value = query || ''; $('sgTaskOther').value = ''; $('sgDonateOther').value = '';
+        texts(); clearError();
+        if (!document.body.classList.contains('modal-open')) { scrollPos = window.pageYOffset; document.body.classList.add('modal-open'); document.body.style.top = '-' + scrollPos + 'px'; }
+        modal.classList.add('active');
+        const box = modal.querySelector('.modal__content'); if (box) box.scrollTop = 0;
+    };
+    function close() {
+        modal.classList.remove('active');
+        if (!document.querySelector('.modal.active')) { document.body.classList.remove('modal-open'); document.body.style.top = ''; window.scrollTo({ top: scrollPos, left: 0, behavior: 'instant' }); }
+    }
+    $('closeSuggest').addEventListener('click', close);
+    $('suggestBackdrop').addEventListener('click', close);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('active')) close(); });
+    document.addEventListener('iapps:lang', () => { if (modal.classList.contains('active')) texts(); });
 })();
 </script>
     <script>
