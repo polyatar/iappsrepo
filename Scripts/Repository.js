@@ -327,7 +327,7 @@ const META_ICONS = {
 
 // ---- иконки на GitHub: файлы из релизов отдаются как application/octet-stream, и браузер часто не показывает их как картинки.
 // Если иконка не загрузилась, пробуем тот же адрес через прокси-сервис изображений, и только потом ставим заглушку.
-const ICON_PLACEHOLDER = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%236366f1' width='100' height='100' rx='20'/><text x='50' y='55' font-size='40' text-anchor='middle' fill='white'>📱</text></svg>";
+const ICON_PLACEHOLDER = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%232a7cf5' width='100' height='100' rx='20'/><text x='50' y='55' font-size='40' text-anchor='middle' fill='white'>📱</text></svg>";
 function iconProxies(url) {
     const enc = encodeURIComponent(url);
     return ['https://wsrv.nl/?url=' + enc + '&w=256&h=256&fit=cover&output=png', 'https://images.weserv.nl/?url=' + enc + '&w=256&h=256&fit=cover&output=png'];
@@ -380,7 +380,7 @@ function extractIconColor(url) {
                 if (wsum < 1) { resolve(null); return; }
                 let col = [Math.round(r / wsum), Math.round(gr / wsum), Math.round(b / wsum)];
                 const mx = Math.max(...col), mn = Math.min(...col);
-                if (mx && (mx - mn) / mx < 0.18) col = mixRgb(col, [99, 102, 241], 0.5);   // серые иконки чуть подкрашиваем цветом сайта
+                if (mx && (mx - mn) / mx < 0.18) col = mixRgb(col, [42, 124, 245], 0.5);   // серые иконки чуть подкрашиваем цветом сайта
                 resolve(col);
             } catch (e) { resolve(null); }                              // браузер запретил чтение картинки (CORS)
         };
