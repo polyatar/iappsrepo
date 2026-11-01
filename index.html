@@ -8,7 +8,7 @@
     <title data-i18n="page.title">iApps - Сертификат разработчика Apple и приложения для iPhone</title>
     <link rel="icon" type="image/png" href="Images/Profile.PNG">
     <link rel="apple-touch-icon" href="Images/Profile.PNG">
-    <link rel="stylesheet" href="Styles/Style.css?v=39">
+    <link rel="stylesheet" href="Styles/Style.css?v=42">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -400,6 +400,47 @@
         .cert-card .cert-card__rights.is-open .cert-card__rights-toggle { border: 1px solid var(--accent); background: linear-gradient(160deg, rgba(var(--accent-rgb), 0.2), rgba(var(--accent-rgb), 0.07)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14); color: var(--text-primary); }
         [data-theme="light"] .cert-card .cert-card__rights.is-open .cert-card__rights-toggle { background: linear-gradient(160deg, rgba(var(--accent-rgb), 0.14), rgba(var(--accent-rgb), 0.05)); box-shadow: inset 0 1px 0 #fff; }
     </style>
+    <style id="pricing-select">
+        /* ===== выбранный тариф: не синий, а переливающаяся стеклянная кромка, как у стекла Apple ===== */
+        @property --rim-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+        @keyframes rim-spin { to { --rim-angle: 360deg; } }
+        .pricing__item--selected { border-color: rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.105); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34), inset 0 0 22px rgba(255, 255, 255, 0.04); }
+        .pricing__item--selected::after { content: ''; position: absolute; inset: 0; padding: 1.5px; border-radius: inherit; pointer-events: none; z-index: 2;
+            background: conic-gradient(from var(--rim-angle), rgba(255, 255, 255, 0.95) 0%, rgba(150, 215, 255, 0.6) 12%, rgba(255, 255, 255, 0.1) 26%, rgba(255, 185, 230, 0.55) 42%, rgba(255, 255, 255, 0.92) 56%, rgba(255, 255, 255, 0.1) 70%, rgba(170, 255, 225, 0.5) 84%, rgba(255, 255, 255, 0.95) 100%);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+            mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+            animation: rim-spin 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) 1; }   /* кромка один раз «переливается» в момент выбора и дальше стоит спокойно: вечная анимация сильно грузила телефон */
+        .pricing__item--selected .pricing__duration, .cert-card.pricing__item--selected .cert-card__name { color: var(--text-primary); }
+        .cert-card.pricing__item--selected .cert-card__cta { background: linear-gradient(160deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.1)); border-color: rgba(255, 255, 255, 0.42); color: #fff; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4); }
+
+        [data-theme="light"] .pricing__item--selected { border-color: rgba(var(--accent-rgb), 0.2); background: rgba(255, 255, 255, 0.92); box-shadow: inset 0 1px 0 #fff, 0 10px 26px rgba(20, 70, 160, 0.12); }
+        [data-theme="light"] .pricing__item--selected::after { background: conic-gradient(from var(--rim-angle), #ffffff 0%, rgba(120, 170, 255, 0.75) 12%, rgba(255, 255, 255, 0.25) 26%, rgba(255, 150, 215, 0.6) 42%, #ffffff 56%, rgba(255, 255, 255, 0.25) 70%, rgba(110, 225, 255, 0.65) 84%, #ffffff 100%); }
+        [data-theme="light"] .cert-card.pricing__item--selected .cert-card__name { color: var(--text-primary); }
+        [data-theme="light"] .cert-card.pricing__item--selected .cert-card__cta { background: linear-gradient(160deg, #ffffff, rgba(226, 240, 255, 0.95)); border-color: rgba(var(--accent-rgb), 0.3); color: var(--text-primary); box-shadow: inset 0 1px 0 #fff; }
+        @media (prefers-reduced-motion: reduce) { .pricing__item--selected::after { animation: none; } }
+    </style>
+    <style id="pricing-pearl">
+        /* ===== перламутровое стекло: галочки в описании, «Гарантия» / «Список прав» при открытии, кнопка «Выбрано» ===== */
+        .cert-card .cert-card__li svg { fill: url(#pearlCheck); }
+        [data-theme="light"] .cert-card .cert-card__li svg { fill: url(#pearlCheckLight); }
+
+        .cert-card .cert-card__rights-toggle { position: relative; }
+        .cert-card .cert-card__rights.is-open .cert-card__rights-toggle { border: 1px solid rgba(255, 255, 255, 0.2); background: linear-gradient(160deg, rgba(255, 255, 255, 0.17), rgba(255, 255, 255, 0.07)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32); color: var(--text-primary); }
+        .cert-card .cert-card__rights.is-open .cert-card__rights-toggle::after { content: ''; position: absolute; inset: 0; padding: 1.5px; border-radius: inherit; pointer-events: none; -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); z-index: 2;
+            background: conic-gradient(from var(--rim-angle), rgba(255, 255, 255, 0.95) 0%, rgba(150, 215, 255, 0.6) 12%, rgba(255, 255, 255, 0.1) 26%, rgba(255, 185, 230, 0.55) 42%, rgba(255, 255, 255, 0.92) 56%, rgba(255, 255, 255, 0.1) 70%, rgba(170, 255, 225, 0.5) 84%, rgba(255, 255, 255, 0.95) 100%); animation: rim-spin 1.2s cubic-bezier(0.2, 0.7, 0.2, 1) 1; }
+        [data-theme="light"] .cert-card .cert-card__rights.is-open .cert-card__rights-toggle { border-color: rgba(var(--accent-rgb), 0.2); background: linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(226, 240, 255, 0.9)); box-shadow: inset 0 1px 0 #fff; }
+        [data-theme="light"] .cert-card .cert-card__rights.is-open .cert-card__rights-toggle::after { background: conic-gradient(from var(--rim-angle), #ffffff 0%, rgba(120, 170, 255, 0.75) 12%, rgba(255, 255, 255, 0.25) 26%, rgba(255, 150, 215, 0.6) 42%, #ffffff 56%, rgba(255, 255, 255, 0.25) 70%, rgba(110, 225, 255, 0.65) 84%, #ffffff 100%); }
+
+        /* «Выбрано»: закрашена переливом */
+        .cert-card.pricing__item--selected .cert-card__cta { position: relative; border-color: rgba(255, 255, 255, 0.5); color: #fff; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.36) 0%, rgba(150, 215, 255, 0.4) 26%, rgba(255, 185, 230, 0.38) 54%, rgba(170, 255, 225, 0.34) 78%, rgba(255, 255, 255, 0.36) 100%);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55); }
+        .cert-card.pricing__item--selected .cert-card__cta::after { content: ''; position: absolute; inset: 0; padding: 1.5px; border-radius: inherit; pointer-events: none; -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); z-index: 2; background: conic-gradient(from var(--rim-angle), rgba(255, 255, 255, 0.95) 0%, rgba(150, 215, 255, 0.6) 12%, rgba(255, 255, 255, 0.1) 26%, rgba(255, 185, 230, 0.55) 42%, rgba(255, 255, 255, 0.92) 56%, rgba(255, 255, 255, 0.1) 70%, rgba(170, 255, 225, 0.5) 84%, rgba(255, 255, 255, 0.95) 100%); animation: rim-spin 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) 1; }
+        [data-theme="light"] .cert-card.pricing__item--selected .cert-card__cta { border-color: rgba(var(--accent-rgb), 0.3); color: var(--text-primary); text-shadow: none;
+            background: linear-gradient(135deg, #ffffff 0%, rgba(150, 200, 255, 0.6) 28%, rgba(255, 190, 225, 0.55) 56%, rgba(150, 235, 255, 0.55) 80%, #ffffff 100%); box-shadow: inset 0 1px 0 #fff; }
+        [data-theme="light"] .cert-card.pricing__item--selected .cert-card__cta::after { background: conic-gradient(from var(--rim-angle), #ffffff 0%, rgba(120, 170, 255, 0.75) 12%, rgba(255, 255, 255, 0.25) 26%, rgba(255, 150, 215, 0.6) 42%, #ffffff 56%, rgba(255, 255, 255, 0.25) 70%, rgba(110, 225, 255, 0.65) 84%, #ffffff 100%); }
+        @media (prefers-reduced-motion: reduce) { .cert-card .cert-card__rights.is-open .cert-card__rights-toggle::after, .cert-card.pricing__item--selected .cert-card__cta::after { animation: none; } }
+    </style>
     <style id="app-detail-styles">
         /* ===== окно приложения: цветная карточка в стиле постеров (цвет берётся из иконки) ===== */
         @property --app-top { syntax: '<color>'; inherits: true; initial-value: #1d6fb8; }
@@ -478,6 +519,13 @@
     </style>
 </head>
 <body>
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+        <defs>
+            <linearGradient id="pearlCheck" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#7fd0ff"/><stop offset="0.38" stop-color="#d9f1ff"/><stop offset="0.68" stop-color="#ffa6dc"/><stop offset="1" stop-color="#8dffd2"/></linearGradient>
+            <linearGradient id="pearlCheckLight" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2a7cf5"/><stop offset="0.38" stop-color="#6aa8ff"/><stop offset="0.68" stop-color="#f070c4"/><stop offset="1" stop-color="#1fc9b8"/></linearGradient>
+        </defs>
+    </svg>
+
     <div class="bg-animation">
         <div class="bg-gradient"></div>
         <div class="bg-grid"></div>
@@ -1413,8 +1461,8 @@
     if (btn) btn.addEventListener('click', () => window.i18n.toggle());
 })();
 </script>
-    <script src="Scripts/Script.js?v=39"></script>
-    <script src="Scripts/Repository.js?v=39"></script>
+    <script src="Scripts/Script.js?v=42"></script>
+    <script src="Scripts/Repository.js?v=42"></script>
     <script>
 (function () {
 
