@@ -8,7 +8,7 @@
     <title data-i18n="page.title">iApps - Сертификат разработчика Apple и приложения для iPhone</title>
     <link rel="icon" type="image/png" href="Images/Profile.PNG">
     <link rel="apple-touch-icon" href="Images/Profile.PNG">
-    <link rel="stylesheet" href="Styles/Style.css?v=51">
+    <link rel="stylesheet" href="Styles/Style.css?v=52">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -287,7 +287,7 @@
         @media (hover: hover) { .category-bar .cat-chip:hover { border-color: rgba(37, 99, 235, 0.65); color: var(--text-primary); } .category-bar .cat-chip.is-active:hover { border-color: transparent; color: #fff; } }
         .category-bar .cat-chip.is-active { background: var(--gradient-1); background-origin: border-box; border-color: transparent; color: #fff; box-shadow: none; }
         .category-bar .cat-arrow { background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-hi); }
-        .category-bar .cat-arrow:hover { background: var(--sel); background-origin: border-box; border-color: transparent; }
+        .category-bar .cat-arrow:hover { background: var(--sel); background-origin: border-box; border-color: transparent; box-shadow: none; }
         @media (max-width: 768px) { #app-list .app-header img { width: 58px; height: 58px; } }
         @media (max-width: 480px) {
             #app-list .app-item { padding: 1rem; border-radius: 22px; }
@@ -523,10 +523,16 @@
         .sg-input[hidden], .sg-textarea[hidden] { display: none; }
         .sg-textarea { margin-top: 0.7rem; resize: none; line-height: 1.45; }
         .sg-input + .sg-chips, .sg-chips + .sg-input { margin-top: 0.7rem; }
-        .sg-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-        .sg-chip { padding: 0.65rem 1.05rem; border-radius: 9999px; font: inherit; font-size: 0.875rem; font-weight: 700; color: var(--text-secondary); cursor: pointer; background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-hi); touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: color var(--transition), border-color var(--transition); }
+        .sg-chips { --fl: 0px; --fr: 0px; display: flex; flex-wrap: nowrap; gap: 0.5rem; margin: -2px; padding: 2px; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; -webkit-overflow-scrolling: touch; cursor: grab;
+            -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--fl), #000 calc(100% - var(--fr)), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 var(--fl), #000 calc(100% - var(--fr)), transparent 100%); }
+        .sg-chips::-webkit-scrollbar { display: none; }
+        .sg-chips.fade-l { --fl: 26px; }
+        .sg-chips.fade-r { --fr: 26px; }
+        .sg-chips.is-dragging { cursor: grabbing; user-select: none; }
+        .sg-chips.is-dragging .sg-chip { pointer-events: none; }
+        .sg-chip { flex: 0 0 auto; white-space: nowrap; padding: 0.65rem 1.05rem; border-radius: 9999px; font: inherit; font-size: 0.875rem; font-weight: 700; color: var(--text-secondary); cursor: pointer; background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-hi); touch-action: manipulation; -webkit-tap-highlight-color: transparent; transition: color var(--transition), border-color var(--transition); }
         @media (hover: hover) { .sg-chip:hover { border-color: rgba(var(--accent-rgb), 0.55); color: var(--text-primary); } }
-        .sg-chip.is-active { background: var(--gradient-1); background-origin: border-box; border-color: transparent; color: #fff; }
+        .sg-chip.is-active { background: var(--gradient-1); background-origin: border-box; border-color: transparent; color: #fff; box-shadow: none; }
         .sg-field.has-error .sg-input, .sg-field.has-error .sg-chip:not(.is-active) { border-color: rgba(248, 113, 113, 0.75); }
         .sg-error { margin: 0 0 1rem; padding: 0.75rem 1rem; border-radius: 16px; font-size: 0.875rem; line-height: 1.45; color: #fecaca; background: rgba(248, 113, 113, 0.12); border: 1px solid rgba(248, 113, 113, 0.4); }
         [data-theme="light"] .sg-error { color: #b91c1c; }
@@ -569,8 +575,11 @@
         .faq-item.is-open::before, .faq-item.is-open + .faq-item::before { opacity: 0; }
         .faq-q { padding: 1.1rem 0; font-size: 1.0625rem; font-weight: 600; letter-spacing: -0.012em; transition: opacity 0.2s ease; }
         .faq-q:active { opacity: 0.6; }
-        .faq-num { transition: background 0.55s var(--ios), color 0.55s var(--ios); }
-        .faq-item.is-open .faq-num { background: var(--gradient-1); background-origin: border-box; color: #fff; }
+        /* цифра: градиент накладывается слоем и плавно проявляется, поэтому при сворачивании нет «вспышки» (раньше градиент пропадал сразу, а заливка возвращалась постепенно) */
+        .faq-num { position: relative; isolation: isolate; overflow: hidden; transition: color 0.5s var(--ios); }
+        .faq-num::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--gradient-1); opacity: 0; transition: opacity 0.5s var(--ios); }
+        .faq-item.is-open .faq-num { color: #fff; }
+        .faq-item.is-open .faq-num::before { opacity: 1; }
         .faq-q svg { transition: transform 0.55s var(--ios), fill 0.3s ease; }
         .faq-a { transition: grid-template-rows 0.6s var(--ios); }
         .faq-a__inner { padding-right: 0.25rem; opacity: 0; transform: translateY(-6px); transition: opacity 0.25s ease, transform 0.6s var(--ios); }
@@ -1645,8 +1654,8 @@
     if (btn) btn.addEventListener('click', () => window.i18n.toggle());
 })();
 </script>
-    <script src="Scripts/Script.js?v=51"></script>
-    <script src="Scripts/Repository.js?v=51"></script>
+    <script src="Scripts/Script.js?v=52"></script>
+    <script src="Scripts/Repository.js?v=52"></script>
     <script>
 (function () {
 
@@ -2285,7 +2294,7 @@
     const T = {
         ru: {
             app: 'Название или ссылка на приложение', appPh: 'Например: Spotify или https://apps.apple.com/…',
-            task: 'Что нужно сделать?', tasks: ['Активировать подписку/покупку', 'Чистый IPA', 'Исправление вылета', 'Другое'], taskPh: 'Опишите, что нужно сделать',
+            task: 'Что нужно сделать?', tasks: ['Активировать подписку/покупку', 'Чистый IPA', 'Исправление вылета', 'Дубликат приложения', 'Другое'], taskPh: 'Опишите, что нужно сделать',
             donate: 'Донат за услугу', donates: ['300 ₽', '500 ₽', '1000 ₽', 'Другое'], donatePh: 'Сумма в рублях',
             send: 'Оформить заявку', hint: 'Откроется Telegram с готовым сообщением: останется нажать «Отправить».',
             sent: 'Telegram открыт. Нажмите «Отправить», и заявка придёт.', copy: 'Скопировать текст заявки', copied: 'Текст скопирован',
@@ -2293,7 +2302,7 @@
         },
         en: {
             app: 'App name or link', appPh: 'For example: Spotify or https://apps.apple.com/…',
-            task: 'What should be done?', tasks: ['Activate subscription/purchase', 'Clean IPA', 'Fix crashes', 'Other'], taskPh: 'Describe what should be done',
+            task: 'What should be done?', tasks: ['Activate subscription/purchase', 'Clean IPA', 'Fix crashes', 'Duplicate app', 'Other'], taskPh: 'Describe what should be done',
             donate: 'Donation for the service', donates: ['300 \u20bd', '500 \u20bd', '1000 \u20bd', 'Other'], donatePh: 'Amount in rubles',
             send: 'Submit request', hint: 'Telegram opens with the message ready: just tap \u201cSend\u201d.',
             sent: 'Telegram is open. Tap \u201cSend\u201d and the request will reach us.', copy: 'Copy request text', copied: 'Text copied',
@@ -2302,21 +2311,65 @@
     };
     // сообщение всегда на русском: его читает владелец сайта
     const RU = T.ru;
+    const OTHER_TASK = 4;      // «Другое» в списке задач
     const state = { task: -1, donate: -1 };
     let lastText = '';
     const lang = () => ((window.i18n && window.i18n.lang) === 'en' ? 'en' : 'ru');
     const t = (k) => T[lang()][k];
 
+    // ряд кнопок: одна строка, листается пальцем и мышью, края затемняются (как строка категорий каталога)
+    function enhance(row) {
+        let down = false, moved = false, sx = 0, sl = 0, suppress = false, tap = null, lastTap = { t: 0, x: -999, y: -999 };
+        const fades = () => { const max = row.scrollWidth - row.clientWidth; row.classList.toggle('fade-l', row.scrollLeft > 2); row.classList.toggle('fade-r', max > 2 && row.scrollLeft < max - 2); };
+        row._fades = fades;
+        row.addEventListener('scroll', fades, { passive: true }); window.addEventListener('resize', fades);
+        row.addEventListener('pointerdown', (e) => {
+            if (e.pointerType === 'mouse') { if (e.button !== 0) return; down = true; moved = false; sx = e.clientX; sl = row.scrollLeft; return; }
+            tap = { x: e.clientX, y: e.clientY, left: row.scrollLeft, t: performance.now(), chip: e.target.closest('.sg-chip') };
+        }, { passive: true });
+        window.addEventListener('pointermove', (e) => {
+            if (!down) return;
+            const dx = e.clientX - sx;
+            if (!moved && Math.abs(dx) > 9) { moved = true; row.classList.add('is-dragging'); }
+            if (moved) row.scrollLeft = sl - dx;
+        });
+        window.addEventListener('pointerup', () => { if (!down) return; down = false; if (moved) { suppress = true; setTimeout(() => { suppress = false; row.classList.remove('is-dragging'); }, 0); } });
+        row.addEventListener('pointercancel', () => { tap = null; }, { passive: true });
+        // палец: кнопка выбирается в момент отпускания, прокрутка выбором не считается
+        row.addEventListener('pointerup', (e) => {
+            if (e.pointerType === 'mouse' || !tap) return;
+            const s = tap; tap = null;
+            if (!s.chip) return;
+            if (Math.hypot(e.clientX - s.x, e.clientY - s.y) > 10 || Math.abs(row.scrollLeft - s.left) > 2 || performance.now() - s.t > 900) return;
+            lastTap = { t: performance.now(), x: e.clientX, y: e.clientY };
+            const ev = new MouseEvent('click', { bubbles: true, cancelable: true }); ev.__own = true; s.chip.dispatchEvent(ev);
+        });
+        row.addEventListener('click', (e) => {
+            if (e.__own) return;
+            if (suppress || (performance.now() - lastTap.t < 600 && Math.hypot(e.clientX - lastTap.x, e.clientY - lastTap.y) < 24)) { e.stopPropagation(); e.preventDefault(); }
+        }, true);
+    }
+    function reveal(row, chip) {
+        const rr = row.getBoundingClientRect(), cr = chip.getBoundingClientRect();
+        if (cr.left < rr.left + 20 || cr.right > rr.right - 20) row.scrollTo({ left: Math.max(0, chip.offsetLeft - (row.clientWidth - chip.offsetWidth) / 2), behavior: 'instant' });
+    }
     function chips(box, items, key, onPick) {
+        if (!box._enhanced) { enhance(box); box._enhanced = true; }
+        const keep = box.scrollLeft;
         box.innerHTML = '';
         items.forEach((label, i) => {
             const b = document.createElement('button'); b.type = 'button'; b.className = 'sg-chip' + (state[key] === i ? ' is-active' : ''); b.textContent = label; b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', String(state[key] === i));
-            b.addEventListener('click', () => { state[key] = i; chips(box, items, key, onPick); onPick(); clearError(); });
+            b.addEventListener('click', () => {
+                state[key] = i;
+                [...box.children].forEach((c, k) => { c.classList.toggle('is-active', k === i); c.setAttribute('aria-checked', String(k === i)); });
+                reveal(box, b); onPick(); clearError();
+            });
             box.appendChild(b);
         });
+        box.scrollLeft = keep; box._fades();
     }
     function sync() {
-        $('sgTaskOther').hidden = state.task !== 3;
+        $('sgTaskOther').hidden = state.task !== OTHER_TASK;
         $('sgDonateOther').hidden = state.donate !== 3;
     }
     function texts() {
@@ -2338,7 +2391,7 @@
         if (!app) return fail('eApp', $('sgApp'));
         if (state.task < 0) return fail('eTask', $('sgTask'));
         let task = RU.tasks[state.task];
-        if (state.task === 3) { const o = $('sgTaskOther').value.trim(); if (!o) return fail('eTaskOther', $('sgTaskOther')); task = 'Другое: ' + o; }
+        if (state.task === OTHER_TASK) { const o = $('sgTaskOther').value.trim(); if (!o) return fail('eTaskOther', $('sgTaskOther')); task = 'Другое: ' + o; }
         let donate = 'не указан';
         if (state.donate >= 0 && state.donate < 3) donate = RU.donates[state.donate];
         if (state.donate === 3) { const n = $('sgDonateOther').value.replace(/\D/g, ''); if (!n) return fail('eDonate', $('sgDonateOther')); donate = n + ' ₽'; }
@@ -2363,9 +2416,10 @@
     window.openSuggest = function (query) {
         state.task = -1; state.donate = -1; lastText = ''; $('sgCopy').hidden = true;
         $('sgApp').value = query || ''; $('sgTaskOther').value = ''; $('sgDonateOther').value = '';
-        texts(); clearError();
+        texts(); clearError(); $('sgTask').scrollLeft = 0; $('sgDonate').scrollLeft = 0;
         if (!document.body.classList.contains('modal-open')) { scrollPos = window.pageYOffset; document.body.classList.add('modal-open'); document.body.style.top = '-' + scrollPos + 'px'; }
         modal.classList.add('active');
+        requestAnimationFrame(() => { $('sgTask')._fades(); $('sgDonate')._fades(); });
         const box = modal.querySelector('.modal__content'); if (box) box.scrollTop = 0;
     };
     function close() {
