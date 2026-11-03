@@ -8,10 +8,11 @@
     <title data-i18n="page.title">iApps - Сертификат разработчика Apple и приложения для iPhone</title>
     <link rel="icon" type="image/png" href="Images/Profile.PNG">
     <link rel="apple-touch-icon" href="Images/Profile.PNG">
-    <link rel="stylesheet" href="Styles/Style.css?v=58">
+    <link rel="stylesheet" href="Styles/Style.css?v=65">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
     <style id="access-styles">
 /* ===== Access: switch + slider ===== */
 .access-switch { position: relative; display: grid; grid-template-columns: 1fr 1fr; padding: 0.375rem; margin: 0 auto 2rem; max-width: 420px; background: var(--bg-glass); border: 1px solid var(--border); border-radius: 9999px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
@@ -702,12 +703,12 @@
 
         .mobile-menu { background: linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.03) 60%, rgba(255, 255, 255, 0.07)), rgba(22, 22, 26, 0.28); border-color: rgba(255, 255, 255, 0.13);
             box-shadow: inset 1.5px 1.5px 0 rgba(255, 255, 255, 0.34), inset -1px -1px 0 rgba(255, 255, 255, 0.12), inset 0 0 40px rgba(255, 255, 255, 0.04), 0 30px 80px rgba(0, 0, 0, 0.42);
-            -webkit-backdrop-filter: blur(22px) saturate(1.9) brightness(1.06); backdrop-filter: blur(22px) saturate(1.9) brightness(1.06); }
+            -webkit-backdrop-filter: blur(24px) saturate(1.3) brightness(1.05); backdrop-filter: blur(24px) saturate(1.3) brightness(1.05); }
         .mobile-menu::before { background: radial-gradient(110% 100% at 12% -12%, rgba(255, 255, 255, 0.2), transparent 62%), radial-gradient(90% 60% at 100% 100%, rgba(255, 255, 255, 0.06), transparent 70%); }
         .mobile-menu .mobile-menu__link:not(.mobile-menu__link--cta), .mobile-menu .mobile-menu__theme { background: rgba(255, 255, 255, 0.04); border-color: rgba(255, 255, 255, 0.08); }
         .mobile-menu .mobile-menu__link-icon, .mobile-menu .mobile-menu__close { background: rgba(255, 255, 255, 0.07); }
         /* на телефоне панель тоже стеклянная, размытие слегка слабее */
-        @media (hover: none) { .mobile-menu { background: linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.03) 60%, rgba(255, 255, 255, 0.07)), rgba(22, 22, 26, 0.4); -webkit-backdrop-filter: blur(16px) saturate(1.7); backdrop-filter: blur(16px) saturate(1.7); } }
+        @media (hover: none) { .mobile-menu { background: linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.03) 60%, rgba(255, 255, 255, 0.07)), rgba(22, 22, 26, 0.4); -webkit-backdrop-filter: blur(20px) saturate(1.2); backdrop-filter: blur(20px) saturate(1.2); } }
         [data-theme="light"] .mobile-menu { background: linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(236, 244, 255, 0.34)); border-color: rgba(255, 255, 255, 0.85); box-shadow: inset 1.5px 1.5px 0 #ffffff, inset -1px -1px 0 rgba(var(--accent-rgb), 0.16), inset 0 0 40px rgba(255, 255, 255, 0.4), 0 30px 80px rgba(20, 70, 160, 0.22); }
         [data-theme="light"] .mobile-menu::before { background: radial-gradient(110% 100% at 12% -12%, rgba(255, 255, 255, 0.95), transparent 62%); }
         @media (hover: none) { [data-theme="light"] .mobile-menu { background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(236, 244, 255, 0.5)); } }
@@ -715,6 +716,89 @@
         [data-theme="light"] .mobile-menu .mobile-menu__link-icon, [data-theme="light"] .mobile-menu .mobile-menu__close { background: rgba(255, 255, 255, 0.6); }
         .overlay { background: rgba(0, 0, 0, 0.32); }
         @media (hover: none) { .overlay { background: rgba(0, 0, 0, 0.4); } }
+    </style>
+    <style id="menu-pro">
+        /* ===== боковое меню: стеклянный лист с «линзой», зоной большого пальца и жестом закрытия ===== */
+        .mobile-menu { top: max(12px, env(safe-area-inset-top)); bottom: max(12px, env(safe-area-inset-bottom)); right: 12px; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; touch-action: pan-y; padding: 1.15rem 1.15rem 1.15rem 1.35rem; }
+        .mobile-menu::-webkit-scrollbar { display: none; }
+        .mobile-menu:focus { outline: none; }
+        .mm-grabber { position: absolute; left: 7px; top: 50%; width: 4px; height: 42px; margin-top: -21px; border-radius: 2px; background: rgba(255, 255, 255, 0.3); pointer-events: none; }
+        [data-theme="light"] .mm-grabber { background: rgba(var(--accent-rgb), 0.28); }
+        .mobile-menu .mobile-menu__header { align-items: center; gap: 0.85rem; padding-bottom: 1rem; }
+        .mobile-menu .mobile-menu__info { flex: 1; flex-direction: column; align-items: flex-start; justify-content: center; gap: 0.2rem; min-height: 0; }
+        .mm-status { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; font-weight: 500; color: var(--text-muted); }
+        .mm-status i { width: 7px; height: 7px; border-radius: 50%; background: #5fd08f; box-shadow: 0 0 0 3px rgba(95, 208, 143, 0.16); }
+        /* список со скользящей «линзой» */
+        .mobile-menu .mobile-menu__nav { position: relative; display: flex; flex-direction: column; gap: 2px; flex: 0 0 auto; padding: 0.85rem 0 0.6rem; }
+        .mobile-menu .mobile-menu__nav .mobile-menu__link { position: relative; z-index: 1; gap: 0.9rem; padding: 0.62rem 0.8rem 0.62rem 0.62rem; border-radius: 22px; background: transparent !important; border-color: transparent !important; box-shadow: none !important; transform: none; }
+        .mobile-menu .mobile-menu__nav .mobile-menu__link:active { transform: scale(0.985); }
+        .mm-lens { position: absolute; left: 0; right: 0; top: 0; bottom: 0; z-index: 0; pointer-events: none; border-radius: 22px; opacity: 0; transition: opacity 0.25s ease;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.17), rgba(255, 255, 255, 0.05)); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.3); }
+        .mm-lens.is-on { opacity: 1; }
+        [data-theme="light"] .mobile-menu .mobile-menu__nav .mobile-menu__link-icon { background: rgba(var(--accent-rgb), 0.08); }
+        [data-theme="light"] .mm-lens { background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.6)); box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.14), 0 6px 18px rgba(20, 70, 160, 0.08); }
+        .mobile-menu .mobile-menu__link-icon { width: 44px; height: 44px; border-radius: 15px; }
+        .mm-text { flex: 1; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+        .mm-title { font-size: 1.03rem; font-weight: 650; letter-spacing: -0.012em; color: var(--text-primary); line-height: 1.2; }
+        .mm-sub { font-size: 0.8rem; font-weight: 500; color: var(--text-muted); line-height: 1.25; }
+        /* переключатели темы и языка: то же жидкое стекло */
+        .mm-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; margin-top: auto; padding: 0.95rem 0 0.9rem; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+        [data-theme="light"] .mm-controls { border-color: rgba(var(--accent-rgb), 0.12); }
+        .mm-control__label { display: block; margin: 0 0 0.4rem 0.3rem; font-size: 0.7rem; font-weight: 650; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-muted); }
+        .mm-seg { position: relative; display: flex; padding: 3px; border-radius: 9999px; background: rgba(255, 255, 255, 0.06); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+        [data-theme="light"] .mm-seg { background: rgba(255, 255, 255, 0.55); box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.14), inset 0 1px 0 #fff; }
+        .mm-seg__btn { position: relative; z-index: 1; flex: 1; display: flex; align-items: center; justify-content: center; height: 36px; padding: 0 0.5rem; border: 0; border-radius: 9999px; background: none; font: inherit; font-size: 0.82rem; font-weight: 650; color: var(--text-secondary); cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+        .mm-seg__btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        .mm-glass { position: absolute; top: 3px; bottom: 3px; left: 0; right: 0; z-index: 2; overflow: hidden; border-radius: 9999px; pointer-events: none;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.06) 52%, rgba(255, 255, 255, 0) 100%), linear-gradient(90deg, rgba(56, 189, 248, 0.84), rgba(37, 99, 235, 0.92)); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.5); }
+        .mm-glass__copy { position: absolute; top: -3px; left: 0; display: flex; padding: 3px; height: calc(100% + 6px); }
+        .mm-glass__copy .mm-seg__btn { color: #fff; cursor: default; }
+        /* главная кнопка внизу, в зоне большого пальца */
+        .mobile-menu .mm-cta { flex: 0 0 auto; gap: 0.9rem; padding: 0.7rem 1rem 0.7rem 0.7rem; border-radius: 26px; }
+        .mobile-menu .mm-cta .mm-title { color: #fff; font-size: 1.08rem; }
+        .mobile-menu .mm-cta .mm-sub { color: rgba(255, 255, 255, 0.78); }
+        .mobile-menu .mm-cta::after { content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 42%; pointer-events: none; background: linear-gradient(105deg, transparent 0%, rgba(255, 255, 255, 0.32) 50%, transparent 100%); transform: translateX(-130%); }
+        .mobile-menu.active .mm-cta::after { animation: mmSheen 1.3s 0.75s cubic-bezier(0.32, 0.72, 0, 1) 1 both; }
+        @keyframes mmSheen { from { transform: translateX(-130%); } to { transform: translateX(330%); } }
+        /* появление по очереди */
+        .mobile-menu .mm-item { opacity: 0; transform: translateX(20px); transition: opacity 0.18s ease, transform 0.18s ease; }
+        .mobile-menu.active .mm-item { opacity: 1; transform: none; transition: opacity 0.5s ease calc(var(--i, 0) * 55ms + 150ms), transform 0.75s var(--ios) calc(var(--i, 0) * 55ms + 150ms); }
+        .mobile-menu .mobile-menu__nav .mobile-menu__link.mm-item:active { transform: scale(0.985); }
+        /* на телефоне ссылки прижаты к низу: большой палец достаёт без усилий */
+        @media (hover: none) { .mobile-menu .mobile-menu__nav { margin-top: auto; } .mobile-menu .mm-controls { margin-top: 0; } }
+        /* на телефоне: без размытия под панелью и без поочерёдного появления (на медленных устройствах они вдвое снижали плавность), стекло даёт плотная заливка и блики */
+        @media (hover: none) {
+            .mobile-menu { -webkit-backdrop-filter: none; backdrop-filter: none; background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03) 60%, rgba(255, 255, 255, 0.07)), rgba(24, 24, 28, 0.95);
+                box-shadow: inset 1.5px 1.5px 0 rgba(255, 255, 255, 0.3), inset -1px -1px 0 rgba(255, 255, 255, 0.12), 0 12px 30px rgba(0, 0, 0, 0.35); }
+            [data-theme="light"] .mobile-menu { background: linear-gradient(180deg, rgba(255, 255, 255, 0.97), rgba(238, 245, 255, 0.95)); box-shadow: inset 1.5px 1.5px 0 #ffffff, inset -1px -1px 0 rgba(var(--accent-rgb), 0.16), 0 12px 30px rgba(20, 70, 160, 0.2); }
+            .mobile-menu .mm-item, .mobile-menu.active .mm-item { opacity: 1; transform: none; transition: none; }
+            .mobile-menu .mobile-menu__nav .mobile-menu__link.mm-item:active { transform: scale(0.985); transition: transform 0.15s ease; }
+        }
+        @media (prefers-reduced-motion: reduce) { .mobile-menu .mm-item, .mobile-menu.active .mm-item { opacity: 1; transform: none; transition: none; } .mm-lens { transition: none; } .mobile-menu.active .mm-cta::after { animation: none; } }
+        .mm-seg__btn:focus-visible, .mobile-menu .mobile-menu__link:focus-visible, .mobile-menu__close:focus-visible { outline: 2px solid rgba(var(--accent-rgb), 0.85); outline-offset: 2px; }
+    </style>
+    <style id="menu-fix">
+        /* ===== боковое меню: «Получить доступ» без цвета (стекло с лёгким перламутром), имя по центру, иконки при наведении ===== */
+        .mobile-menu .mobile-menu__info { justify-content: center; }
+        .mobile-menu .mm-cta, .mobile-menu .mm-cta:hover { color: var(--text-primary); border-color: rgba(255, 255, 255, 0.13) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
+            background: linear-gradient(120deg, rgba(150, 215, 255, 0.15) 0%, rgba(255, 185, 230, 0.11) 48%, rgba(170, 255, 225, 0.13) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05)) !important; }
+        .mobile-menu .mm-cta::before { content: ''; display: block; position: absolute; inset: 0; z-index: 2; padding: 1.5px; border-radius: inherit; pointer-events: none; opacity: 1; -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); background: conic-gradient(from 0deg, rgba(255, 255, 255, 0.9) 0%, rgba(150, 215, 255, 0.55) 14%, rgba(255, 255, 255, 0.08) 28%, rgba(255, 185, 230, 0.5) 44%, rgba(255, 255, 255, 0.85) 58%, rgba(255, 255, 255, 0.08) 72%, rgba(170, 255, 225, 0.45) 86%, rgba(255, 255, 255, 0.9) 100%); }
+        .mobile-menu .mm-cta .mm-title { color: var(--text-primary); }
+        .mobile-menu .mm-cta .mm-sub { color: var(--text-muted); }
+        .mobile-menu .mm-cta .mobile-menu__link-icon { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.14); }
+        .mobile-menu .mm-cta .mobile-menu__link-icon svg { color: var(--text-primary); }
+        .mobile-menu .mm-cta .mobile-menu__link-arrow { fill: var(--text-muted); opacity: 0.8; }
+        [data-theme="light"] .mobile-menu .mm-cta, [data-theme="light"] .mobile-menu .mm-cta:hover { border-color: rgba(var(--accent-rgb), 0.16) !important; box-shadow: inset 0 1px 0 #ffffff !important;
+            background: linear-gradient(120deg, rgba(120, 170, 255, 0.18) 0%, rgba(255, 150, 215, 0.12) 48%, rgba(110, 225, 255, 0.16) 100%), linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.62)) !important; }
+        [data-theme="light"] .mobile-menu .mm-cta::before { background: conic-gradient(from 0deg, #ffffff 0%, rgba(120, 170, 255, 0.7) 14%, rgba(255, 255, 255, 0.25) 28%, rgba(255, 150, 215, 0.55) 44%, #ffffff 58%, rgba(255, 255, 255, 0.25) 72%, rgba(110, 225, 255, 0.6) 86%, #ffffff 100%); }
+        [data-theme="light"] .mobile-menu .mm-cta .mobile-menu__link-icon { background: rgba(var(--accent-rgb), 0.08); border-color: rgba(var(--accent-rgb), 0.16); box-shadow: none; }
+        /* иконки не пропадают ни при наведении, ни при нажатии, ни в светлой теме */
+        .mobile-menu .mobile-menu__link .mobile-menu__link-icon svg, .mobile-menu .mobile-menu__link:hover .mobile-menu__link-icon svg, .mobile-menu .mobile-menu__link:focus-visible .mobile-menu__link-icon svg, .mobile-menu .mobile-menu__link:active .mobile-menu__link-icon svg { color: var(--text-primary) !important; stroke: currentColor; fill: none; opacity: 0.95; }
+        .mobile-menu .mobile-menu__link:hover .mobile-menu__link-icon { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.2); }
+        [data-theme="light"] .mobile-menu .mobile-menu__link:hover .mobile-menu__link-icon { background: rgba(var(--accent-rgb), 0.1); border-color: rgba(var(--accent-rgb), 0.22); }
+        .mobile-menu .mobile-menu__link:hover .mm-title { color: var(--text-primary); }
+        .mobile-menu .mobile-menu__link:hover .mm-sub { color: var(--text-secondary); }
+        .mobile-menu .mobile-menu__link:hover .mobile-menu__link-arrow { fill: var(--text-primary); }
     </style>
     <style id="perf-fixes">
         /* ===== скорость и стабильность ===== */
@@ -738,6 +822,41 @@
         .faq-chips { isolation: isolate; }
         .faq-thumb { z-index: -1; }
         .faq-chips .faq-chip { z-index: auto; transition: color 0.25s ease 0.12s; }
+    </style>
+    <style id="smooth-fixes">
+        /* ===== чистый фон: сетка «в клеточку» убрана ===== */
+        .bg-grid { display: none !important; }
+        /* ===== «Как это работает?»: простые и лёгкие переходы ===== */
+        .faq-live { transition: opacity 0.32s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.5s var(--ios); }
+        .faq-live.is-leaving { opacity: 0; transform: translateX(var(--dx, 0px)); transition: opacity 0.12s ease-in, transform 0.12s ease-in; }
+        .faq-live.is-arriving { opacity: 0.2; transform: translateX(var(--dx, 0px)); transition: none; }
+        .faq-section.is-resizing { transition: height 0.5s var(--ios); }
+        .faq-seg { position: relative; --seg-edge: rgb(48, 48, 53); }
+        [data-theme="light"] .faq-seg { --seg-edge: rgb(248, 251, 255); }
+        .faq-chips, .faq-chips.fade-l, .faq-chips.fade-r { -webkit-mask-image: none; mask-image: none; }
+        .faq-seg::before, .faq-seg::after { content: ''; position: absolute; top: 0; bottom: 0; width: 30px; z-index: 3; pointer-events: none; opacity: 0; transition: opacity 0.25s ease; }
+        .faq-seg::before { left: 0; border-radius: 9999px 0 0 9999px; background: linear-gradient(90deg, var(--seg-edge), rgba(0, 0, 0, 0)); }
+        .faq-seg::after { right: 0; border-radius: 0 9999px 9999px 0; background: linear-gradient(270deg, var(--seg-edge), rgba(0, 0, 0, 0)); }
+        .faq-seg.fade-l::before, .faq-seg.fade-r::after { opacity: 1; }
+        /* ===== список приложений: облегчённые тени карточек ===== */
+        #app-list .app-item { box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22), var(--glass-hi); }
+        [data-theme="light"] #app-list .app-item { box-shadow: 0 6px 16px rgba(20, 70, 160, 0.08), var(--glass-hi); }
+        /* ===== смена темы: переходы на время переключения отключены (иначе сотни элементов анимируются разом) ===== */
+        html.theme-switching *, html.theme-switching *::before, html.theme-switching *::after { transition: none !important; }
+    </style>
+    <style id="faq-liquid">
+        /* ===== «Как это работает?»: ползунок как жидкое стекло ===== */
+        .modal .modal__content--faq { max-height: min(85vh, 760px); max-height: min(85dvh, 760px); }
+        .faq-chips { display: block; padding: 0; }
+        .faq-track { position: relative; display: flex; gap: 2px; padding: 4px; width: max-content; min-width: 100%; }
+        .faq-chips .faq-chip, .faq-chips .faq-chip.is-active { color: var(--text-secondary); }
+        .faq-glass { position: absolute; top: 4px; bottom: 4px; left: 0; right: 0; z-index: 2; overflow: hidden; border-radius: 9999px; pointer-events: none;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.06) 52%, rgba(255, 255, 255, 0) 100%), linear-gradient(90deg, rgba(56, 189, 248, 0.84), rgba(37, 99, 235, 0.92));
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.5); }
+        .faq-glass__copy { position: absolute; top: -4px; left: 0; display: flex; gap: 2px; padding: 4px; width: max-content; height: calc(100% + 8px); }
+        .faq-glass__copy .faq-chip { color: #fff !important; background: none; pointer-events: none; opacity: 1; text-shadow: 0 1px 6px rgba(0, 40, 120, 0.35); }
+        .faq-chips .faq-chip { transition: none; }
+        @media (hover: hover) { .faq-chips .faq-chip:not(.is-active):hover { color: var(--text-primary); } }
     </style>
     <style id="app-detail-styles">
         /* ===== окно приложения: цветная карточка в стиле постеров (цвет берётся из иконки) ===== */
@@ -860,8 +979,9 @@
         </div>
     </header>
 
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-menu__header">
+    <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Меню" data-i18n-attr="aria-label:menu.title" tabindex="-1">
+        <span class="mm-grabber" aria-hidden="true"></span>
+        <div class="mobile-menu__header mm-item" style="--i:0">
             <img class="mobile-menu__avatar" src="Images/Profile.PNG" alt="iApps">
             <div class="mobile-menu__info">
                 <span class="mobile-menu__name">iApps</span>
@@ -870,28 +990,33 @@
                 <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"/></svg>
             </button>
         </div>
-        <nav class="mobile-menu__nav">
-            <a href="#pricing" class="mobile-menu__link mobile-menu__link--cta">
-                <span class="mobile-menu__link-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="3"/><path d="M8 10.5V7.6a4 4 0 0 1 7.5-1.9"/><path d="M12 15v2"/></svg></span>
-                <span class="mobile-menu__link-text" data-i18n="menu.access">Получить доступ</span>
-                <svg class="mobile-menu__link-arrow" viewBox="0 0 24 24" width="18" height="18"><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"/></svg>
-            </a>
-            <a href="#apps" class="mobile-menu__link">
+        <nav class="mobile-menu__nav" id="mmNav">
+            <span class="mm-lens" aria-hidden="true"></span>
+            <a href="#apps" class="mobile-menu__link mm-item" style="--i:1" data-spy="apps">
                 <span class="mobile-menu__link-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg></span>
-                <span class="mobile-menu__link-text" data-i18n="menu.apps">Приложения</span>
-                <svg class="mobile-menu__link-arrow" viewBox="0 0 24 24" width="18" height="18"><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"/></svg>
+                <span class="mm-text"><span class="mm-title" data-i18n="menu.apps">Приложения</span><span class="mm-sub" data-i18n="menu.sub.apps">Каталог и поиск</span></span>
+                <svg class="mobile-menu__link-arrow" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"/></svg>
             </a>
-            <a href="https://t.me/iapps" class="mobile-menu__link" target="_blank" rel="noopener">
+            <a href="https://t.me/iapps" class="mobile-menu__link mm-item" style="--i:2" target="_blank" rel="noopener">
                 <span class="mobile-menu__link-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.7 3.6 3.9 10.1c-.7.3-.7 1.3 0 1.5l4.2 1.4 1.5 4.7c.2.6 1 .8 1.4.3l2.2-2.1 4.1 3c.5.4 1.2.1 1.4-.5l3-14.2c.2-.8-.6-1.4-1.3-1.1z"/><path d="M8.2 13.1 16.5 7.6"/></svg></span>
-                <span class="mobile-menu__link-text" data-i18n="menu.channel">Telegram канал</span>
-                <svg class="mobile-menu__link-arrow" viewBox="0 0 24 24" width="18" height="18"><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"/></svg>
+                <span class="mm-text"><span class="mm-title" data-i18n="menu.channel">Telegram канал</span><span class="mm-sub" data-i18n="menu.sub.channel">Новости и обновления</span></span>
+                <svg class="mobile-menu__link-arrow" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"/></svg>
             </a>
-            <a href="https://t.me/iappspay_bot" class="mobile-menu__link" target="_blank" rel="noopener">
+            <a href="https://t.me/iappspay_bot" class="mobile-menu__link mm-item" style="--i:3" target="_blank" rel="noopener">
                 <span class="mobile-menu__link-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="7.5" width="15" height="12" rx="4.2"/><path d="M12 7.5V4.4"/><circle cx="12" cy="3.3" r="1.1"/><circle cx="9" cy="12.4" r="1.2" fill="currentColor" stroke="none"/><circle cx="15" cy="12.4" r="1.2" fill="currentColor" stroke="none"/><path d="M9.6 16.1c.7.6 1.5.9 2.4.9s1.7-.3 2.4-.9"/><path d="M2.5 12.2v3.2M21.5 12.2v3.2"/></svg></span>
-                <span class="mobile-menu__link-text" data-i18n="menu.bot">Telegram бот</span>
-                <svg class="mobile-menu__link-arrow" viewBox="0 0 24 24" width="18" height="18"><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"/></svg>
+                <span class="mm-text"><span class="mm-title" data-i18n="menu.bot">Telegram бот</span><span class="mm-sub" data-i18n="menu.sub.bot">Оплата и поддержка</span></span>
+                <svg class="mobile-menu__link-arrow" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"/></svg>
             </a>
         </nav>
+        <div class="mm-controls mm-item" style="--i:4">
+            <div class="mm-control"><span class="mm-control__label" data-i18n="menu.theme">Тема</span><div class="mm-seg" id="mmTheme" role="radiogroup"></div></div>
+            <div class="mm-control"><span class="mm-control__label" data-i18n="menu.lang">Язык</span><div class="mm-seg" id="mmLang" role="radiogroup"></div></div>
+        </div>
+        <a href="#pricing" class="mobile-menu__link mobile-menu__link--cta mm-cta mm-item" style="--i:5">
+            <span class="mobile-menu__link-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="3"/><path d="M8 10.5V7.6a4 4 0 0 1 7.5-1.9"/><path d="M12 15v2"/></svg></span>
+            <span class="mm-text"><span class="mm-title" data-i18n="menu.access">Получить доступ</span><span class="mm-sub" data-i18n="menu.sub.access">Тарифы и оплата</span></span>
+            <svg class="mobile-menu__link-arrow" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"/></svg>
+        </a>
     </div>
     <div class="overlay" id="overlay"></div>
 
@@ -1540,6 +1665,16 @@
   "page.title": "iApps - Сертификат разработчика Apple и приложения для iPhone",
   "menu.apps": "Приложения",
   "menu.access": "Получить доступ",
+  "menu.title": "Меню",
+  "menu.status": "Каталог онлайн",
+  "menu.sub.access": "Тарифы и оплата",
+  "menu.sub.apps": "Каталог и поиск",
+  "menu.sub.channel": "Новости и обновления",
+  "menu.sub.bot": "Оплата и поддержка",
+  "menu.theme": "Тема",
+  "menu.lang": "Язык",
+  "menu.themeDark": "Тёмная тема",
+  "menu.themeLight": "Светлая тема",
   "menu.channel": "Telegram канал",
   "menu.bot": "Telegram бот",
   "hero.badgePre": "Более",
@@ -1655,6 +1790,16 @@
   "page.title": "iApps - Apple Developer Certificate and apps for iPhone",
   "menu.apps": "Apps",
   "menu.access": "Get access",
+  "menu.title": "Menu",
+  "menu.status": "Catalog online",
+  "menu.sub.access": "Plans and payment",
+  "menu.sub.apps": "Catalog and search",
+  "menu.sub.channel": "News and updates",
+  "menu.sub.bot": "Payment and support",
+  "menu.theme": "Theme",
+  "menu.lang": "Language",
+  "menu.themeDark": "Dark theme",
+  "menu.themeLight": "Light theme",
   "menu.channel": "Telegram channel",
   "menu.bot": "Telegram bot",
   "hero.badgePre": "Over",
@@ -1802,8 +1947,8 @@
     if (btn) btn.addEventListener('click', () => window.i18n.toggle());
 })();
 </script>
-    <script src="Scripts/Script.js?v=58"></script>
-    <script src="Scripts/Repository.js?v=58"></script>
+    <script src="Scripts/Script.js?v=65"></script>
+    <script src="Scripts/Repository.js?v=65"></script>
     <script>
 (function () {
 
@@ -2267,83 +2412,91 @@
         let tap = null, lastTapSelect = 0, lastTapPoint = { x: -999, y: -999 }, down = false, moved = false, startX = 0, startLeft = 0, suppressClick = false;
         function updateFades() {
             const max = chipsEl.scrollWidth - chipsEl.clientWidth;
-            chipsEl.classList.toggle('fade-l', chipsEl.scrollLeft > 2);
-            chipsEl.classList.toggle('fade-r', max > 2 && chipsEl.scrollLeft < max - 2);
+            const seg = chipsEl.parentElement;
+            seg.classList.toggle('fade-l', chipsEl.scrollLeft > 2);
+            seg.classList.toggle('fade-r', max > 2 && chipsEl.scrollLeft < max - 2);
         }
         function reveal(chip) {
             const sr = chipsEl.getBoundingClientRect(), cr = chip.getBoundingClientRect();
             if (cr.left < sr.left + 24 || cr.right > sr.right - 24) chipsEl.scrollTo({ left: Math.max(0, chip.offsetLeft - (chipsEl.clientWidth - chip.offsetWidth) / 2), behavior: 'instant' });   // без анимации: нажатие во время неё могло теряться
         }
-        // Смена категории по языку движения Apple: одна кривая для всего, ничего не ждёт друг друга.
-        // Старый раздел уходит в сторону и гаснет, новый приходит с другой стороны, а высота окна плавно перетекает в новую.
+        // Смена категории: старый раздел уходит в сторону (140 мс), новый приходит с другой стороны, а высота окна плавно перетекает.
+        // Только переходы CSS (прозрачность и сдвиг идут на видеокарте), без клонов и скриптовых анимаций; состояние всегда очищается таймером.
         const sectionEl = document.getElementById('faqSection'), liveEl = document.getElementById('faqLive');
-        const IOS = 'cubic-bezier(0.32, 0.72, 0, 1)';
-        const chips = () => [...chipsEl.querySelectorAll('.faq-chip')];
-        let switchToken = 0, anims = [];
+        const chips = () => [...chipsEl.querySelectorAll('.faq-track > .faq-chip')];      // только настоящие кнопки, без копий подписей внутри плашки
+        let switchToken = 0, switchTimers = [];
         function cancelSwitch() {
-            anims.forEach(x => { try { x.cancel(); } catch (e) {} }); anims = [];
-            sectionEl.querySelectorAll('.faq-ghost').forEach(g => g.remove());
-            sectionEl.style.height = ''; sectionEl.style.overflow = '';
+            switchTimers.forEach(clearTimeout); switchTimers = [];
+            sectionEl.classList.remove('is-resizing'); sectionEl.style.height = ''; sectionEl.style.overflow = '';
+            liveEl.classList.remove('is-leaving', 'is-arriving'); liveEl.style.removeProperty('--dx');
         }
-        // «стеклянная плашка» под выбранной категорией скользит к новой
+        // «Жидкое стекло» под выбранной категорией: края плашки едут с разной скоростью (передний обгоняет задний),
+        // поэтому она растягивается и оседает как капля. Белый текст выбранной категории лежит внутри плашки (копия подписей):
+        // он всегда точно под стеклом, и ничего не нужно синхронизировать.
         function placeThumb(animate) {
-            const chip = chips()[cat], th = chipsEl.querySelector('.faq-thumb');
-            if (!chip || !th) return;
-            th.classList.toggle('no-anim', !animate);
-            th.style.width = chip.offsetWidth + 'px'; th.style.transform = 'translateX(' + chip.offsetLeft + 'px)';
-            if (!animate) { void th.offsetWidth; th.classList.remove('no-anim'); }
+            const chip = chips()[cat], track = chipsEl.querySelector('.faq-track'), g = track && track.querySelector('.faq-glass');
+            if (!chip || !g) return;
+            const cp = g.firstElementChild;
+            const L = chip.offsetLeft, R = Math.max(0, track.offsetWidth - (chip.offsetLeft + chip.offsetWidth));
+            if (!animate || g._L === undefined) { g.style.transition = 'none'; cp.style.transition = 'none'; }
+            else {
+                const right = L > g._L, lead = '0.42s cubic-bezier(0.3, 1.3, 0.5, 1)', trail = '0.66s cubic-bezier(0.32, 0.72, 0, 1)';
+                g.style.transition = right ? 'left ' + trail + ', right ' + lead : 'left ' + lead + ', right ' + trail;
+                cp.style.transition = 'left ' + (right ? trail : lead);
+            }
+            g.style.left = L + 'px'; g.style.right = R + 'px'; cp.style.left = (-L) + 'px';
+            g._L = L;
+            if (!animate) { void g.offsetWidth; g.style.transition = ''; cp.style.transition = ''; }
         }
-        async function swapSection(i) {
+        function swapSection(i) {
             const token = ++switchToken;
             const from = sectionEl.getBoundingClientRect().height;
             cancelSwitch();
             const dir = i > cat ? 1 : -1;
             const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            if (reduce || !modal.classList.contains('active') || !sectionEl.animate) { cat = i; renderList(); return; }
-            const ghost = document.createElement('div');
-            ghost.className = 'faq-ghost'; ghost.setAttribute('aria-hidden', 'true'); ghost.setAttribute('inert', '');
-            ghost.innerHTML = liveEl.innerHTML.replace(/\s(id|aria-controls|aria-labelledby)="[^"]*"/g, '');
+            if (reduce || !modal.classList.contains('active')) { cat = i; renderList(); return; }
+            cat = i;
             sectionEl.style.overflow = 'hidden'; sectionEl.style.height = from + 'px';
-            sectionEl.appendChild(ghost);
-            cat = i; renderList();
-            const to = liveEl.getBoundingClientRect().height;
-            sectionEl.style.height = to + 'px';
-            const dur = Math.max(520, Math.min(780, 520 + Math.abs(to - from) * 0.35));
-            anims = [
-                sectionEl.animate([{ height: from + 'px' }, { height: to + 'px' }], { duration: dur, easing: IOS }),
-                ghost.animate([{ opacity: 1, transform: 'translateX(0)' }, { opacity: 0, transform: 'translateX(' + (-dir * 22) + 'px)' }], { duration: 170, easing: 'cubic-bezier(0.25, 0, 0.5, 1)', fill: 'forwards' }),
-                liveEl.animate([{ opacity: 0.35, transform: 'translateX(' + (dir * 22) + 'px)' }, { opacity: 1, transform: 'translateX(0)' }], { duration: dur - 140, delay: 120, easing: IOS, fill: 'backwards' })   // текст никогда не пропадает полностью
-            ];
-            const finish = () => {
+            liveEl.style.setProperty('--dx', (-dir * 14) + 'px'); liveEl.classList.add('is-leaving');
+            switchTimers.push(setTimeout(() => {
                 if (token !== switchToken) return;
-                anims.forEach(x => { try { x.cancel(); } catch (e) {} }); anims = [];
-                ghost.remove(); sectionEl.style.height = ''; sectionEl.style.overflow = '';
-            };
-            const safety = setTimeout(finish, dur + 320);       // страховка: состояние очищается, даже если браузер не доиграл анимацию
-            try { await Promise.all(anims.map(x => x.finished)); } catch (e) { clearTimeout(safety); return; }
-            clearTimeout(safety); finish();
+                renderList();
+                liveEl.classList.remove('is-leaving');
+                liveEl.style.setProperty('--dx', (dir * 14) + 'px'); liveEl.classList.add('is-arriving');      // стартовое положение нового раздела, без перехода
+                sectionEl.style.height = 'auto'; const to = liveEl.getBoundingClientRect().height;
+                sectionEl.style.height = from + 'px';
+                void sectionEl.offsetHeight;                                                                  // фиксируем стартовые значения
+                sectionEl.classList.add('is-resizing'); liveEl.classList.remove('is-arriving');               // дальше всё делают переходы CSS
+                sectionEl.style.height = to + 'px';
+                switchTimers.push(setTimeout(() => { if (token === switchToken) cancelSwitch(); }, 700));
+            }, 125));
         }
         function setCat(i, scroll) {
             if (i === cat) { if (scroll) reveal(chips()[i]); return; }
-            const from = cat;
             chips().forEach((c, k) => { c.classList.toggle('is-active', k === i); c.setAttribute('aria-selected', String(k === i)); });
             if (scroll) reveal(chips()[i]);
-            const target = i;
-            swapSection(i).then(() => {});
-            cat = target; placeThumb(true);
+            swapSection(i);
+            placeThumb(true);
         }
+        const ro = window.ResizeObserver ? new ResizeObserver(() => placeThumb(false)) : null;     // шрифт загрузился, сменился язык или размер: плашка пересчитывается сама
         function renderChips() {
             const keep = chipsEl.scrollLeft;
             chipsEl.innerHTML = '';
-            const th = document.createElement('span'); th.className = 'faq-thumb no-anim'; th.setAttribute('aria-hidden', 'true'); chipsEl.appendChild(th);
+            const track = document.createElement('div'); track.className = 'faq-track';
+            const g = document.createElement('span'); g.className = 'faq-glass'; g.setAttribute('aria-hidden', 'true');
+            const cp = document.createElement('span'); cp.className = 'faq-glass__copy'; g.appendChild(cp); track.appendChild(g);
             data().forEach((c, i) => {
                 const b = document.createElement('button');
                 b.type = 'button'; b.className = 'faq-chip' + (i === cat ? ' is-active' : ''); b.textContent = c.name; b.dataset.i = String(i);
                 b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', String(i === cat));
-                chipsEl.appendChild(b);
+                track.appendChild(b);
+                const k = document.createElement('button'); k.type = 'button'; k.className = 'faq-chip'; k.textContent = c.name; k.tabIndex = -1; k.disabled = true; cp.appendChild(k);
             });
+            chipsEl.appendChild(track);
             chipsEl.scrollLeft = keep; updateFades(); placeThumb(false);
+            if (ro) { ro.disconnect(); ro.observe(track); }
         }
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => placeThumb(false));
         chipsEl.addEventListener('scroll', updateFades, { passive: true });
         window.addEventListener('resize', () => { updateFades(); placeThumb(false); });
         // мышь: перетаскивание (небольшое дрожание руки не считается перетаскиванием)
@@ -2651,6 +2804,145 @@
     document.querySelectorAll('.modal, .mobile-menu').forEach(el => obs.observe(el, { attributes: true, attributeFilter: ['class'] }));
     document.addEventListener('visibilitychange', sync);
     window.addEventListener('pageshow', sync);
+})();
+</script>
+    <script>
+(function () {
+    const root = document.documentElement;
+    let t = 0;
+    function quiet() {
+        root.classList.add('theme-switching');
+        clearTimeout(t);
+        t = setTimeout(() => root.classList.remove('theme-switching'), 450);
+    }
+    // перехватываем нажатие раньше обработчика темы: к моменту смены атрибута переходы уже отключены
+    ['themeToggle', 'mobileThemeToggle'].forEach(id => { const b = document.getElementById(id); if (b) b.addEventListener('click', quiet, true); });
+})();
+</script>
+    <script>
+(function () {
+    const panel = document.getElementById('mobileMenu');
+    if (!panel) return;
+    const nav = document.getElementById('mmNav'), lens = nav.querySelector('.mm-lens');
+    const rows = [...nav.querySelectorAll('.mobile-menu__link')];
+    const overlay = document.getElementById('overlay'), closeBtn = document.getElementById('closeMenu'), avatarBtn = document.getElementById('avatarBtn');
+    const root = document.documentElement;
+    const LEAD = '0.4s cubic-bezier(0.3, 1.25, 0.5, 1)', TRAIL = '0.62s cubic-bezier(0.32, 0.72, 0, 1)';
+
+    /* ---------- «линза» скользит к строке, тянется как капля ---------- */
+    let lensTop = null;
+    function moveLens(row, animate) {
+        if (!row) { lens.classList.remove('is-on'); return; }
+        const t = row.offsetTop, b = nav.clientHeight - (row.offsetTop + row.offsetHeight);
+        if (animate === false || lensTop === null || !lens.classList.contains('is-on')) {
+            lens.style.transition = 'none'; lens.style.top = t + 'px'; lens.style.bottom = b + 'px'; void lens.offsetWidth; lens.style.transition = '';
+        } else {
+            const down = t > lensTop;
+            lens.style.transition = 'opacity 0.25s ease, top ' + (down ? TRAIL : LEAD) + ', bottom ' + (down ? LEAD : TRAIL);
+            lens.style.top = t + 'px'; lens.style.bottom = b + 'px';
+        }
+        lensTop = t; lens.classList.add('is-on');
+    }
+    /* строка, на которой «линза» отдыхает: раздел страницы, который сейчас на экране */
+    let here = null;
+    const spyRow = () => (here === 'apps' ? nav.querySelector('[data-spy="apps"]') : null);
+    if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => entries.forEach((en) => { if (en.isIntersecting) here = en.target.id; else if (here === en.target.id) here = null; }), { rootMargin: '-35% 0px -50% 0px' });
+        ['apps', 'pricing'].forEach((id) => { const s = document.getElementById(id); if (s) io.observe(s); });
+    }
+    const rest = (animate) => moveLens(spyRow(), animate);
+    rows.forEach((r) => {
+        r.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') moveLens(r); });
+        r.addEventListener('pointerdown', () => moveLens(r), { passive: true });
+        r.addEventListener('focus', () => moveLens(r));
+    });
+    nav.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') rest(); });
+    nav.addEventListener('focusout', (e) => { if (!nav.contains(e.relatedTarget)) rest(); });
+
+    /* ---------- переключатели темы и языка ---------- */
+    const SUN = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.4 4.4 6 6M18 18l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.4 19.6 6 18M18 6l1.6-1.6"/></svg>';
+    const MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8 8.4 8.4 0 1 0 20.2 14.6z"/></svg>';
+    const tr = (k, d) => (window.i18n && window.i18n.t ? (window.i18n.t(k) || d) : d);
+    function makeSeg(el, defs, getIdx, pick) {
+        el.innerHTML = '';
+        defs.forEach((d, i) => {
+            const b = document.createElement('button'); b.type = 'button'; b.className = 'mm-seg__btn'; b.setAttribute('role', 'radio'); b.setAttribute('aria-label', d.label); b.innerHTML = d.html;
+            b.addEventListener('click', () => { if (i !== getIdx()) pick(i); });
+            el.appendChild(b);
+        });
+        const g = document.createElement('span'); g.className = 'mm-glass'; g.setAttribute('aria-hidden', 'true');
+        const cp = document.createElement('span'); cp.className = 'mm-glass__copy';
+        defs.forEach((d) => { const s = document.createElement('span'); s.className = 'mm-seg__btn'; s.innerHTML = d.html; cp.appendChild(s); });
+        g.appendChild(cp); el.appendChild(g);
+        const place = (animate) => {
+            const btns = el.querySelectorAll('button'), idx = getIdx(), btn = btns[idx]; if (!btn) return;
+            const L = btn.offsetLeft, R = Math.max(0, el.clientWidth - (btn.offsetLeft + btn.offsetWidth));
+            cp.style.width = el.clientWidth + 'px';
+            btns.forEach((x, k) => x.setAttribute('aria-checked', String(k === idx)));
+            if (!animate || g._L === undefined) { g.style.transition = 'none'; cp.style.transition = 'none'; }
+            else { const right = L > g._L; g.style.transition = right ? 'left ' + TRAIL + ', right ' + LEAD : 'left ' + LEAD + ', right ' + TRAIL; cp.style.transition = 'left ' + (right ? TRAIL : LEAD); }
+            g.style.left = L + 'px'; g.style.right = R + 'px'; cp.style.left = (-L) + 'px'; g._L = L;
+            if (!animate) { void g.offsetWidth; g.style.transition = ''; cp.style.transition = ''; }
+        };
+        if (window.ResizeObserver) new ResizeObserver(() => place(false)).observe(el);
+        return place;
+    }
+    const themeBtn = document.getElementById('themeToggle');
+    const themeIdx = () => (root.getAttribute('data-theme') === 'light' ? 1 : 0);
+    const placeTheme = makeSeg(document.getElementById('mmTheme'),
+        [{ html: MOON, label: tr('menu.themeDark', 'Тёмная тема') }, { html: SUN, label: tr('menu.themeLight', 'Светлая тема') }],
+        themeIdx, () => { if (themeBtn) themeBtn.click(); });
+    const langIdx = () => (window.i18n && window.i18n.lang === 'en' ? 1 : 0);
+    const placeLang = makeSeg(document.getElementById('mmLang'),
+        [{ html: 'RU', label: 'Русский' }, { html: 'EN', label: 'English' }],
+        langIdx, (i) => { if (window.i18n && window.i18n.set) window.i18n.set(i === 1 ? 'en' : 'ru'); });
+    new MutationObserver(() => placeTheme(true)).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+    document.addEventListener('iapps:lang', () => { placeLang(true); placeTheme(false); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { placeTheme(false); placeLang(false); });
+
+    /* ---------- открытие и закрытие: фокус, Tab не уходит из меню ---------- */
+    new MutationObserver(() => {
+        if (panel.classList.contains('active')) { placeTheme(false); placeLang(false); rest(false); requestAnimationFrame(() => panel.focus({ preventScroll: true })); }
+        else { lens.classList.remove('is-on'); lensTop = null; if (document.activeElement && panel.contains(document.activeElement) && avatarBtn) avatarBtn.focus({ preventScroll: true }); }
+    }).observe(panel, { attributes: true, attributeFilter: ['class'] });
+    panel.addEventListener('keydown', (e) => {
+        if (e.key !== 'Tab') return;
+        const f = [...panel.querySelectorAll('a[href], button:not([disabled])')].filter((x) => x.offsetParent !== null);
+        if (!f.length) return;
+        const first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && (document.activeElement === first || document.activeElement === panel)) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+
+    /* ---------- жест: меню можно «отодвинуть» вправо, оно следует за пальцем ---------- */
+    let drag = null, justDragged = 0;
+    panel.addEventListener('pointerdown', (e) => {
+        if (!panel.classList.contains('active') || (e.pointerType === 'mouse' && e.button !== 0) || e.target.closest('.mm-seg')) return;
+        drag = { id: e.pointerId, x: e.clientX, y: e.clientY, on: false, dx: 0, s: [[performance.now(), e.clientX]] };
+    }, { passive: true });
+    window.addEventListener('pointermove', (e) => {
+        if (!drag || e.pointerId !== drag.id) return;
+        const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+        if (!drag.on) {
+            if (Math.abs(dy) > 10 && Math.abs(dy) > Math.abs(dx)) { drag = null; return; }
+            if (dx > 10 && dx > Math.abs(dy) * 1.3) { drag.on = true; panel.style.transition = 'none'; try { panel.setPointerCapture(e.pointerId); } catch (er) {} } else return;
+        }
+        drag.dx = Math.max(0, dx);
+        drag.s.push([performance.now(), e.clientX]); if (drag.s.length > 4) drag.s.shift();
+        panel.style.transform = 'translateX(' + drag.dx + 'px)';
+        if (overlay) overlay.style.opacity = String(Math.max(0, 1 - drag.dx / panel.offsetWidth));
+    });
+    const end = (e) => {
+        if (!drag || e.pointerId !== drag.id) return;
+        const d = drag; drag = null;
+        if (!d.on) return;
+        const a = d.s[0], z = d.s[d.s.length - 1], v = (z[1] - a[1]) / Math.max(1, z[0] - a[0]);
+        panel.style.transition = ''; panel.style.transform = ''; if (overlay) overlay.style.opacity = '';
+        if (d.dx > panel.offsetWidth * 0.3 || v > 0.55) closeBtn.click();
+        justDragged = performance.now();      // после закрытия: гасим только «хвост» нажатия от самого жеста
+    };
+    window.addEventListener('pointerup', end); window.addEventListener('pointercancel', end);
+    panel.addEventListener('click', (e) => { if (performance.now() - justDragged < 350) { e.preventDefault(); e.stopPropagation(); } }, true);
 })();
 </script>
 </body>

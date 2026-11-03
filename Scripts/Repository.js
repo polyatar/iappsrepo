@@ -23,6 +23,7 @@ fetch('Repo.json?v=' + Math.floor(Date.now() / 60000), { cache: 'no-cache' })
     .then(response => response.json())
     .then(data => {
         apps = data;
+    prepApps();
         displayApps();
         updateStatsCounters(apps.length);
     })
@@ -146,21 +147,24 @@ searchInput.addEventListener('input', () => {
     }, 300);
 });
 
+// названия в нижнем регистре и время обновления считаются один раз при загрузке, а не при каждом поиске и сортировке
+function prepApps() {
+    for (const a of apps) { a._ln = String(a.appName || '').toLowerCase(); a._ts = Date.parse(a.appUpdateTime) || 0; }
+}
+
 function displayApps() {
     appList.innerHTML = '';
     
-    let filteredApps = apps.filter(app => 
-        app.appName.toLowerCase().includes(searchInput.value.toLowerCase())
-    );
+    const q = searchInput.value.toLowerCase();
+    let filteredApps = q ? apps.filter(app => app._ln.includes(q)) : apps.slice();
 
     if (selectedCategory) {
-        filteredApps = filteredApps.filter(app => 
-            app.appName.toLowerCase().includes(`#${selectedCategory.toLowerCase()}`)
-        );
+        const tag = `#${selectedCategory.toLowerCase()}`;
+        filteredApps = filteredApps.filter(app => app._ln.includes(tag));
     }
 
     if (displayMode === 'time') {
-        filteredApps.sort((a, b) => new Date(b.appUpdateTime) - new Date(a.appUpdateTime));
+        filteredApps.sort((a, b) => b._ts - a._ts);
     }
 
     const start = (currentPage - 1) * itemsPerPage;
@@ -201,7 +205,7 @@ function displayApps() {
         appItem.style.cursor = 'pointer';
         appItem.innerHTML = `
             <div class="app-header">
-                <img src="${app.appImage}" data-orig="${app.appImage}" alt="${cleanedAppName}" loading="lazy" onerror="iconFallback(this)">
+                <img src="${app.appImage}" data-orig="${app.appImage}" alt="${cleanedAppName}" loading="lazy" decoding="async" onerror="iconFallback(this)">
                 <div class="app-header__info">
                     <h3>${cleanedAppName}</h3>
                     <div class="app-pills">${pills}</div>
