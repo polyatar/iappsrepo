@@ -8,7 +8,7 @@
     <title data-i18n="page.title">iApps - Сертификат разработчика Apple и приложения для iPhone</title>
     <link rel="icon" type="image/png" href="Images/Profile.PNG">
     <link rel="apple-touch-icon" href="Images/Profile.PNG">
-    <link rel="stylesheet" href="Styles/Style.css?v=69">
+    <link rel="stylesheet" href="Styles/Style.css?v=70">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
@@ -896,6 +896,24 @@
         [data-theme="light"] .mm-seg.is-moving .mm-glass, [data-theme="light"] .mm-seg.is-pressed .mm-glass { background: #ffffff; box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.24), inset 0 1px 0 #fff, 0 4px 14px rgba(20, 70, 160, 0.2); }
         .mm-seg__btn { transition: transform 0.4s var(--ios); }
         .mm-seg.is-pressed .mm-seg__btn { transform: scale(0.97); }
+    </style>
+    <style id="menu-under">
+        /* ===== меню открывается под шапкой; стекло сразу готовое (без задержки), подписи читаются в светлой теме ===== */
+        .mobile-menu { top: calc(var(--hdr-h, 76px) + 10px); }
+        html.menu-open .header { z-index: 300; }
+        html.menu-open .header .header__avatar--menu { --ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E"); }
+        /* размытие не включается с опозданием: панель с первого кадра выглядит так же, как после остановки */
+        .mobile-menu, .mobile-menu.is-glass { -webkit-backdrop-filter: blur(12px) saturate(1.2) brightness(1.1); backdrop-filter: blur(12px) saturate(1.2) brightness(1.1); transition: transform 0.65s var(--ios); }
+        [data-theme="light"] .mobile-menu, [data-theme="light"] .mobile-menu.is-glass { -webkit-backdrop-filter: blur(14px) saturate(1.1) brightness(1.04); backdrop-filter: blur(14px) saturate(1.1) brightness(1.04); }
+        @media (hover: none) {
+            .mobile-menu, .mobile-menu.is-glass { -webkit-backdrop-filter: blur(12px) saturate(1.2) brightness(1.1); backdrop-filter: blur(12px) saturate(1.2) brightness(1.1); }
+            [data-theme="light"] .mobile-menu, [data-theme="light"] .mobile-menu.is-glass { -webkit-backdrop-filter: blur(14px) saturate(1.1) brightness(1.04); backdrop-filter: blur(14px) saturate(1.1) brightness(1.04); }
+        }
+        /* светлая тема: серые подписи под названиями стали темнее */
+        [data-theme="light"] .mobile-menu .mm-sub { color: rgba(10, 42, 85, 0.74); }
+        [data-theme="light"] .mobile-menu .mobile-menu__link .mobile-menu__link-arrow { fill: rgba(10, 42, 85, 0.5); opacity: 1; }
+        [data-theme="light"] .mobile-menu .mm-control__label { color: rgba(10, 42, 85, 0.68); }
+        [data-theme="light"] .mobile-menu .mm-cta .mm-sub { color: rgba(10, 42, 85, 0.74); }
     </style>
     <style id="perf-fixes">
         /* ===== скорость и стабильность ===== */
@@ -2043,8 +2061,8 @@
     if (btn) btn.addEventListener('click', () => window.i18n.toggle());
 })();
 </script>
-    <script src="Scripts/Script.js?v=69"></script>
-    <script src="Scripts/Repository.js?v=69"></script>
+    <script src="Scripts/Script.js?v=70"></script>
+    <script src="Scripts/Repository.js?v=70"></script>
     <script>
 (function () {
 
@@ -3028,14 +3046,21 @@
     document.addEventListener('iapps:lang', () => { placeLang(true); placeTheme(false); });
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { placeTheme(false); placeLang(false); });
 
+    /* ---------- меню начинается под шапкой; бургер при открытом меню закрывает его ---------- */
+    const syncHeader = () => { const c = document.querySelector('.header__container'); if (c) root.style.setProperty('--hdr-h', Math.round(c.getBoundingClientRect().bottom) + 'px'); };
+    syncHeader(); window.addEventListener('resize', syncHeader);
+    if (avatarBtn) avatarBtn.addEventListener('click', (e) => { if (panel.classList.contains('active')) { e.stopImmediatePropagation(); e.preventDefault(); closeBtn.click(); } }, true);
+
     /* ---------- открытие и закрытие: фокус, Tab не уходит из меню ---------- */
     let glassT = 0, wasActive = false;
     new MutationObserver(() => {
         const on = panel.classList.contains('active');
         if (on === wasActive) return;          // реагируем только на открытие и закрытие, а не на любые смены класса (например, is-glass)
         wasActive = on;
+        root.classList.toggle('menu-open', on);
+        if (avatarBtn) avatarBtn.setAttribute('aria-expanded', String(on));
         clearTimeout(glassT);
-        if (on) { placeTheme(false); placeLang(false); rest(false); requestAnimationFrame(() => panel.focus({ preventScroll: true })); glassT = setTimeout(() => panel.classList.add('is-glass'), 700); }
+        if (on) { syncHeader(); placeTheme(false); placeLang(false); rest(false); requestAnimationFrame(() => panel.focus({ preventScroll: true })); glassT = setTimeout(() => panel.classList.add('is-glass'), 700); }
         else { panel.classList.remove('is-glass'); lens.classList.remove('is-on'); lensTop = null; if (document.activeElement && panel.contains(document.activeElement) && avatarBtn) avatarBtn.focus({ preventScroll: true }); }
     }).observe(panel, { attributes: true, attributeFilter: ['class'] });
     panel.addEventListener('keydown', (e) => {
