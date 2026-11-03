@@ -8,7 +8,7 @@
     <title data-i18n="page.title">iApps - Сертификат разработчика Apple и приложения для iPhone</title>
     <link rel="icon" type="image/png" href="Images/Profile.PNG">
     <link rel="apple-touch-icon" href="Images/Profile.PNG">
-    <link rel="stylesheet" href="Styles/Style.css?v=72">
+    <link rel="stylesheet" href="Styles/Style.css?v=77">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
@@ -953,17 +953,7 @@
         @media (hover: hover) { .mobile-menu.mobile-menu .mm-cta:hover { background: rgba(255, 255, 255, 0.08) !important; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.28) !important; } }
         .mobile-menu .mm-cta .mm-title { color: var(--text-primary); font-size: 1.03rem; }
         .mobile-menu .mm-cta .mm-sub { color: var(--text-muted); }
-        /* особенность: значок и стрелка светятся голубым изнутри, стрелка лежит в маленьком углублении */
-        .mobile-menu.mobile-menu .mm-cta .mobile-menu__link-icon { box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.55), inset 0 -1px 0 rgba(255, 255, 255, 0.13), inset 0 0 14px rgba(56, 189, 248, 0.38) !important; }
-        .mobile-menu .mm-cta .mobile-menu__link-icon svg { color: #62c9fb !important; }
-        .mobile-menu .mm-cta .mobile-menu__link-arrow { box-sizing: content-box; width: 16px; height: 16px; padding: 6px; border-radius: 50%; fill: #62c9fb; opacity: 1; background: rgba(0, 0, 0, 0.24); box-shadow: inset 0 1.5px 4px rgba(0, 0, 0, 0.55), inset 0 -1px 0 rgba(255, 255, 255, 0.13), inset 0 0 8px rgba(56, 189, 248, 0.3); }
-        [data-theme="light"] .mobile-menu.mobile-menu .mm-cta, [data-theme="light"] .mobile-menu.mobile-menu .mm-cta:hover { background: transparent !important; box-shadow: none !important; }
-        @media (hover: hover) { [data-theme="light"] .mobile-menu.mobile-menu .mm-cta:hover { background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.6)) !important; box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.14), 0 6px 18px rgba(20, 70, 160, 0.08) !important; } }
-        [data-theme="light"] .mobile-menu .mm-cta .mm-title { color: var(--text-primary); }
-        [data-theme="light"] .mobile-menu .mm-cta .mm-sub { color: rgba(10, 42, 85, 0.74); }
-        [data-theme="light"] .mobile-menu.mobile-menu .mm-cta .mobile-menu__link-icon { box-shadow: inset 0 2px 5px rgba(20, 70, 160, 0.22), inset 0 -1px 0 rgba(255, 255, 255, 0.95), inset 0 0 12px rgba(56, 189, 248, 0.32) !important; }
-        [data-theme="light"] .mobile-menu .mm-cta .mobile-menu__link-icon svg { color: #1a78de !important; }
-        [data-theme="light"] .mobile-menu .mm-cta .mobile-menu__link-arrow { fill: #1a78de; background: rgba(var(--accent-rgb), 0.07); box-shadow: inset 0 1.5px 4px rgba(20, 70, 160, 0.24), inset 0 -1px 0 rgba(255, 255, 255, 0.95), inset 0 0 8px rgba(56, 189, 248, 0.26); }
+        .mobile-menu .mm-cta { margin-top: auto; }
         /* ползунки темы и языка: дорожка утоплена так же, как остальные элементы */
         .mobile-menu.mobile-menu .mm-seg { background: rgba(0, 0, 0, 0.24); box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.55), inset 1px 0 2px rgba(0, 0, 0, 0.22), inset 0 -1px 0 rgba(255, 255, 255, 0.13); }
         [data-theme="light"] .mobile-menu.mobile-menu .mm-seg { background: rgba(var(--accent-rgb), 0.07); box-shadow: inset 0 2px 5px rgba(20, 70, 160, 0.22), inset 1px 0 2px rgba(20, 70, 160, 0.08), inset 0 -1px 0 rgba(255, 255, 255, 0.95); }
@@ -979,6 +969,40 @@
             box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8), inset 0 1.5px 0 #ffffff, inset 0 -1px 0 rgba(255, 255, 255, 0.5), inset 1.5px 0 0 rgba(255, 170, 90, 0.2), inset 3px 0 0 rgba(90, 150, 255, 0.12), inset -1.5px 0 0 rgba(90, 150, 255, 0.2), inset -3px 0 0 rgba(255, 170, 90, 0.12), inset 0 0 30px rgba(255, 255, 255, 0.35);
             -webkit-backdrop-filter: blur(14px) saturate(1.1) brightness(1.04); backdrop-filter: blur(14px) saturate(1.1) brightness(1.04); }
         @media (hover: none) { .mobile-menu, .mobile-menu.is-glass { box-shadow: 0 14px 36px rgba(0, 0, 0, 0.32) !important; } [data-theme="light"] .mobile-menu, [data-theme="light"] .mobile-menu.is-glass { box-shadow: 0 14px 36px rgba(20, 70, 160, 0.18) !important; } }
+    </style>
+    <style id="lang-ui">
+        /* ===== кнопка языка в шапке: стеклянная «таблетка» (значок, код, стрелка) и выпадающее стекло с выбором ===== */
+        .header .theme-toggle.lang-toggle { width: auto; min-width: 40px; padding: 0 0.7rem 0 0.75rem; gap: 0.4rem; border-radius: 9999px; display: flex; align-items: center; justify-content: center; overflow: visible; }
+        .header .theme-toggle.lang-toggle::before { position: static; inset: auto; margin: 0; flex: none; width: 18px; height: 18px; }
+        .header .lang-toggle__code { position: static; right: auto; bottom: auto; flex: none; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em; line-height: 1; color: var(--text-primary); pointer-events: none; }
+        .header .theme-toggle.lang-toggle::after { content: ''; flex: none; width: 12px; height: 12px; background: var(--text-primary); opacity: 0.7; pointer-events: none;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") center / contain no-repeat; transition: transform 0.4s var(--ios), opacity 0.3s ease; }
+        .header .lang-toggle[aria-expanded="true"]::after { transform: rotate(180deg); opacity: 1; }
+        @media (max-width: 480px) { .header .theme-toggle.lang-toggle { padding: 0 0.55rem 0 0.6rem; gap: 0.3rem; } }
+
+        .lang-pop { position: fixed; z-index: 400; width: 236px; padding: 8px; border-radius: 28px; isolation: isolate; opacity: 0; transform: translateY(-8px) scale(0.96); pointer-events: none;
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4); transition: opacity 0.22s ease, transform 0.45s var(--ios); }
+        .lang-pop[hidden] { display: none; }
+        .lang-pop.is-open { opacity: 1; transform: none; pointer-events: auto; }
+        /* стекло отдельным слоем: движение линзы не заставляет пересчитывать размытие */
+        .lang-pop::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+            background: linear-gradient(100deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.11) 60%, rgba(255, 255, 255, 0.17) 100%);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 0 rgba(160, 215, 255, 0.42), inset -1px 0 0 rgba(160, 215, 255, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(16px) saturate(1.25) brightness(1.08); backdrop-filter: blur(16px) saturate(1.25) brightness(1.08); }
+        .lang-lens { position: absolute; left: 8px; right: 8px; top: 8px; height: 46px; z-index: 0; border-radius: 20px; pointer-events: none; opacity: 0; transition: opacity 0.25s ease;
+            background: rgba(255, 255, 255, 0.15); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.55), inset 0 0 14px rgba(255, 255, 255, 0.1); }
+        .lang-lens.is-on { opacity: 1; }
+        .lang-opt { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; width: 100%; height: 46px; padding: 0 1rem; border: 0; border-radius: 20px; background: none; color: var(--text-primary); font: inherit; font-size: 0.97rem; font-weight: 600; letter-spacing: -0.005em; cursor: pointer; text-align: start; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+        .lang-opt__code { flex: none; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: var(--text-muted); transition: color 0.3s ease; }
+        .lang-opt.is-current .lang-opt__code { color: var(--text-primary); }
+        .lang-opt:active { transform: scale(0.985); }
+        .lang-opt:focus-visible { outline: 2px solid rgba(var(--accent-rgb), 0.85); outline-offset: -2px; }
+        [data-theme="light"] .lang-pop { box-shadow: 0 18px 44px rgba(20, 70, 160, 0.2); }
+        [data-theme="light"] .lang-pop::before { background: linear-gradient(100deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.64) 60%, rgba(255, 255, 255, 0.78)); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.85), inset 0 1px 0 #ffffff, inset 0 -1px 0 rgba(var(--accent-rgb), 0.22), inset -1px 0 0 rgba(var(--accent-rgb), 0.1); }
+        [data-theme="light"] .lang-lens { background: linear-gradient(180deg, #ffffff, rgba(255, 255, 255, 0.82)); box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.16), 0 4px 12px rgba(20, 70, 160, 0.1); }
+        [data-theme="light"] .lang-opt__code { color: rgba(10, 42, 85, 0.6); }
+        [data-theme="light"] .lang-opt.is-current .lang-opt__code { color: var(--text-primary); }
+        @media (prefers-reduced-motion: reduce) { .lang-pop, .lang-lens { transition: none; } }
     </style>
     <style id="perf-fixes">
         /* ===== скорость и стабильность ===== */
@@ -1037,6 +1061,36 @@
         .faq-glass__copy .faq-chip { color: #fff !important; background: none; pointer-events: none; opacity: 1; text-shadow: 0 1px 6px rgba(0, 40, 120, 0.35); }
         .faq-chips .faq-chip { transition: none; }
         @media (hover: hover) { .faq-chips .faq-chip:not(.is-active):hover { color: var(--text-primary); } }
+    </style>
+    <style id="rtl-fonts">
+        /* ===== шрифты для китайского и арабского, арабская вёрстка справа налево ===== */
+        html[lang="zh"] body, html[lang="zh"] button, html[lang="zh"] input, html[lang="zh"] textarea { font-family: Inter, -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", "Source Han Sans SC", sans-serif; }
+        html[lang="ar"] body, html[lang="ar"] button, html[lang="ar"] input, html[lang="ar"] textarea { font-family: "Noto Sans Arabic", -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, "Geeza Pro", "Arial", sans-serif; }
+        /* межбуквенный интервал рвёт арабскую вязь и портит иероглифы */
+        html[lang="ar"] *, html[lang="ar"] *::before, html[lang="ar"] *::after, html[lang="zh"] *, html[lang="zh"] *::before, html[lang="zh"] *::after { letter-spacing: normal !important; }
+        html[lang="ar"] .lang-opt__code, html[lang="ar"] .lang-toggle__code { letter-spacing: 0.04em !important; }
+        html[lang="zh"] .hero__title, html[lang="ar"] .hero__title { line-height: 1.25; }
+
+        /* прокручиваемые ряды остаются «слева направо» (их скрипты считают положение слева), а содержимое читается справа налево */
+        html[dir="rtl"] .pricing__scroll, html[dir="rtl"] .category-bar__scroll, html[dir="rtl"] .faq-chips, html[dir="rtl"] .sg-chips { direction: ltr; }
+        html[dir="rtl"] .pricing__item, html[dir="rtl"] .cat-chip, html[dir="rtl"] .faq-chip, html[dir="rtl"] .sg-chip { direction: rtl; }
+        html[dir="rtl"] .pricing__item, html[dir="rtl"] .cert-card, html[dir="rtl"] .cert-card__rights-toggle,
+        html[dir="rtl"] .modal__content--app .app-detail .app-detail__meta-item, html[dir="rtl"] .modal__content--app .app-detail .app-detail__section { text-align: right; }
+        html[dir="rtl"] .access-switch__thumb { left: auto; right: 0.375rem; }
+        html[dir="rtl"] .access-switch[data-active="1"] .access-switch__thumb { transform: translateX(-100%); }
+        html[dir="rtl"] .faq-a__inner { padding-left: 0.25rem; padding-right: calc(38px + 1rem); }
+        @media (max-width: 480px) { html[dir="rtl"] .faq-a__inner { padding-right: calc(34px + 0.8rem); } }
+        html[dir="rtl"] .search__icon { left: auto; right: 1.25rem; }
+        html[dir="rtl"] .search__clear { right: auto; left: 1rem; }
+        @media (max-width: 768px) { html[dir="rtl"] .search__icon { right: 1rem; } }
+        /* стрелки зеркалятся отдельным свойством scale, чтобы не мешать сдвигам при наведении */
+        html[dir="rtl"] .hero__actions .btn--primary svg, html[dir="rtl"] .mobile-menu__link-arrow { scale: -1 1; }
+        /* боковое меню выезжает слева */
+        html[dir="rtl"] .mobile-menu { right: auto; left: 12px; transform: translateX(calc(-100% - 24px)); }
+        html[dir="rtl"] .mobile-menu.active { transform: none; }
+        html[dir="rtl"] .mobile-menu .mm-item { transform: translateX(-20px); }
+        html[dir="rtl"] .mobile-menu.active .mm-item { transform: none; }
+        html[dir="rtl"] .mobile-menu .mobile-menu__nav .mobile-menu__link:hover { transform: none; }
     </style>
     <style id="app-detail-styles">
         /* ===== окно приложения: цветная карточка в стиле постеров (цвет берётся из иконки) ===== */
@@ -1146,7 +1200,7 @@
                         <path d="M10 7a7 7 0 0 0 12 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.979 6.979 0 0 0 10 7zm-6 5a8 8 0 0 0 15.062 3.762A9 9 0 0 1 8.238 4.938 7.999 7.999 0 0 0 4 12z"/>
                     </svg>
                 </button>
-                <button class="theme-toggle lang-toggle" id="langToggle" type="button" aria-label="Сменить язык" data-i18n-attr="aria-label:aria.lang">
+                <button class="theme-toggle lang-toggle" id="langToggle" type="button" aria-label="Сменить язык" data-i18n-attr="aria-label:aria.lang" aria-haspopup="listbox" aria-expanded="false" aria-controls="langPop">
                     <svg class="lang-toggle__icon" viewBox="0 0 24 24" width="22" height="22"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm-2.29-2.333A17.9 17.9 0 0 1 8.027 13H4.062a8.008 8.008 0 0 0 5.648 6.667zM10.03 13c.151 2.439.848 4.73 1.97 6.752A15.905 15.905 0 0 0 13.97 13h-3.94zm9.908 0h-3.965a17.9 17.9 0 0 1-1.683 6.667A8.008 8.008 0 0 0 19.938 13zM4.062 11h3.965A17.9 17.9 0 0 1 9.71 4.333 8.008 8.008 0 0 0 4.062 11zm5.969 0h3.938A15.905 15.905 0 0 0 12 4.248 15.905 15.905 0 0 0 10.03 11zm4.259-6.667A17.9 17.9 0 0 1 15.973 11h3.965a8.008 8.008 0 0 0-5.648-6.667z"/></svg>
                     <span class="lang-toggle__code" id="langCode">RU</span>
                 </button>
@@ -1159,6 +1213,9 @@
         </div>
     </header>
 
+    <div class="lang-pop" id="langPop" role="listbox" aria-label="Язык" data-i18n-attr="aria-label:menu.lang" hidden>
+        <span class="lang-lens" aria-hidden="true"></span>
+    </div>
     <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Меню" data-i18n-attr="aria-label:menu.title" tabindex="-1">
         <div class="mobile-menu__header mm-item" style="--i:0">
             <img class="mobile-menu__avatar" src="Images/Profile.PNG" alt="iApps">
@@ -1187,10 +1244,6 @@
                 <svg class="mobile-menu__link-arrow" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"/></svg>
             </a>
         </nav>
-        <div class="mm-controls mm-item" style="--i:4">
-            <div class="mm-control"><span class="mm-control__label" data-i18n="menu.theme">Тема</span><div class="mm-seg" id="mmTheme" role="radiogroup"></div></div>
-            <div class="mm-control"><span class="mm-control__label" data-i18n="menu.lang">Язык</span><div class="mm-seg" id="mmLang" role="radiogroup"></div></div>
-        </div>
         <a href="#pricing" class="mobile-menu__link mobile-menu__link--cta mm-cta mm-item" style="--i:5">
             <span class="mobile-menu__link-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="3"/><path d="M8 10.5V7.6a4 4 0 0 1 7.5-1.9"/><path d="M12 15v2"/></svg></span>
             <span class="mm-text"><span class="mm-title" data-i18n="menu.access">Получить доступ</span><span class="mm-sub" data-i18n="menu.sub.access">Тарифы и оплата</span></span>
@@ -2089,10 +2142,520 @@
   "err.local": "Open the site via a local server (e.g. <code>python3 -m http.server</code>) — the browser blocks fetch for file://",
   "err.net": "Check your internet connection",
   "date.locale": "en-US"
- }
+ },
+ "uk": {
+ "page.title": "iApps — Сертифікат розробника Apple та застосунки для iPhone",
+ "menu.apps": "Застосунки",
+ "menu.access": "Отримати доступ",
+ "menu.title": "Меню",
+ "menu.status": "Каталог онлайн",
+ "menu.sub.access": "Тарифи та оплата",
+ "menu.sub.apps": "Каталог і пошук",
+ "menu.sub.channel": "Новини та оновлення",
+ "menu.sub.bot": "Оплата та підтримка",
+ "menu.theme": "Тема",
+ "menu.lang": "Мова",
+ "menu.themeDark": "Темна тема",
+ "menu.themeLight": "Світла тема",
+ "menu.channel": "Telegram-канал",
+ "menu.bot": "Telegram-бот",
+ "hero.badgePre": "Понад",
+ "hero.badgePost": "+ застосунків",
+ "hero.title1": "Твій прокачаний",
+ "hero.subtitle": "Великий каталог застосунків — банки, видалені з App Store, розблоковані платні функції, моди, ігри та інші. Працює з iPhone і iPad.",
+ "hero.browse": "Дивитися застосунки",
+ "hero.plans": "Тарифи",
+ "hero.how": "Як це працює?",
+ "faq.title": "Як це працює?",
+ "suggest.btn": "Запропонувати застосунок",
+ "suggest.title": "Запропонувати застосунок",
+ "pricing.title": "Тарифні плани",
+ "pricing.descDefault": "Оберіть товар і відповідний тариф",
+ "pricing.descRepo": "Доступ до всіх застосунків каталогу",
+ "pricing.descCert": "Сертифікати для встановлення застосунків",
+ "tab.repo": "Репозиторій",
+ "tab.cert": "Сертифікати",
+ "dur.3": "3 міс",
+ "dur.6": "6 міс",
+ "dur.12": "12 міс",
+ "dur.24": "24 міс",
+ "dur.60": "60 міс",
+ "badge.popular": "Популярний",
+ "cert.s30": "Супер30",
+ "cert.s60": "Супер60",
+ "cert.s90": "Супер90",
+ "cert.s180": "Супер180",
+ "cert.s300": "Супер300",
+ "cert.s30jit": "Супер30 + JIT",
+ "cert.tag": "/ рік",
+ "f.dist": "Distribution сертифікат",
+ "f.devdist": "Dev і Distribution сертифікат",
+ "f.make": "Виготовлення за 1 хвилину",
+ "f.ppq": "Без перевірки PPQ",
+ "f.valid": "Термін дії ~1 рік",
+ "f.support": "Річна підтримка",
+ "f.unlimited": "Встановлення без лімітів і ПК",
+ "f.warranty": "Гарантія",
+ "cert.select": "Обрати",
+ "cert.selected": "Обрано",
+ "cert.rights": "Список прав",
+ "f.notif": "Підтримує сповіщення та VPN",
+ "f.widgets": "Підтримує віджети",
+ "cert.warrantyTerm": "Термін гарантії",
+ "cert.daysShort": "{n} дн.",
+ "cert.daysFull": "{n} днів",
+ "cert.unlimited": "Необмежені перевипуски",
+ "cert.unlimitedText": "Ми замінимо ваш сертифікат на новий за гарантією, якщо його анулює компанія Apple раніше терміну. Кількість замін необмежена, поки діє гарантія.",
+ "buy.bot": "Купити через бот",
+ "buy.seller": "Купити у продавця",
+ "apps.title": "Каталог застосунків",
+ "apps.subtitle": "Знайдіть потрібний застосунок серед нашої колекції",
+ "common.all": "Усі",
+ "cat.Russia": "Видалені з App Store",
+ "cat.Social": "Соцмережі",
+ "cat.Music": "Музика",
+ "cat.Video": "Відео",
+ "cat.Design": "Дизайн",
+ "cat.Network": "VPN",
+ "cat.Study": "Навчання",
+ "cat.Office": "Офіс",
+ "cat.Games": "Ігри",
+ "cat.Kids": "Діти",
+ "cat.Life": "Здоров’я",
+ "cat.Other": "Інше",
+ "cat.Money": "Фінанси",
+ "cat.Travel": "Подорожі",
+ "cat.Themes": "Теми",
+ "filters.title": "⚙️ Фільтри",
+ "sort.title": "↕️ Сортування",
+ "sort.new": "Нові",
+ "perpage.title": "📊 Кількість на сторінці",
+ "category.title": "📂 Категорія",
+ "filters.reset": "Скинути фільтри",
+ "info.title": "Про товари",
+ "info.certTitle": "🔐 Сертифікат розробника",
+ "info.certText": "Потрібен для встановлення сторонніх застосунків на iPhone і iPad. Діє до одного року максимум. Для використання та встановлення ПК не потрібен.",
+ "info.repoTitle": "📦 Репозиторій",
+ "info.repoText": "Наш каталог зламаних застосунків (злами, моди, банки, видалені застосунки та багато інших). Для використання потрібен сертифікат.",
+ "modal.appDefault": "Застосунок",
+ "footer.rights": "Усі права захищено.",
+ "aria.theme": "Перемкнути тему",
+ "aria.lang": "Змінити мову",
+ "aria.openMenu": "Відкрити меню",
+ "aria.close": "Закрити",
+ "aria.info": "Інформація про товари",
+ "aria.product": "Товар",
+ "aria.back": "Назад",
+ "aria.next": "Далі",
+ "aria.repoPlans": "Тарифи репозиторію",
+ "aria.certPlans": "Тарифи сертифікатів",
+ "search.placeholder": "Пошук застосунків...",
+ "aria.clear": "Очистити",
+ "aria.filters": "Фільтри",
+ "aria.categories": "Категорії",
+ "toast.copied": "Текст скопійовано — якщо не підставився, просто вставте",
+ "msg.cert": "Вітаю! Хочу купити сертифікат {name} — {price}.",
+ "msg.repo": "Вітаю! Хочу оформити тариф IAppsRepo: {name} — {price}.",
+ "app.size": "Розмір",
+ "app.version": "Версія",
+ "app.desc": "Опис",
+ "app.updated": "Оновлено:",
+ "app.access": "Отримати доступ",
+ "empty.title": "Нічого не знайдено",
+ "empty.sub": "Спробуйте змінити параметри пошуку",
+ "err.title": "Не вдалося завантажити застосунки",
+ "err.local": "Відкрийте сайт через локальний сервер (наприклад, <code>python3 -m http.server</code>) — браузер блокує fetch для file://",
+ "err.net": "Перевірте підключення до інтернету",
+ "date.locale": "uk-UA"
+},
+ "es": {
+ "page.title": "iApps - Certificado de desarrollador de Apple y apps para iPhone",
+ "menu.apps": "Aplicaciones",
+ "menu.access": "Obtener acceso",
+ "menu.title": "Menú",
+ "menu.status": "Catálogo en línea",
+ "menu.sub.access": "Tarifas y pago",
+ "menu.sub.apps": "Catálogo y búsqueda",
+ "menu.sub.channel": "Noticias y novedades",
+ "menu.sub.bot": "Pago y soporte",
+ "menu.theme": "Tema",
+ "menu.lang": "Idioma",
+ "menu.themeDark": "Tema oscuro",
+ "menu.themeLight": "Tema claro",
+ "menu.channel": "Canal de Telegram",
+ "menu.bot": "Bot de Telegram",
+ "hero.badgePre": "Más de",
+ "hero.badgePost": "+ apps",
+ "hero.title1": "Tu versión mejorada de",
+ "hero.subtitle": "Un gran catálogo de apps: bancos, apps eliminadas de la App Store, apps con funciones de pago desbloqueadas, mods, juegos y más. Funciona con iPhone y iPad.",
+ "hero.browse": "Ver aplicaciones",
+ "hero.plans": "Tarifas",
+ "hero.how": "¿Cómo funciona?",
+ "faq.title": "¿Cómo funciona?",
+ "suggest.btn": "Sugerir una app",
+ "suggest.title": "Sugerir una app",
+ "pricing.title": "Planes y tarifas",
+ "pricing.descDefault": "Elige un producto y la tarifa adecuada",
+ "pricing.descRepo": "Acceso a todas las apps del catálogo",
+ "pricing.descCert": "Certificados para instalar apps",
+ "tab.repo": "Repositorio",
+ "tab.cert": "Certificados",
+ "dur.3": "3 meses",
+ "dur.6": "6 meses",
+ "dur.12": "12 meses",
+ "dur.24": "24 meses",
+ "dur.60": "60 meses",
+ "badge.popular": "Popular",
+ "cert.s30": "Super30",
+ "cert.s60": "Super60",
+ "cert.s90": "Super90",
+ "cert.s180": "Super180",
+ "cert.s300": "Super300",
+ "cert.s30jit": "Super30 + JIT",
+ "cert.tag": "/ año",
+ "f.dist": "Certificado Distribution",
+ "f.devdist": "Certificado Dev y Distribution",
+ "f.make": "Emisión en 1 minuto",
+ "f.ppq": "Sin verificación PPQ",
+ "f.valid": "Validez de ~1 año",
+ "f.support": "Soporte anual",
+ "f.unlimited": "Instalación sin límites y sin PC",
+ "f.warranty": "Garantía",
+ "cert.select": "Elegir",
+ "cert.selected": "Elegido",
+ "cert.rights": "Lista de permisos",
+ "f.notif": "Compatible con notificaciones y VPN",
+ "f.widgets": "Compatible con widgets",
+ "cert.warrantyTerm": "Plazo de garantía",
+ "cert.daysShort": "{n} d",
+ "cert.daysFull": "{n} días",
+ "cert.unlimited": "Reemisiones ilimitadas",
+ "cert.unlimitedText": "Sustituiremos tu certificado por uno nuevo en garantía si Apple lo revoca antes de que caduque. El número de sustituciones es ilimitado mientras la garantía esté activa.",
+ "buy.bot": "Comprar por el bot",
+ "buy.seller": "Comprar al vendedor",
+ "apps.title": "Catálogo de aplicaciones",
+ "apps.subtitle": "Encuentra la app que necesitas en nuestra colección",
+ "common.all": "Todas",
+ "cat.Russia": "Eliminadas de la App Store",
+ "cat.Social": "Redes sociales",
+ "cat.Music": "Música",
+ "cat.Video": "Vídeo",
+ "cat.Design": "Diseño",
+ "cat.Network": "VPN",
+ "cat.Study": "Estudios",
+ "cat.Office": "Oficina",
+ "cat.Games": "Juegos",
+ "cat.Kids": "Niños",
+ "cat.Life": "Salud",
+ "cat.Other": "Otros",
+ "cat.Money": "Finanzas",
+ "cat.Travel": "Viajes",
+ "cat.Themes": "Temas",
+ "filters.title": "⚙️ Filtros",
+ "sort.title": "↕️ Orden",
+ "sort.new": "Más recientes",
+ "perpage.title": "📊 Resultados por página",
+ "category.title": "📂 Categoría",
+ "filters.reset": "Restablecer filtros",
+ "info.title": "Sobre los productos",
+ "info.certTitle": "🔐 Certificado de desarrollador",
+ "info.certText": "Necesario para instalar apps de terceros en iPhone y iPad. Válido hasta un año como máximo. No se necesita PC para usarlo ni instalarlo.",
+ "info.repoTitle": "📦 Repositorio",
+ "info.repoText": "Nuestro catálogo de apps crackeadas (cracks, mods, apps bancarias, apps eliminadas y muchas más). Se necesita un certificado para usarlo.",
+ "modal.appDefault": "Aplicación",
+ "footer.rights": "Todos los derechos reservados.",
+ "aria.theme": "Cambiar tema",
+ "aria.lang": "Cambiar idioma",
+ "aria.openMenu": "Abrir menú",
+ "aria.close": "Cerrar",
+ "aria.info": "Información sobre los productos",
+ "aria.product": "Producto",
+ "aria.back": "Atrás",
+ "aria.next": "Siguiente",
+ "aria.repoPlans": "Tarifas del repositorio",
+ "aria.certPlans": "Tarifas de certificados",
+ "search.placeholder": "Buscar aplicaciones...",
+ "aria.clear": "Borrar",
+ "aria.filters": "Filtros",
+ "aria.categories": "Categorías",
+ "toast.copied": "Texto copiado: si no se pegó solo, simplemente pégalo",
+ "app.size": "Tamaño",
+ "app.version": "Versión",
+ "app.desc": "Descripción",
+ "app.updated": "Actualizado:",
+ "app.access": "Obtener acceso",
+ "empty.title": "No se encontró nada",
+ "empty.sub": "Prueba a cambiar los parámetros de búsqueda",
+ "err.title": "No se pudieron cargar las aplicaciones",
+ "err.local": "Abre el sitio mediante un servidor local (por ejemplo, <code>python3 -m http.server</code>): el navegador bloquea fetch para file://",
+ "err.net": "Comprueba tu conexión a internet",
+ "date.locale": "es-ES",
+ "msg.cert": "Hello! I'd like to buy the certificate {name} — {price}.",
+ "msg.repo": "Hello! I'd like to get an IAppsRepo plan: {name} — {price}."
+},
+ "zh": {
+ "page.title": "iApps - Apple 开发者证书与 iPhone 应用",
+ "menu.apps": "应用",
+ "menu.access": "获取权限",
+ "menu.title": "菜单",
+ "menu.status": "目录在线",
+ "menu.sub.access": "套餐与支付",
+ "menu.sub.apps": "目录与搜索",
+ "menu.sub.channel": "新闻与更新",
+ "menu.sub.bot": "支付与支持",
+ "menu.theme": "主题",
+ "menu.lang": "语言",
+ "menu.themeDark": "深色主题",
+ "menu.themeLight": "浅色主题",
+ "menu.channel": "Telegram 频道",
+ "menu.bot": "Telegram 机器人",
+ "hero.badgePre": "超过",
+ "hero.badgePost": "+ 个应用",
+ "hero.title1": "你的强化版",
+ "hero.subtitle": "海量应用目录：银行类应用、已从 App Store 下架的应用、解锁付费功能的应用、模组、游戏等。支持 iPhone 和 iPad。",
+ "hero.browse": "浏览应用",
+ "hero.plans": "套餐",
+ "hero.how": "如何使用？",
+ "faq.title": "如何使用？",
+ "suggest.btn": "推荐应用",
+ "suggest.title": "推荐应用",
+ "pricing.title": "资费套餐",
+ "pricing.descDefault": "选择商品和合适的套餐",
+ "pricing.descRepo": "访问目录中的所有应用",
+ "pricing.descCert": "用于安装应用的证书",
+ "tab.repo": "软件源",
+ "tab.cert": "证书",
+ "dur.3": "3个月",
+ "dur.6": "6个月",
+ "dur.12": "12个月",
+ "dur.24": "24个月",
+ "dur.60": "60个月",
+ "badge.popular": "热门",
+ "cert.s30": "Super30",
+ "cert.s60": "Super60",
+ "cert.s90": "Super90",
+ "cert.s180": "Super180",
+ "cert.s300": "Super300",
+ "cert.s30jit": "Super30 + JIT",
+ "cert.tag": "/ 年",
+ "f.dist": "Distribution 证书",
+ "f.devdist": "Dev 与 Distribution 证书",
+ "f.make": "1 分钟制作",
+ "f.ppq": "无需 PPQ 验证",
+ "f.valid": "有效期约 1 年",
+ "f.support": "全年支持",
+ "f.unlimited": "无限制安装，无需电脑",
+ "f.warranty": "保修",
+ "cert.select": "选择",
+ "cert.selected": "已选择",
+ "cert.rights": "权限列表",
+ "f.notif": "支持通知和 VPN",
+ "f.widgets": "支持小组件",
+ "cert.warrantyTerm": "保修期",
+ "cert.daysShort": "{n} 天",
+ "cert.daysFull": "{n} 天",
+ "cert.unlimited": "无限次重新签发",
+ "cert.unlimitedText": "如果证书在到期前被 Apple 吊销，我们将在保修期内为您更换新证书。保修有效期间更换次数不限。",
+ "buy.bot": "通过机器人购买",
+ "buy.seller": "向卖家购买",
+ "apps.title": "应用目录",
+ "apps.subtitle": "在我们的合集中找到你需要的应用",
+ "common.all": "全部",
+ "cat.Russia": "已从 App Store 下架",
+ "cat.Social": "社交",
+ "cat.Music": "音乐",
+ "cat.Video": "视频",
+ "cat.Design": "设计",
+ "cat.Network": "VPN",
+ "cat.Study": "学习",
+ "cat.Office": "办公",
+ "cat.Games": "游戏",
+ "cat.Kids": "儿童",
+ "cat.Life": "健康",
+ "cat.Other": "其他",
+ "cat.Money": "金融",
+ "cat.Travel": "旅行",
+ "cat.Themes": "主题",
+ "filters.title": "⚙️ 筛选",
+ "sort.title": "↕️ 排序",
+ "sort.new": "最新",
+ "perpage.title": "📊 每页数量",
+ "category.title": "📂 分类",
+ "filters.reset": "重置筛选",
+ "info.title": "商品说明",
+ "info.certTitle": "🔐 开发者证书",
+ "info.certText": "用于在 iPhone 和 iPad 上安装第三方应用。有效期最长一年。使用和安装无需电脑。",
+ "info.repoTitle": "📦 软件源",
+ "info.repoText": "我们的破解应用目录（破解版、模组、银行类应用、已下架应用等众多应用）。使用需要证书。",
+ "modal.appDefault": "应用",
+ "footer.rights": "保留所有权利。",
+ "aria.theme": "切换主题",
+ "aria.lang": "切换语言",
+ "aria.openMenu": "打开菜单",
+ "aria.close": "关闭",
+ "aria.info": "商品信息",
+ "aria.product": "商品",
+ "aria.back": "返回",
+ "aria.next": "下一个",
+ "aria.repoPlans": "软件源套餐",
+ "aria.certPlans": "证书套餐",
+ "search.placeholder": "搜索应用...",
+ "aria.clear": "清除",
+ "aria.filters": "筛选",
+ "aria.categories": "分类",
+ "toast.copied": "文本已复制，如果没有自动粘贴，请手动粘贴",
+ "app.size": "大小",
+ "app.version": "版本",
+ "app.desc": "简介",
+ "app.updated": "更新于：",
+ "app.access": "获取权限",
+ "empty.title": "未找到任何内容",
+ "empty.sub": "请尝试更改搜索条件",
+ "err.title": "无法加载应用",
+ "err.local": "请通过本地服务器打开网站（例如 <code>python3 -m http.server</code>），浏览器会阻止 file:// 的 fetch 请求",
+ "err.net": "请检查网络连接",
+ "date.locale": "zh-CN",
+ "msg.cert": "Hello! I'd like to buy the certificate {name} — {price}.",
+ "msg.repo": "Hello! I'd like to get an IAppsRepo plan: {name} — {price}."
+},
+ "ar": {
+ "page.title": "iApps - شهادة مطوّر Apple وتطبيقات iPhone",
+ "menu.apps": "التطبيقات",
+ "menu.access": "احصل على الوصول",
+ "menu.title": "القائمة",
+ "menu.status": "الكتالوج متصل",
+ "menu.sub.access": "الباقات والدفع",
+ "menu.sub.apps": "الكتالوج والبحث",
+ "menu.sub.channel": "الأخبار والتحديثات",
+ "menu.sub.bot": "الدفع والدعم",
+ "menu.theme": "المظهر",
+ "menu.lang": "اللغة",
+ "menu.themeDark": "المظهر الداكن",
+ "menu.themeLight": "المظهر الفاتح",
+ "menu.channel": "قناة Telegram",
+ "menu.bot": "بوت Telegram",
+ "hero.badgePre": "أكثر من",
+ "hero.badgePost": "+ تطبيق",
+ "hero.title1": "نسختك المطوّرة من",
+ "hero.subtitle": "كتالوج ضخم من التطبيقات: تطبيقات البنوك، والتطبيقات المحذوفة من App Store، والتطبيقات ذات الميزات المدفوعة المفتوحة، والتعديلات والألعاب وغيرها. يعمل مع iPhone وiPad.",
+ "hero.browse": "تصفّح التطبيقات",
+ "hero.plans": "الباقات",
+ "hero.how": "كيف يعمل؟",
+ "faq.title": "كيف يعمل؟",
+ "suggest.btn": "اقترح تطبيقًا",
+ "suggest.title": "اقترح تطبيقًا",
+ "pricing.title": "باقات الأسعار",
+ "pricing.descDefault": "اختر المنتج والباقة المناسبة",
+ "pricing.descRepo": "وصول إلى جميع تطبيقات الكتالوج",
+ "pricing.descCert": "شهادات لتثبيت التطبيقات",
+ "tab.repo": "المستودع",
+ "tab.cert": "الشهادات",
+ "dur.3": "3 أشهر",
+ "dur.6": "6 أشهر",
+ "dur.12": "12 شهرًا",
+ "dur.24": "24 شهرًا",
+ "dur.60": "60 شهرًا",
+ "badge.popular": "الأكثر طلبًا",
+ "cert.s30": "Super30",
+ "cert.s60": "Super60",
+ "cert.s90": "Super90",
+ "cert.s180": "Super180",
+ "cert.s300": "Super300",
+ "cert.s30jit": "Super30 + JIT",
+ "cert.tag": "/ سنة",
+ "f.dist": "شهادة Distribution",
+ "f.devdist": "شهادة Dev وDistribution",
+ "f.make": "إصدار خلال دقيقة واحدة",
+ "f.ppq": "بدون فحص PPQ",
+ "f.valid": "صالحة لمدة سنة تقريبًا",
+ "f.support": "دعم لمدة سنة",
+ "f.unlimited": "تثبيت بلا حدود وبدون كمبيوتر",
+ "f.warranty": "الضمان",
+ "cert.select": "اختيار",
+ "cert.selected": "تم الاختيار",
+ "cert.rights": "قائمة الصلاحيات",
+ "f.notif": "تدعم الإشعارات وVPN",
+ "f.widgets": "تدعم الودجات",
+ "cert.warrantyTerm": "مدة الضمان",
+ "cert.daysShort": "{n} يوم",
+ "cert.daysFull": "{n} يومًا",
+ "cert.unlimited": "إعادة إصدار غير محدودة",
+ "cert.unlimitedText": "سنستبدل شهادتك بأخرى جديدة ضمن الضمان إذا ألغتها Apple قبل انتهاء صلاحيتها. عدد مرات الاستبدال غير محدود طوال فترة الضمان.",
+ "buy.bot": "الشراء عبر البوت",
+ "buy.seller": "الشراء من البائع",
+ "apps.title": "كتالوج التطبيقات",
+ "apps.subtitle": "اعثر على التطبيق الذي تحتاجه في مجموعتنا",
+ "common.all": "الكل",
+ "cat.Russia": "المحذوفة من App Store",
+ "cat.Social": "التواصل الاجتماعي",
+ "cat.Music": "الموسيقى",
+ "cat.Video": "الفيديو",
+ "cat.Design": "التصميم",
+ "cat.Network": "VPN",
+ "cat.Study": "التعليم",
+ "cat.Office": "المكتب",
+ "cat.Games": "الألعاب",
+ "cat.Kids": "الأطفال",
+ "cat.Life": "الصحة",
+ "cat.Other": "أخرى",
+ "cat.Money": "المالية",
+ "cat.Travel": "السفر",
+ "cat.Themes": "السمات",
+ "filters.title": "⚙️ المرشحات",
+ "sort.title": "↕️ الترتيب",
+ "sort.new": "الأحدث",
+ "perpage.title": "📊 عدد العناصر في الصفحة",
+ "category.title": "📂 الفئة",
+ "filters.reset": "إعادة ضبط المرشحات",
+ "info.title": "عن المنتجات",
+ "info.certTitle": "🔐 شهادة المطوّر",
+ "info.certText": "مطلوبة لتثبيت تطبيقات الجهات الخارجية على iPhone وiPad. صالحة لمدة سنة كحد أقصى. لا حاجة إلى كمبيوتر للاستخدام أو التثبيت.",
+ "info.repoTitle": "📦 المستودع",
+ "info.repoText": "كتالوجنا للتطبيقات المعدّلة (تعديلات، وتطبيقات البنوك، والتطبيقات المحذوفة وغيرها الكثير). يتطلب الاستخدام وجود شهادة.",
+ "modal.appDefault": "تطبيق",
+ "footer.rights": "جميع الحقوق محفوظة.",
+ "aria.theme": "تبديل المظهر",
+ "aria.lang": "تغيير اللغة",
+ "aria.openMenu": "فتح القائمة",
+ "aria.close": "إغلاق",
+ "aria.info": "معلومات عن المنتجات",
+ "aria.product": "المنتج",
+ "aria.back": "السابق",
+ "aria.next": "التالي",
+ "aria.repoPlans": "باقات المستودع",
+ "aria.certPlans": "باقات الشهادات",
+ "search.placeholder": "ابحث عن التطبيقات...",
+ "aria.clear": "مسح",
+ "aria.filters": "المرشحات",
+ "aria.categories": "الفئات",
+ "toast.copied": "تم نسخ النص، وإذا لم يُلصق تلقائيًا فالصقه يدويًا",
+ "app.size": "الحجم",
+ "app.version": "الإصدار",
+ "app.desc": "الوصف",
+ "app.updated": "آخر تحديث:",
+ "app.access": "احصل على الوصول",
+ "empty.title": "لم يتم العثور على شيء",
+ "empty.sub": "جرّب تغيير معايير البحث",
+ "err.title": "تعذّر تحميل التطبيقات",
+ "err.local": "افتح الموقع عبر خادم محلي (مثل <code>python3 -m http.server</code>)، فالمتصفح يمنع fetch لروابط file://",
+ "err.net": "تحقق من اتصالك بالإنترنت",
+ "date.locale": "ar-EG-u-nu-latn",
+ "msg.cert": "Hello! I'd like to buy the certificate {name} — {price}.",
+ "msg.repo": "Hello! I'd like to get an IAppsRepo plan: {name} — {price}."
+}
 };
+    // языки сайта: код, родное название, короткая подпись на кнопке, направление письма
+    const LANGS = [
+        { code: 'ru', name: 'Русский', short: 'RU', dir: 'ltr' },
+        { code: 'uk', name: 'Українська', short: 'UA', dir: 'ltr' },
+        { code: 'en', name: 'English', short: 'EN', dir: 'ltr' },
+        { code: 'es', name: 'Español', short: 'ES', dir: 'ltr' },
+        { code: 'zh', name: '中文', short: '中文', dir: 'ltr' },
+        { code: 'ar', name: 'العربية', short: 'AR', dir: 'rtl' }
+    ];
+    const META = {}; LANGS.forEach(l => { META[l.code] = l; });
     let lang = 'ru';
-    try { const s = localStorage.getItem('lang'); if (s === 'ru' || s === 'en') lang = s; } catch (e) {}
+    try { const s = localStorage.getItem('lang'); if (META[s]) lang = s; } catch (e) {}
 
     function t(key, vars) {
         const d = DICT[lang] || DICT.ru;
@@ -2100,8 +2663,20 @@
         if (vars) Object.keys(vars).forEach(k => { s = s.split('{' + k + '}').join(vars[k]); });
         return s;
     }
+    // арабский шрифт подгружается только тогда, когда выбран арабский язык
+    let arabicFont = false;
+    function loadFonts() {
+        if (lang === 'ar' && !arabicFont) {
+            arabicFont = true;
+            const l = document.createElement('link'); l.rel = 'stylesheet';
+            l.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap';
+            document.head.appendChild(l);
+        }
+    }
     function apply() {
+        const m = META[lang];
         document.documentElement.lang = lang;
+        document.documentElement.dir = m.dir;
         document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
         document.querySelectorAll('[data-i18n-attr]').forEach(el => {
             el.dataset.i18nAttr.split(';').forEach(pair => {
@@ -2110,24 +2685,27 @@
             });
         });
         const code = document.getElementById('langCode');
-        if (code) code.textContent = lang.toUpperCase();
+        if (code) code.textContent = m.short;
+        loadFonts();
     }
     function set(l) {
-        if (l !== 'ru' && l !== 'en') return;
+        if (!META[l]) return;
         lang = l;
         try { localStorage.setItem('lang', l); } catch (e) {}
+        // на время смены языка переходы отключены: сотни элементов не анимируются разом, пока меняются размеры и направление
+        const rt = document.documentElement; rt.classList.add('theme-switching'); clearTimeout(window.__langQuiet); window.__langQuiet = setTimeout(() => rt.classList.remove('theme-switching'), 600);
         apply();
         document.dispatchEvent(new CustomEvent('iapps:lang', { detail: { lang: l } }));
     }
-    window.i18n = { t: t, set: set, apply: apply, toggle: function () { set(lang === 'ru' ? 'en' : 'ru'); }, get lang() { return lang; } };
+    window.i18n = { t: t, set: set, apply: apply, langs: LANGS, meta: META,
+        toggle: function () { set(LANGS[(LANGS.findIndex(x => x.code === lang) + 1) % LANGS.length].code); },
+        get lang() { return lang; } };
 
     apply();
-    const btn = document.getElementById('langToggle');
-    if (btn) btn.addEventListener('click', () => window.i18n.toggle());
 })();
 </script>
-    <script src="Scripts/Script.js?v=72"></script>
-    <script src="Scripts/Repository.js?v=72"></script>
+    <script src="Scripts/Script.js?v=77"></script>
+    <script src="Scripts/Repository.js?v=77"></script>
     <script>
 (function () {
 
@@ -2320,7 +2898,7 @@
     
     function buildSellerMessage() {
         const t = selectedTariffs[activeAccess];
-        const name = L() === 'en' ? (t.durationEn || t.duration) : t.duration;
+        const name = ['en', 'es', 'zh', 'ar'].includes(L()) ? (t.durationEn || t.duration) : t.duration;
         return T(t.product === 'Сертификат' ? 'msg.cert' : 'msg.repo', { name: name, price: t.price }, '');
     }
 
@@ -2583,9 +3161,20 @@
                 ] }
             ]
         };
+        // остальные языки собираются из одинакового набора текстов
+        const FAQX = {"uk": {"n": ["Загальні", "Сертифікат", "Репозиторій", "Безпека"], "cert": "Сертифікат дає змогу встановлювати застосунки поза App Store без обмежень за кількістю та без ПК. Розробники використовують сертифікат для встановлення й тестування власних застосунків. Ми використовуємо його у своїх цілях. Наприклад, ви зможете встановити видалені з App Store застосунки, застосунки з розблокованим платним функціоналом, модифікації з розширеним функціоналом, платні ігри та застосунки тощо. Сертифікат реєструється за UDID пристрою.", "repo": "Наш каталог застосунків, у якому 1500+ застосунків. До каталогу входять застосунки, видалені з App Store, банки, моди, застосунки, активовані на підписку/покупку, платні застосунки та ігри з App Store й інші. Для використання репозиторію та можливості встановлення застосунків потрібен сертифікат розробника.", "icloud": ["Ні. Вам не потрібно входити в сторонні акаунти Apple. Також нам не потрібні ваші дані iCloud, паролі тощо. Ніколи не передавайте свої дані та не входьте в чужі акаунти Apple: зловмисники можуть скористатися вашою недосвідченістю й заблокувати ваш пристрій.", "З сертифікатом ви ніколи не припуститеся такої помилки, адже цей спосіб не потребує входу в облікові записи."], "udid": "UDID — унікальний ідентифікатор кожного пристрою Apple, за яким сертифікат реєструється саме на ваш iPhone або iPad.", "safe": "Так. Усі застосунки перевіряються перед додаванням до каталогу. Сертифікат видається офіційно через Apple. Джейлбрейк не потрібен. Сертифікат не впливає на функціонал вашого пристрою чи гарантію.", "waitCert": "реєстрація займає 1–5 хвилин. У рідкісних випадках видача сертифіката може тривати довше, якщо Apple проводить технічні роботи, заходи чи презентації.", "repoInstant": "видача завжди відбувається миттєво.", "certWord": "Сертифікат —", "repoWord": "Репозиторій —", "q_cert": "Що таке сертифікат?", "q_repo": "Що таке репозиторій?", "q_icloud": "Чи потрібно мені входити в чужий iCloud?", "q_safe": "Це безпечно?", "q_wait": "Скільки чекати після оплати?", "q_udid": "Що таке UDID?", "q_waitCert": "Скільки очікувати видачу сертифіката?", "q_valid": "Який термін дії сертифіката?", "q_guarantee": "Навіщо потрібна гарантія? (Відкликання сертифіката)", "q_count": "Яку кількість застосунків я зможу встановити?", "q_which": "Які застосунки я можу встановити?", "q_other": "Чи можу я використовувати сертифікат на своєму іншому iPhone або iPad?", "q_change": "Я змінив пристрій на інший, чи можна замінити сертифікат?", "q_pc": "Чи потрібен мені ПК для встановлення застосунків?", "q_ios": "Чи можу я оновлювати iOS?", "q_tariffs": "Які тарифи в репозиторію?", "q_access": "Як надається доступ до репозиторію?", "q_warranty": "Чи впливає сертифікат на гарантію?", "valid": "Сертифікат працює з моменту покупки й до 1 року максимум. Протягом цього періоду ви зможете встановлювати та використовувати будь-які застосунки на своєму пристрої.", "guarantee": "У рідкісних випадках Apple може анулювати сертифікат раніше терміну. Якщо таке станеться в період дії гарантії, ми безкоштовно замінимо сертифікат для того самого пристрою. Якщо термін гарантії закінчився або заміна не входить в умови вашого тарифу, потрібно буде оформити новий сертифікат. Гарантія в усіх тарифах включає необмежену кількість замін.", "count": "За допомогою сертифіката розробника ви зможете встановити будь-яку кількість застосунків. Обмежень немає.", "which": "Ви зможете встановлювати будь-які модифіковані або платні застосунки та ігри, як із наших каналів, так і завантажені з інтернету.", "other": "Сертифікат реєструється на певний пристрій за UDID (унікальним ідентифікатором). Використовувати сертифікат ви зможете лише на тому пристрої, на який його придбали.", "change": "На жаль, заміна неможлива. Apple технічно не надає можливості змінити UDID після реєстрації. Для нового пристрою потрібен новий сертифікат.", "pc": "Ні, ПК не потрібен. З сертифікатом розробника застосунки можна встановлювати просто з iPhone або iPad.", "ios": "Так, сертифікат вас ніяк не обмежує: ви можете оновлювати iOS у будь-який момент до актуальної версії. Рекомендуємо утриматися від встановлення бета-версій. Часто там трапляються помилки, і не всі розробники встигають випустити оновлення своїх застосунків, щоб вони підтримували бета-версію.", "tariffsP": "У нас два основні тарифи — «Підписка» і «Постійний».", "subWord": "Підписка —", "subText": "доступна користувачам, які мають наш або сторонній сертифікат чи використовують інший спосіб встановлення. Ви можете придбати підписку на 3, 6, 12, 24 і 60 місяців.", "permWord": "Постійний —", "permText": "доступний лише власникам сертифікатів iApps, оплачується один раз і діє, поки ви користуєтеся нашим сертифікатом. З купівлею нового сертифіката доступ продовжується безкоштовно.", "access": "Репозиторій iApps працює через застосунки GBox, Feather, LiveContainer (SideStore/AltStore). Ми надамо всі інструкції та допоможемо, якщо у вас виникнуть труднощі зі встановленням чи використанням.", "warranty": "Ні! Сертифікат видається офіційно Apple. Це не джейлбрейк і не інше втручання в роботу пристрою та його системи. На гарантію, облікові записи та будь-що інше сертифікат ніяк не впливає."}, "es": {"n": ["General", "Certificado", "Repositorio", "Seguridad"], "cert": "El certificado te permite instalar apps fuera de la App Store sin límite de cantidad y sin PC. Los desarrolladores usan certificados para instalar y probar sus propias apps. Nosotros lo usamos para nuestros propios fines. Por ejemplo, podrás instalar apps eliminadas de la App Store, apps con funciones de pago desbloqueadas, mods con funciones ampliadas, juegos y apps de pago, etc. El certificado se registra con el UDID de tu dispositivo.", "repo": "Nuestro catálogo de apps, con más de 1500 apps. Incluye apps eliminadas de la App Store, apps bancarias, mods, apps con suscripción/compra activada, apps y juegos de pago de la App Store y otras. Para usar el repositorio e instalar apps se necesita un certificado de desarrollador.", "icloud": ["No. No necesitas iniciar sesión en cuentas de Apple de terceros. Tampoco necesitamos tus datos de iCloud, contraseñas ni nada parecido. Nunca compartas tus datos ni inicies sesión en cuentas de Apple ajenas: los estafadores pueden aprovecharse de tu inexperiencia y bloquear tu dispositivo.", "Con un certificado nunca cometerás ese error, porque este método no requiere iniciar sesión en ninguna cuenta."], "udid": "El UDID es un identificador único de cada dispositivo Apple. El certificado se registra con él, así que funciona con tu iPhone o iPad concreto.", "safe": "Sí. Todas las apps se revisan antes de añadirlas al catálogo. El certificado se emite oficialmente a través de Apple. No hace falta jailbreak. El certificado no afecta al funcionamiento ni a la garantía de tu dispositivo.", "waitCert": "el registro tarda de 1 a 5 minutos. En casos poco frecuentes puede tardar más si Apple está realizando tareas de mantenimiento, eventos o presentaciones.", "repoInstant": "la entrega siempre es instantánea.", "certWord": "Certificado:", "repoWord": "Repositorio:", "q_cert": "¿Qué es un certificado?", "q_repo": "¿Qué es el repositorio?", "q_icloud": "¿Tengo que iniciar sesión en un iCloud ajeno?", "q_safe": "¿Es seguro?", "q_wait": "¿Cuánto hay que esperar tras el pago?", "q_udid": "¿Qué es el UDID?", "q_waitCert": "¿Cuánto tarda en emitirse el certificado?", "q_valid": "¿Cuál es la validez del certificado?", "q_guarantee": "¿Para qué sirve la garantía? (Revocación del certificado)", "q_count": "¿Cuántas apps podré instalar?", "q_which": "¿Qué apps puedo instalar?", "q_other": "¿Puedo usar el certificado en otro iPhone o iPad mío?", "q_change": "He cambiado de dispositivo, ¿se puede reemplazar el certificado?", "q_pc": "¿Necesito un PC para instalar apps?", "q_ios": "¿Puedo actualizar iOS?", "q_tariffs": "¿Qué tarifas tiene el repositorio?", "q_access": "¿Cómo se da acceso al repositorio?", "q_warranty": "¿Afecta el certificado a la garantía?", "valid": "El certificado funciona desde el momento de la compra y hasta 1 año como máximo. Durante ese periodo podrás instalar y usar cualquier app en tu dispositivo.", "guarantee": "En casos poco frecuentes, Apple puede revocar el certificado antes de tiempo. Si ocurre durante el periodo de garantía, lo sustituiremos gratis para el mismo dispositivo. Si la garantía ha terminado o la sustitución no está incluida en tu tarifa, tendrás que adquirir un certificado nuevo. La garantía de todas las tarifas incluye sustituciones ilimitadas.", "count": "Con el certificado de desarrollador podrás instalar cualquier cantidad de apps. No hay límites.", "which": "Podrás instalar cualquier app o juego modificado o de pago, tanto de nuestros canales como descargado de internet.", "other": "El certificado se registra para un dispositivo concreto mediante su UDID (identificador único). Solo podrás usarlo en el dispositivo para el que lo compraste.", "change": "Lamentablemente, no es posible reemplazarlo. Apple no permite técnicamente cambiar el UDID después del registro. Para un dispositivo nuevo hace falta un certificado nuevo.", "pc": "No, no necesitas PC. Con el certificado de desarrollador puedes instalar apps directamente desde tu iPhone o iPad.", "ios": "Sí, el certificado no te limita en nada: puedes actualizar iOS en cualquier momento a la versión actual. Recomendamos no instalar versiones beta. A menudo tienen errores y no todos los desarrolladores logran actualizar sus apps a tiempo para que sean compatibles con la beta.", "tariffsP": "Tenemos dos tarifas principales: «Suscripción» y «Permanente».", "subWord": "Suscripción:", "subText": "disponible para usuarios que tengan nuestro certificado o uno de terceros, o que usen otro método de instalación. Puedes contratar la suscripción por 3, 6, 12, 24 o 60 meses.", "permWord": "Permanente:", "permText": "solo para propietarios de certificados de iApps; se paga una vez y es válida mientras uses nuestro certificado. Al comprar un nuevo certificado, el acceso se amplía gratis.", "access": "El repositorio de iApps funciona a través de las apps GBox, Feather y LiveContainer (SideStore/AltStore). Te daremos todas las instrucciones y te ayudaremos si tienes problemas con la instalación o el uso.", "warranty": "¡No! El certificado lo emite oficialmente Apple. No es un jailbreak ni ninguna otra intervención en el dispositivo o su sistema. El certificado no afecta en nada a la garantía, a las cuentas ni a nada más."}, "zh": {"n": ["常见", "证书", "软件源", "安全"], "cert": "证书让您可以在 App Store 之外安装应用，数量不限，也无需电脑。开发者使用证书来安装和测试自己的应用，我们则将其用于自己的用途。例如，您可以安装已从 App Store 下架的应用、解锁付费功能的应用、功能增强的修改版、付费游戏和应用等。证书按设备的 UDID 注册。", "repo": "我们的应用目录，收录 1500 多个应用，包括已从 App Store 下架的应用、银行类应用、模组、已激活订阅/购买的应用、App Store 的付费应用和游戏等。使用软件源并安装应用需要开发者证书。", "icloud": ["不需要。您无需登录任何第三方 Apple 账号，我们也不需要您的 iCloud 信息、密码等。请永远不要透露个人信息，也不要登录他人的 Apple 账号：骗子可能利用您的经验不足而锁定您的设备。", "使用证书时您不会犯这样的错误，因为这种方式无需登录任何账号。"], "udid": "UDID 是每台 Apple 设备的唯一标识符，证书正是按它注册到您的 iPhone 或 iPad 上。", "safe": "安全。所有应用在加入目录前都会经过检查。证书通过 Apple 官方渠道签发，无需越狱，也不会影响设备的功能或保修。", "waitCert": "注册需要 1–5 分钟。在少数情况下，如果 Apple 正在进行维护、举办活动或发布会，签发可能会更久。", "repoInstant": "始终即时发放。", "certWord": "证书：", "repoWord": "软件源：", "q_cert": "什么是证书？", "q_repo": "什么是软件源？", "q_icloud": "我需要登录别人的 iCloud 吗？", "q_safe": "安全吗？", "q_wait": "付款后需要等多久？", "q_udid": "什么是 UDID？", "q_waitCert": "证书需要多久签发？", "q_valid": "证书的有效期是多久？", "q_guarantee": "保修有什么用？（证书被撤销）", "q_count": "我能安装多少个应用？", "q_which": "我可以安装哪些应用？", "q_other": "我能在自己的另一台 iPhone 或 iPad 上使用证书吗？", "q_change": "我换了设备，可以更换证书吗？", "q_pc": "安装应用需要电脑吗？", "q_ios": "我可以更新 iOS 吗？", "q_tariffs": "软件源有哪些套餐？", "q_access": "如何获得软件源的访问权限？", "q_warranty": "证书会影响保修吗？", "valid": "证书自购买之日起生效，最长有效期 1 年。在此期间，您可以在设备上安装并使用任何应用。", "guarantee": "在少数情况下，Apple 可能会提前撤销证书。如果这发生在保修期内，我们会为同一设备免费更换证书。如果保修期已结束，或您的套餐不包含更换，则需要重新购买证书。所有套餐的保修均包含无限次更换。", "count": "使用开发者证书，您可以安装任意数量的应用，没有限制。", "which": "您可以安装任何修改版或付费的应用和游戏，无论来自我们的频道还是从互联网下载。", "other": "证书按 UDID（唯一标识符）注册到特定设备，只能在购买时所对应的设备上使用。", "change": "很遗憾，无法更换。Apple 在技术上不允许在注册后更改 UDID。新设备需要新的证书。", "pc": "不需要电脑。有了开发者证书，可以直接在 iPhone 或 iPad 上安装应用。", "ios": "可以，证书不会限制您：您可以随时将 iOS 更新到最新版本。建议不要安装测试版，测试版常有问题，并非所有开发者都来得及更新应用以支持测试版。", "tariffsP": "我们有两个主要套餐：“订阅”和“永久”。", "subWord": "订阅：", "subText": "适用于拥有我们的或第三方证书，或使用其他安装方式的用户。可购买 3、6、12、24 或 60 个月的订阅。", "permWord": "永久：", "permText": "仅限 iApps 证书持有者，一次付费，只要您使用我们的证书就一直有效。购买新证书后，访问权限将免费延期。", "access": "iApps 软件源通过 GBox、Feather、LiveContainer（SideStore/AltStore）等应用使用。我们会提供全部说明，并在安装或使用遇到困难时为您提供帮助。", "warranty": "不会！证书由 Apple 官方签发。这不是越狱，也不是对设备及其系统的其他干预。证书不会以任何方式影响保修、账号或其他方面。"}, "ar": {"n": ["عام", "الشهادة", "المستودع", "الأمان"], "cert": "تتيح لك الشهادة تثبيت التطبيقات من خارج App Store دون حد لعددها ودون الحاجة إلى كمبيوتر. يستخدم المطورون الشهادات لتثبيت تطبيقاتهم واختبارها، ونحن نستخدمها لأغراضنا الخاصة. على سبيل المثال، يمكنك تثبيت تطبيقات محذوفة من App Store، وتطبيقات ذات ميزات مدفوعة مفتوحة، ونسخ معدّلة بميزات موسّعة، وألعاب وتطبيقات مدفوعة وغيرها. تُسجَّل الشهادة وفق UDID جهازك.", "repo": "كتالوج تطبيقاتنا الذي يضم أكثر من 1500 تطبيق. يشمل تطبيقات محذوفة من App Store، وتطبيقات البنوك، والتعديلات، وتطبيقات مفعّل فيها الاشتراك/الشراء، وتطبيقات وألعاب مدفوعة من App Store وغيرها. لاستخدام المستودع وتثبيت التطبيقات تحتاج إلى شهادة مطوّر.", "icloud": ["لا. لا تحتاج إلى تسجيل الدخول إلى حسابات Apple تابعة لجهات أخرى. كما أننا لا نحتاج إلى بيانات iCloud الخاصة بك أو كلمات المرور أو غيرها. لا تشارك بياناتك أبدًا ولا تسجّل الدخول إلى حسابات Apple لا تخصك: فقد يستغل المحتالون قلة خبرتك ويقفلون جهازك.", "مع الشهادة لن تقع في هذا الخطأ أبدًا، لأن هذه الطريقة لا تتطلب تسجيل الدخول إلى أي حساب."], "udid": "UDID هو معرّف فريد لكل جهاز Apple، وتُسجَّل الشهادة وفقه، فتعمل على جهاز iPhone أو iPad الخاص بك تحديدًا.", "safe": "نعم. تُفحص جميع التطبيقات قبل إضافتها إلى الكتالوج. تُصدر الشهادة رسميًا عبر Apple. لا حاجة إلى جيلبريك. ولا تؤثر الشهادة في وظائف جهازك أو ضمانه.", "waitCert": "يستغرق التسجيل من 1 إلى 5 دقائق. وفي حالات نادرة قد يطول الإصدار إذا كانت Apple تجري أعمال صيانة أو فعاليات أو عروضًا تقديمية.", "repoInstant": "يتم التسليم دائمًا فورًا.", "certWord": "الشهادة —", "repoWord": "المستودع —", "q_cert": "ما هي الشهادة؟", "q_repo": "ما هو المستودع؟", "q_icloud": "هل يجب أن أسجّل الدخول إلى iCloud شخص آخر؟", "q_safe": "هل هذا آمن؟", "q_wait": "كم أنتظر بعد الدفع؟", "q_udid": "ما هو UDID؟", "q_waitCert": "كم تستغرق عملية إصدار الشهادة؟", "q_valid": "ما مدة صلاحية الشهادة؟", "q_guarantee": "ما فائدة الضمان؟ (إلغاء الشهادة)", "q_count": "كم عدد التطبيقات التي يمكنني تثبيتها؟", "q_which": "ما التطبيقات التي يمكنني تثبيتها؟", "q_other": "هل يمكنني استخدام الشهادة على iPhone أو iPad آخر لدي؟", "q_change": "غيّرت جهازي، فهل يمكن استبدال الشهادة؟", "q_pc": "هل أحتاج إلى كمبيوتر لتثبيت التطبيقات؟", "q_ios": "هل يمكنني تحديث iOS؟", "q_tariffs": "ما هي باقات المستودع؟", "q_access": "كيف يتم منح الوصول إلى المستودع؟", "q_warranty": "هل تؤثر الشهادة في الضمان؟", "valid": "تعمل الشهادة منذ لحظة الشراء ولمدة سنة كحد أقصى. وخلال هذه الفترة يمكنك تثبيت أي تطبيقات واستخدامها على جهازك.", "guarantee": "في حالات نادرة قد تلغي Apple الشهادة قبل موعدها. وإذا حدث ذلك خلال فترة الضمان فسنستبدل الشهادة مجانًا للجهاز نفسه. وإذا انتهت مدة الضمان أو لم يكن الاستبدال ضمن شروط باقتك، فسيلزم إصدار شهادة جديدة. ويتضمن الضمان في جميع الباقات عددًا غير محدود من عمليات الاستبدال.", "count": "بشهادة المطوّر يمكنك تثبيت أي عدد من التطبيقات. لا توجد قيود.", "which": "يمكنك تثبيت أي تطبيقات أو ألعاب معدّلة أو مدفوعة، سواء من قنواتنا أو المحمّلة من الإنترنت.", "other": "تُسجَّل الشهادة لجهاز محدد وفق UDID (المعرّف الفريد). ويمكنك استخدامها فقط على الجهاز الذي اشتريتها من أجله.", "change": "للأسف الاستبدال غير ممكن. فـ Apple لا تتيح تقنيًا تغيير UDID بعد التسجيل. والجهاز الجديد يحتاج إلى شهادة جديدة.", "pc": "لا، لا حاجة إلى كمبيوتر. مع شهادة المطوّر يمكن تثبيت التطبيقات مباشرة من iPhone أو iPad.", "ios": "نعم، الشهادة لا تقيّدك بأي شكل: يمكنك تحديث iOS في أي وقت إلى أحدث إصدار. ننصح بعدم تثبيت الإصدارات التجريبية، فغالبًا ما تحتوي على أخطاء، ولا يلحق جميع المطورين بتحديث تطبيقاتهم لتدعم الإصدار التجريبي.", "tariffsP": "لدينا باقتان رئيسيتان: «الاشتراك» و«الدائمة».", "subWord": "الاشتراك —", "subText": "متاح للمستخدمين الذين لديهم شهادتنا أو شهادة من جهة أخرى أو يستخدمون طريقة تثبيت أخرى. يمكنك شراء اشتراك لمدة 3 أو 6 أو 12 أو 24 أو 60 شهرًا.", "permWord": "الدائمة —", "permText": "متاحة فقط لأصحاب شهادات iApps، وتُدفع مرة واحدة وتستمر ما دمت تستخدم شهادتنا. وعند شراء شهادة جديدة يتجدد الوصول مجانًا.", "access": "يعمل مستودع iApps عبر تطبيقات GBox وFeather وLiveContainer (SideStore/AltStore). سنقدّم لك جميع التعليمات ونساعدك إذا واجهتك صعوبات في التثبيت أو الاستخدام.", "warranty": "لا! تُصدر Apple الشهادة رسميًا. وهي ليست جيلبريك ولا تدخلًا آخر في عمل الجهاز ونظامه. ولا تؤثر الشهادة في الضمان أو الحسابات أو أي شيء آخر."}};
+        function mkFaq(S) {
+            return [
+                { name: S.n[0], items: [ { q: S.q_cert, a: [S.cert] }, { q: S.q_repo, a: [S.repo] }, { q: S.q_icloud, a: S.icloud }, { q: S.q_safe, a: [S.safe] }, { q: S.q_wait, a: [{ b: S.certWord, t: S.waitCert }, { b: S.repoWord, t: S.repoInstant }] } ] },
+                { name: S.n[1], items: [ { q: S.q_cert, a: [S.cert] }, { q: S.q_udid, a: [S.udid] }, { q: S.q_waitCert, a: [{ b: S.certWord, t: S.waitCert }] }, { q: S.q_valid, a: [S.valid] }, { q: S.q_guarantee, a: [S.guarantee] }, { q: S.q_count, a: [S.count] }, { q: S.q_which, a: [S.which] }, { q: S.q_other, a: [S.other] }, { q: S.q_change, a: [S.change] }, { q: S.q_pc, a: [S.pc] }, { q: S.q_ios, a: [S.ios] } ] },
+                { name: S.n[2], items: [ { q: S.q_repo, a: [S.repo] }, { q: S.q_tariffs, a: [S.tariffsP, { b: S.subWord, t: S.subText }, { b: S.permWord, t: S.permText }] }, { q: S.q_access, a: [S.access] } ] },
+                { name: S.n[3], items: [ { q: S.q_safe, a: [S.safe] }, { q: S.q_warranty, a: [S.warranty] }, { q: S.q_icloud, a: S.icloud } ] }
+            ];
+        }
+        Object.keys(FAQX).forEach(k => { FAQ[k] = mkFaq(FAQX[k]); });
         const CHEVRON = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 15.5l-6-6 1.4-1.4 4.6 4.6 4.6-4.6L18 9.5z"/></svg>';
         let cat = 0, scrollPos = 0;
-        const data = () => FAQ[(window.i18n && window.i18n.lang) === 'en' ? 'en' : 'ru'];
+        const data = () => FAQ[(window.i18n && FAQ[window.i18n.lang]) ? window.i18n.lang : 'ru'];
 
         // строка категорий: листается пальцем и мышью, края затемняются; при выборе чипы не пересоздаются, чтобы прокрутка не сбрасывалась
         let tap = null, lastTapSelect = 0, lastTapPoint = { x: -999, y: -999 }, down = false, moved = false, startX = 0, startLeft = 0, suppressClick = false;
@@ -2792,14 +3381,18 @@
             send: 'Submit request', hint: 'Telegram opens with the message ready: just tap \u201cSend\u201d.',
             sent: 'Telegram is open. Tap \u201cSend\u201d and the request will reach us.', copy: 'Copy request text', copied: 'Text copied',
             eApp: 'Enter the app name or a link.', eTask: 'Choose what should be done.', eTaskOther: 'Describe what should be done.', eDonate: 'Enter the donation amount.'
-        }
+        },
+        uk: {"app": "Назва або посилання на застосунок", "appPh": "Наприклад: Spotify або https://apps.apple.com/…", "task": "Що потрібно зробити?", "tasks": ["Активувати підписку/покупку", "Чистий IPA", "Виправлення вильоту", "Дублікат застосунку", "Інше"], "taskPh": "Опишіть, що потрібно зробити", "donate": "Донат за послугу", "donates": ["300 ₽", "500 ₽", "1000 ₽", "Інше"], "donatePh": "Сума в рублях", "send": "Оформити заявку", "hint": "Відкриється Telegram із готовим повідомленням: залишиться натиснути «Надіслати».", "sent": "Telegram відкрито. Натисніть «Надіслати», і заявка прийде.", "copy": "Скопіювати текст заявки", "copied": "Текст скопійовано", "eApp": "Вкажіть назву застосунку або посилання.", "eTask": "Оберіть, що потрібно зробити.", "eTaskOther": "Опишіть, що потрібно зробити.", "eDonate": "Вкажіть суму донату."},
+        es: {"app": "Nombre o enlace de la app", "appPh": "Por ejemplo: Spotify o https://apps.apple.com/…", "task": "¿Qué hay que hacer?", "tasks": ["Activar suscripción/compra", "IPA limpio", "Corregir cierres inesperados", "Duplicar la app", "Otro"], "taskPh": "Describe qué hay que hacer", "donate": "Donación por el servicio", "donates": ["300 ₽", "500 ₽", "1000 ₽", "Otro"], "donatePh": "Importe en rublos", "send": "Enviar solicitud", "hint": "Se abrirá Telegram con el mensaje listo: solo tendrás que pulsar «Enviar».", "sent": "Telegram está abierto. Pulsa «Enviar» y la solicitud llegará.", "copy": "Copiar el texto de la solicitud", "copied": "Texto copiado", "eApp": "Indica el nombre de la app o un enlace.", "eTask": "Elige qué hay que hacer.", "eTaskOther": "Describe qué hay que hacer.", "eDonate": "Indica el importe de la donación."},
+        zh: {"app": "应用名称或链接", "appPh": "例如：Spotify 或 https://apps.apple.com/…", "task": "需要做什么？", "tasks": ["激活订阅/购买", "纯净 IPA", "修复闪退", "应用分身", "其他"], "taskPh": "请描述需要做什么", "donate": "服务赞助", "donates": ["300 ₽", "500 ₽", "1000 ₽", "其他"], "donatePh": "金额（卢布）", "send": "提交申请", "hint": "将打开已填好消息的 Telegram：只需点击“发送”。", "sent": "Telegram 已打开。点击“发送”，申请就会送达。", "copy": "复制申请文本", "copied": "文本已复制", "eApp": "请填写应用名称或链接。", "eTask": "请选择需要做什么。", "eTaskOther": "请描述需要做什么。", "eDonate": "请填写赞助金额。"},
+        ar: {"app": "اسم التطبيق أو رابطه", "appPh": "مثال: Spotify أو https://apps.apple.com/…", "task": "ما المطلوب؟", "tasks": ["تفعيل الاشتراك/الشراء", "IPA نظيف", "إصلاح الإغلاق المفاجئ", "نسخة مكررة من التطبيق", "أخرى"], "taskPh": "صف ما المطلوب", "donate": "تبرّع مقابل الخدمة", "donates": ["300 ₽", "500 ₽", "1000 ₽", "أخرى"], "donatePh": "المبلغ بالروبل", "send": "إرسال الطلب", "hint": "سيفتح Telegram مع الرسالة جاهزة، وما عليك إلا الضغط على «إرسال».", "sent": "تم فتح Telegram. اضغط «إرسال» ليصلنا طلبك.", "copy": "نسخ نص الطلب", "copied": "تم نسخ النص", "eApp": "أدخل اسم التطبيق أو رابطه.", "eTask": "اختر ما المطلوب.", "eTaskOther": "صف ما المطلوب.", "eDonate": "أدخل مبلغ التبرع."}
     };
     // сообщение всегда на русском: его читает владелец сайта
     const RU = T.ru;
     const OTHER_TASK = 4;      // «Другое» в списке задач
     const state = { task: -1, donate: -1 };
     let lastText = '';
-    const lang = () => ((window.i18n && window.i18n.lang) === 'en' ? 'en' : 'ru');
+    const lang = () => ((window.i18n && T[window.i18n.lang]) ? window.i18n.lang : 'ru');
     const t = (k) => T[lang()][k];
 
     // ряд кнопок: одна строка, листается пальцем и мышью, края затемняются (как строка категорий каталога)
@@ -3040,79 +3633,6 @@
     nav.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { clearTimeout(leaveT); leaveT = setTimeout(() => rest(), 160); } });   // не гасим линзу сразу: курсор может на миг выйти за край и вернуться
     nav.addEventListener('focusout', (e) => { if (!nav.contains(e.relatedTarget)) rest(); });
 
-    /* ---------- переключатели темы и языка ---------- */
-    const SUN = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.4 4.4 6 6M18 18l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.4 19.6 6 18M18 6l1.6-1.6"/></svg>';
-    const MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8 8.4 8.4 0 1 0 20.2 14.6z"/></svg>';
-    const tr = (k, d) => (window.i18n && window.i18n.t ? (window.i18n.t(k) || d) : d);
-    function makeSeg(el, defs, getIdx, pick) {
-        el.innerHTML = '';
-        let dragEnd = 0;
-        defs.forEach((d, i) => {
-            const b = document.createElement('button'); b.type = 'button'; b.className = 'mm-seg__btn'; b.setAttribute('role', 'radio'); b.setAttribute('aria-label', d.label); b.innerHTML = d.html;
-            b.addEventListener('click', () => { if (performance.now() - dragEnd < 300) return; if (i !== getIdx()) pick(i); });
-            el.appendChild(b);
-        });
-        const g = document.createElement('span'); g.className = 'mm-glass'; g.setAttribute('aria-hidden', 'true');
-        const cp = document.createElement('span'); cp.className = 'mm-glass__copy';
-        defs.forEach((d) => { const s = document.createElement('span'); s.className = 'mm-seg__btn'; s.innerHTML = d.html; cp.appendChild(s); });
-        g.appendChild(cp); el.appendChild(g);
-        let movingT = 0;
-        const place = (animate) => {
-            const btns = el.querySelectorAll('button'), idx = getIdx(), btn = btns[idx]; if (!btn) return;
-            const L = btn.offsetLeft, R = Math.max(0, el.clientWidth - (btn.offsetLeft + btn.offsetWidth));
-            cp.style.width = el.clientWidth + 'px';
-            btns.forEach((x, k) => x.setAttribute('aria-checked', String(k === idx)));
-            if (!animate || g._L === undefined) { g.style.transition = 'none'; cp.style.transition = 'none'; }
-            else {
-                const right = L > g._L; g.style.transition = right ? 'left ' + TRAIL + ', right ' + LEAD : 'left ' + LEAD + ', right ' + TRAIL; cp.style.transition = 'left ' + (right ? TRAIL : LEAD);
-                el.classList.add('is-moving'); clearTimeout(movingT); movingT = setTimeout(() => el.classList.remove('is-moving'), 900);   // пока стекло в движении, оно чуть ярче
-            }
-            g.style.left = L + 'px'; g.style.right = R + 'px'; cp.style.left = (-L) + 'px'; g._L = L;
-            if (!animate) { void g.offsetWidth; g.style.transition = ''; cp.style.transition = ''; }
-        };
-        /* стекло можно «взять» и перетащить: оно следует за пальцем, а при отпускании оседает на ближайшем варианте */
-        let drag = null;
-        const nearest = (cx) => { const btns = [...el.querySelectorAll('button')]; let best = 0, bd = 1e9; btns.forEach((x, k) => { const d = Math.abs(cx - (x.offsetLeft + x.offsetWidth / 2)); if (d < bd) { bd = d; best = k; } }); return best; };
-        el.addEventListener('pointerdown', (e) => {
-            if (e.pointerType === 'mouse' && e.button !== 0) return;
-            drag = { id: e.pointerId, x: e.clientX, moved: false, cx: 0 };
-            el.classList.add('is-pressed');
-        }, { passive: true });
-        el.addEventListener('pointermove', (e) => {
-            if (!drag || e.pointerId !== drag.id) return;
-            if (!drag.moved) { if (Math.abs(e.clientX - drag.x) < 5) return; drag.moved = true; try { el.setPointerCapture(e.pointerId); } catch (er) {} }
-            const r = el.getBoundingClientRect(), bw = el.querySelector('button').offsetWidth;
-            const cx = Math.min(Math.max(e.clientX - r.left, 3 + bw / 2), el.clientWidth - 3 - bw / 2);
-            drag.cx = cx;
-            const L = cx - bw / 2, R = el.clientWidth - (cx + bw / 2);
-            g.style.transition = 'left 0.1s linear, right 0.1s linear'; cp.style.transition = 'left 0.1s linear';
-            g.style.left = L + 'px'; g.style.right = R + 'px'; cp.style.left = (-L) + 'px'; g._L = L;
-        });
-        const release = (e) => {
-            if (!drag || e.pointerId !== drag.id) return;
-            const d = drag; drag = null; el.classList.remove('is-pressed');
-            if (!d.moved) return;
-            dragEnd = performance.now();
-            const idx = nearest(d.cx);
-            if (idx !== getIdx()) pick(idx); else place(true);
-        };
-        el.addEventListener('pointerup', release); el.addEventListener('pointercancel', release);
-        if (window.ResizeObserver) new ResizeObserver(() => place(false)).observe(el);
-        return place;
-    }
-    const themeBtn = document.getElementById('themeToggle');
-    const themeIdx = () => (root.getAttribute('data-theme') === 'light' ? 1 : 0);
-    const placeTheme = makeSeg(document.getElementById('mmTheme'),
-        [{ html: MOON, label: tr('menu.themeDark', 'Тёмная тема') }, { html: SUN, label: tr('menu.themeLight', 'Светлая тема') }],
-        themeIdx, () => { if (themeBtn) themeBtn.click(); });
-    const langIdx = () => (window.i18n && window.i18n.lang === 'en' ? 1 : 0);
-    const placeLang = makeSeg(document.getElementById('mmLang'),
-        [{ html: 'RU', label: 'Русский' }, { html: 'EN', label: 'English' }],
-        langIdx, (i) => { if (window.i18n && window.i18n.set) window.i18n.set(i === 1 ? 'en' : 'ru'); });
-    new MutationObserver(() => placeTheme(true)).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
-    document.addEventListener('iapps:lang', () => { placeLang(true); placeTheme(false); });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { placeTheme(false); placeLang(false); });
-
     /* ---------- меню начинается под шапкой; бургер при открытом меню закрывает его ---------- */
     const syncHeader = () => { const c = document.querySelector('.header__container'); if (c) root.style.setProperty('--hdr-h', Math.round(c.getBoundingClientRect().bottom) + 'px'); };
     syncHeader(); window.addEventListener('resize', syncHeader);
@@ -3127,7 +3647,7 @@
         root.classList.toggle('menu-open', on);
         if (avatarBtn) avatarBtn.setAttribute('aria-expanded', String(on));
         clearTimeout(glassT);
-        if (on) { syncHeader(); placeTheme(false); placeLang(false); rest(false); requestAnimationFrame(() => panel.focus({ preventScroll: true })); glassT = setTimeout(() => panel.classList.add('is-glass'), 700); }
+        if (on) { syncHeader(); rest(false); requestAnimationFrame(() => panel.focus({ preventScroll: true })); glassT = setTimeout(() => panel.classList.add('is-glass'), 700); }
         else { panel.classList.remove('is-glass'); lens.classList.remove('is-on'); lensTop = null; if (document.activeElement && panel.contains(document.activeElement) && avatarBtn) avatarBtn.focus({ preventScroll: true }); }
     }).observe(panel, { attributes: true, attributeFilter: ['class'] });
     panel.addEventListener('keydown', (e) => {
@@ -3143,31 +3663,115 @@
     let drag = null, justDragged = 0;
     panel.addEventListener('pointerdown', (e) => {
         if (!panel.classList.contains('active') || (e.pointerType === 'mouse' && e.button !== 0) || e.target.closest('.mm-seg')) return;
-        drag = { id: e.pointerId, x: e.clientX, y: e.clientY, on: false, dx: 0, s: [[performance.now(), e.clientX]] };
+        drag = { id: e.pointerId, x: e.clientX, y: e.clientY, on: false, dx: 0, s: [[performance.now(), e.clientX]], sg: root.dir === 'rtl' ? -1 : 1 };
     }, { passive: true });
     window.addEventListener('pointermove', (e) => {
         if (!drag || e.pointerId !== drag.id) return;
-        const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+        const dx = (e.clientX - drag.x) * drag.sg, dy = e.clientY - drag.y;
         if (!drag.on) {
             if (Math.abs(dy) > 10 && Math.abs(dy) > Math.abs(dx)) { drag = null; return; }
             if (dx > 10 && dx > Math.abs(dy) * 1.3) { drag.on = true; panel.style.transition = 'none'; try { panel.setPointerCapture(e.pointerId); } catch (er) {} } else return;
         }
         drag.dx = Math.max(0, dx);
         drag.s.push([performance.now(), e.clientX]); if (drag.s.length > 4) drag.s.shift();
-        panel.style.transform = 'translateX(' + drag.dx + 'px)';
+        panel.style.transform = 'translateX(' + (drag.dx * drag.sg) + 'px)';
         if (overlay) overlay.style.opacity = String(Math.max(0, 1 - drag.dx / panel.offsetWidth));
     });
     const end = (e) => {
         if (!drag || e.pointerId !== drag.id) return;
         const d = drag; drag = null;
         if (!d.on) return;
-        const a = d.s[0], z = d.s[d.s.length - 1], v = (z[1] - a[1]) / Math.max(1, z[0] - a[0]);
+        const a = d.s[0], z = d.s[d.s.length - 1], v = d.sg * (z[1] - a[1]) / Math.max(1, z[0] - a[0]);
         panel.style.transition = ''; panel.style.transform = ''; if (overlay) overlay.style.opacity = '';
         if (d.dx > panel.offsetWidth * 0.3 || v > 0.55) closeBtn.click();
         justDragged = performance.now();      // после закрытия: гасим только «хвост» нажатия от самого жеста
     };
     window.addEventListener('pointerup', end); window.addEventListener('pointercancel', end);
     panel.addEventListener('click', (e) => { if (performance.now() - justDragged < 350) { e.preventDefault(); e.stopPropagation(); } }, true);
+})();
+</script>
+    <script>
+(function () {
+    const btn = document.getElementById('langToggle'), pop = document.getElementById('langPop');
+    if (!btn || !pop || !window.i18n) return;
+    const lens = pop.querySelector('.lang-lens'), root = document.documentElement;
+    const LEAD = '0.36s cubic-bezier(0.3, 1.12, 0.5, 1)', TRAIL = '0.56s cubic-bezier(0.32, 0.72, 0, 1)';
+    let opts = [], lensTop = null, isOpen = false, hideT = 0, closeT = 0, leaveT = 0;
+
+    function build() {
+        pop.querySelectorAll('.lang-opt').forEach((e) => e.remove());
+        opts = window.i18n.langs.map((l) => {
+            const b = document.createElement('button'); b.type = 'button'; b.className = 'lang-opt'; b.setAttribute('role', 'option'); b.dataset.lang = l.code; b.lang = l.code;
+            const n = document.createElement('span'); n.className = 'lang-opt__name'; n.textContent = l.name; n.lang = l.code; n.dir = l.dir;
+            const c = document.createElement('span'); c.className = 'lang-opt__code'; c.textContent = l.short === '中文' ? 'ZH' : l.short; c.dir = 'ltr';
+            b.appendChild(n); b.appendChild(c);
+            b.addEventListener('click', () => choose(l.code, b));
+            b.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { clearTimeout(leaveT); moveLens(b); } });
+            b.addEventListener('pointerdown', () => moveLens(b), { passive: true });
+            b.addEventListener('focus', () => moveLens(b));
+            pop.appendChild(b); return b;
+        });
+        mark();
+    }
+    const current = () => opts.find((o) => o.dataset.lang === window.i18n.lang);
+    function mark() { opts.forEach((o) => { const on = o.dataset.lang === window.i18n.lang; o.classList.toggle('is-current', on); o.setAttribute('aria-selected', String(on)); }); }
+
+    /* линза скользит к варианту и тянется как капля (края едут с разной скоростью) */
+    function moveLens(opt, animate) {
+        if (!opt) { lens.classList.remove('is-on'); return; }
+        const t = opt.offsetTop, b = pop.clientHeight - (opt.offsetTop + opt.offsetHeight);
+        if (animate === false || lensTop === null || !lens.classList.contains('is-on')) {
+            lens.style.transition = 'none'; lens.style.top = t + 'px'; lens.style.bottom = b + 'px'; lens.style.height = 'auto'; void lens.offsetWidth; lens.style.transition = '';
+        } else {
+            const down = t > lensTop;
+            lens.style.height = 'auto';
+            lens.style.transition = 'opacity 0.25s ease, top ' + (down ? TRAIL : LEAD) + ', bottom ' + (down ? LEAD : TRAIL);
+            lens.style.top = t + 'px'; lens.style.bottom = b + 'px';
+        }
+        lensTop = t; lens.classList.add('is-on');
+    }
+    pop.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { clearTimeout(leaveT); leaveT = setTimeout(() => moveLens(current()), 160); } });
+
+    function place() {
+        const r = btn.getBoundingClientRect(), rtl = root.dir === 'rtl', w = pop.offsetWidth || 236;
+        let left = rtl ? r.left : r.right - w;
+        left = Math.max(8, Math.min(left, window.innerWidth - w - 8));
+        pop.style.left = left + 'px'; pop.style.top = Math.round(r.bottom + 10) + 'px';
+        pop.style.transformOrigin = (rtl ? 'left' : 'right') + ' top';
+    }
+    function openPop() {
+        clearTimeout(hideT); clearTimeout(closeT);
+        if (!opts.length) build(); else mark();
+        pop.hidden = false; place(); isOpen = true;
+        btn.setAttribute('aria-expanded', 'true');
+        requestAnimationFrame(() => { pop.classList.add('is-open'); lens.style.transition = 'none'; lensTop = null; lens.classList.remove('is-on'); moveLens(current(), false); });
+    }
+    function closePop(refocus) {
+        if (!isOpen) return;
+        isOpen = false; clearTimeout(closeT);
+        pop.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false');
+        hideT = setTimeout(() => { if (!isOpen) pop.hidden = true; }, 380);
+        if (refocus) btn.focus({ preventScroll: true });
+    }
+    function choose(code, opt) {
+        if (code !== window.i18n.lang) window.i18n.set(code);
+        mark(); moveLens(opt, true);
+        clearTimeout(closeT); closeT = setTimeout(() => closePop(true), 460);
+    }
+    btn.addEventListener('click', (e) => { e.stopPropagation(); if (isOpen) closePop(false); else openPop(); });
+    document.addEventListener('pointerdown', (e) => { if (isOpen && !pop.contains(e.target) && !btn.contains(e.target)) closePop(false); }, true);
+    document.addEventListener('keydown', (e) => {
+        if (!isOpen) return;
+        if (e.key === 'Escape') { e.preventDefault(); closePop(true); return; }
+        const i = opts.indexOf(document.activeElement);
+        if (e.key === 'ArrowDown') { e.preventDefault(); (opts[i + 1] || opts[0]).focus(); }
+        else if (e.key === 'ArrowUp') { e.preventDefault(); (opts[i - 1] || opts[opts.length - 1]).focus(); }
+        else if (e.key === 'Tab') { closePop(false); }
+    });
+    btn.addEventListener('keydown', (e) => { if ((e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') && !isOpen) { e.preventDefault(); openPop(); requestAnimationFrame(() => { const c = current(); if (c) c.focus({ preventScroll: true }); }); } });
+    window.addEventListener('resize', () => { if (isOpen) place(); });
+    window.addEventListener('scroll', () => { if (isOpen) place(); }, { passive: true });
+    document.addEventListener('iapps:lang', () => { mark(); if (isOpen) place(); });
 })();
 </script>
 </body>
