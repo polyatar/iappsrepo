@@ -188,7 +188,7 @@ function displayApps() {
     paginatedApps.forEach((app, index) => {
         const cleanedAppName = app.appName.split('\n')[0];
         const formattedDescription = app.appDescription.replace(/\n/g, '<br>');
-        const delay = index * 0.05;
+        const delay = Math.min(index * 0.04, 0.32);   // раньше на 100 карточках последняя появлялась только через 5 секунд
         // версия и размер — плашками, как на постерах (значения, которые не удалось разобрать, не показываем)
         const vi = parseAppVersion(app.appVersion);
         const pills = [[META_ICONS.version, vi.version], [META_ICONS.size, vi.size]]

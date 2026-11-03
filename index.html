@@ -8,7 +8,7 @@
     <title data-i18n="page.title">iApps - Сертификат разработчика Apple и приложения для iPhone</title>
     <link rel="icon" type="image/png" href="Images/Profile.PNG">
     <link rel="apple-touch-icon" href="Images/Profile.PNG">
-    <link rel="stylesheet" href="Styles/Style.css?v=55">
+    <link rel="stylesheet" href="Styles/Style.css?v=58">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -249,7 +249,7 @@
         [data-theme="light"] { --glass-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.9) 0%, rgba(232, 243, 255, 0.76) 100%); --glass-border: rgba(42, 124, 245, 0.22); --glass-hi: inset 0 1px 0 rgba(255, 255, 255, 0.9); --glass-shadow: 0 10px 28px rgba(20, 70, 160, 0.14); }
 
         /* мини-карточки каталога */
-        #app-list .app-item { position: relative; overflow: hidden; padding: 1.25rem; border-radius: 26px; opacity: 1; animation-fill-mode: backwards; container-type: inline-size;
+        #app-list .app-item { position: relative; overflow: hidden; padding: 1.25rem; border-radius: 26px; opacity: 1; animation-fill-mode: backwards;
             background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow), var(--glass-hi); }
         #app-list .app-item::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 22% -12%, rgba(255, 255, 255, 0.12), transparent 58%); pointer-events: none; }
         [data-theme="light"] #app-list .app-item::before { background: radial-gradient(ellipse at 22% -12%, rgba(var(--accent-rgb), 0.1), transparent 58%); }
@@ -265,11 +265,9 @@
         #app-list .app-header__info h3 { font-size: 1.0625rem; font-weight: 800; margin-bottom: 0; }
         /* версия и размер всегда в одну строку, как на телефоне */
         .app-pills { display: flex; flex-wrap: nowrap; gap: 0.35rem; min-width: 0; margin-top: 0.45rem; }
-        .app-pill { display: inline-flex; align-items: center; gap: 0.3rem; flex: 0 1 auto; min-width: 0; padding: 0.22rem 0.6rem; border-radius: 9999px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: var(--text-primary); font-size: 0.72rem; font-weight: 700; line-height: 1.3; }
+        .app-pill { display: inline-flex; align-items: center; gap: 0.3rem; flex: 0 1 auto; min-width: 0; padding: 0.2rem 0.5rem; border-radius: 9999px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: var(--text-primary); font-size: 0.7rem; font-weight: 700; line-height: 1.3; }
         .app-pill svg { width: 13px; height: 13px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; opacity: 0.85; }
         .app-pill > span { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        @container (max-width: 340px) { .app-pill { padding: 0.2rem 0.45rem; font-size: 0.68rem; gap: 0.22rem; } .app-pill svg { width: 11px; height: 11px; } }
-        @container (max-width: 215px) { .app-pill svg { display: none; } }
         #app-list .app-item hr { height: 1px; margin: 0.95rem 0; border: 0; background: linear-gradient(90deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0)); }
         [data-theme="light"] .app-pill { background: rgba(42, 124, 245, 0.08); border-color: rgba(42, 124, 245, 0.2); }
         [data-theme="light"] #app-list .app-item hr { background: linear-gradient(90deg, rgba(42, 124, 245, 0.24), rgba(15, 23, 42, 0)); }
@@ -685,6 +683,61 @@
         [data-theme="light"] .mobile-menu .mobile-menu__link--cta .mobile-menu__link-icon { background: rgba(255, 255, 255, 0.22); border-color: rgba(255, 255, 255, 0.5); box-shadow: none; }
         @media (hover: hover) { [data-theme="light"] .mobile-menu .mobile-menu__link:hover, [data-theme="light"] .mobile-menu .mobile-menu__theme:hover { background: #ffffff; border-color: rgba(var(--accent-rgb), 0.28); } [data-theme="light"] .mobile-menu .mobile-menu__link--cta:hover { background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 52%), linear-gradient(90deg, rgba(56, 189, 248, 1) 0%, rgba(37, 99, 235, 1) 100%); } }
         @media (prefers-reduced-motion: reduce) { .mobile-menu { transition: none; } }
+    </style>
+    <style id="nav-liquid">
+        /* ===== шапка и боковая панель: более жидкое и прозрачное стекло ===== */
+        .header__container {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.03) 52%, rgba(255, 255, 255, 0.075) 100%), rgba(22, 22, 26, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34), inset 0 -1px 0 rgba(255, 255, 255, 0.09), inset 0 0 22px rgba(255, 255, 255, 0.045), 0 12px 36px rgba(0, 0, 0, 0.24);
+            -webkit-backdrop-filter: blur(14px) saturate(1.9) brightness(1.08); backdrop-filter: blur(14px) saturate(1.9) brightness(1.08);
+        }
+        .header__container::before { background: radial-gradient(72px 46px at 22px 50%, rgba(255, 255, 255, 0.22), transparent 72%), radial-gradient(72px 46px at calc(100% - 22px) 50%, rgba(255, 255, 255, 0.13), transparent 72%), radial-gradient(120% 170% at 12% -70%, rgba(255, 255, 255, 0.18), transparent 56%); }
+        .header__container::after { background: linear-gradient(135deg, rgba(255, 255, 255, 0.62) 0%, rgba(255, 255, 255, 0.06) 30%, rgba(255, 255, 255, 0.04) 70%, rgba(255, 255, 255, 0.34) 100%); }
+        .header.is-scrolled .header__container { background: linear-gradient(180deg, rgba(255, 255, 255, 0.13) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.075) 100%), rgba(22, 22, 26, 0.34); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.34), inset 0 -1px 0 rgba(255, 255, 255, 0.09), inset 0 0 22px rgba(255, 255, 255, 0.045), 0 14px 40px rgba(0, 0, 0, 0.3); }
+        [data-theme="light"] .header__container { background: linear-gradient(180deg, rgba(255, 255, 255, 0.74) 0%, rgba(255, 255, 255, 0.2) 55%, rgba(255, 255, 255, 0.42) 100%), rgba(236, 244, 255, 0.12); border-color: rgba(255, 255, 255, 0.85);
+            box-shadow: inset 0 1px 0 #ffffff, inset 0 -1px 0 rgba(var(--accent-rgb), 0.1), inset 0 0 22px rgba(255, 255, 255, 0.4), 0 12px 36px rgba(20, 70, 160, 0.12); }
+        [data-theme="light"] .header__container::before { background: radial-gradient(72px 46px at 22px 50%, rgba(255, 255, 255, 0.95), transparent 72%), radial-gradient(72px 46px at calc(100% - 22px) 50%, rgba(255, 255, 255, 0.7), transparent 72%), radial-gradient(120% 170% at 12% -70%, rgba(255, 255, 255, 0.9), transparent 56%); }
+        [data-theme="light"] .header.is-scrolled .header__container { background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.3) 55%, rgba(255, 255, 255, 0.5) 100%), rgba(236, 244, 255, 0.2); box-shadow: inset 0 1px 0 #ffffff, inset 0 -1px 0 rgba(var(--accent-rgb), 0.1), inset 0 0 22px rgba(255, 255, 255, 0.4), 0 14px 40px rgba(20, 70, 160, 0.16); }
+
+        .mobile-menu { background: linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.03) 60%, rgba(255, 255, 255, 0.07)), rgba(22, 22, 26, 0.28); border-color: rgba(255, 255, 255, 0.13);
+            box-shadow: inset 1.5px 1.5px 0 rgba(255, 255, 255, 0.34), inset -1px -1px 0 rgba(255, 255, 255, 0.12), inset 0 0 40px rgba(255, 255, 255, 0.04), 0 30px 80px rgba(0, 0, 0, 0.42);
+            -webkit-backdrop-filter: blur(22px) saturate(1.9) brightness(1.06); backdrop-filter: blur(22px) saturate(1.9) brightness(1.06); }
+        .mobile-menu::before { background: radial-gradient(110% 100% at 12% -12%, rgba(255, 255, 255, 0.2), transparent 62%), radial-gradient(90% 60% at 100% 100%, rgba(255, 255, 255, 0.06), transparent 70%); }
+        .mobile-menu .mobile-menu__link:not(.mobile-menu__link--cta), .mobile-menu .mobile-menu__theme { background: rgba(255, 255, 255, 0.04); border-color: rgba(255, 255, 255, 0.08); }
+        .mobile-menu .mobile-menu__link-icon, .mobile-menu .mobile-menu__close { background: rgba(255, 255, 255, 0.07); }
+        /* на телефоне панель тоже стеклянная, размытие слегка слабее */
+        @media (hover: none) { .mobile-menu { background: linear-gradient(180deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.03) 60%, rgba(255, 255, 255, 0.07)), rgba(22, 22, 26, 0.4); -webkit-backdrop-filter: blur(16px) saturate(1.7); backdrop-filter: blur(16px) saturate(1.7); } }
+        [data-theme="light"] .mobile-menu { background: linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(236, 244, 255, 0.34)); border-color: rgba(255, 255, 255, 0.85); box-shadow: inset 1.5px 1.5px 0 #ffffff, inset -1px -1px 0 rgba(var(--accent-rgb), 0.16), inset 0 0 40px rgba(255, 255, 255, 0.4), 0 30px 80px rgba(20, 70, 160, 0.22); }
+        [data-theme="light"] .mobile-menu::before { background: radial-gradient(110% 100% at 12% -12%, rgba(255, 255, 255, 0.95), transparent 62%); }
+        @media (hover: none) { [data-theme="light"] .mobile-menu { background: linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(236, 244, 255, 0.5)); } }
+        [data-theme="light"] .mobile-menu .mobile-menu__link:not(.mobile-menu__link--cta), [data-theme="light"] .mobile-menu .mobile-menu__theme { background: rgba(255, 255, 255, 0.5); }
+        [data-theme="light"] .mobile-menu .mobile-menu__link-icon, [data-theme="light"] .mobile-menu .mobile-menu__close { background: rgba(255, 255, 255, 0.6); }
+        .overlay { background: rgba(0, 0, 0, 0.32); }
+        @media (hover: none) { .overlay { background: rgba(0, 0, 0, 0.4); } }
+    </style>
+    <style id="perf-fixes">
+        /* ===== скорость и стабильность ===== */
+        /* размытие фона на десятках повторяющихся элементов (каждая карточка списка, каждая категория, кнопки) тормозило прокрутку и открытие окон: оставлено только у шапки и боковой панели */
+        .app-item, .cat-chip, .cat-arrow, .search__input, .settings-btn, button, .btn, .modal__content--app { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+        .category-chip span:first-of-type, .category-chip span { filter: none !important; }
+        /* фоновые пятна без дорогого размытия: тот же мягкий свет градиентом; на телефоне они стоят */
+        .bg-glow { filter: none; }
+        .bg-glow--1 { background: radial-gradient(circle, rgba(29, 78, 216, 1) 0%, rgba(29, 78, 216, 0) 70%); }
+        .bg-glow--2 { background: radial-gradient(circle, rgba(37, 99, 235, 1) 0%, rgba(37, 99, 235, 0) 70%); }
+        .bg-glow--3 { background: radial-gradient(circle, rgba(30, 64, 175, 1) 0%, rgba(30, 64, 175, 0) 70%); }
+        [data-theme="light"] .bg-glow--1 { background: radial-gradient(circle, rgba(31, 184, 251, 1) 0%, rgba(31, 184, 251, 0) 70%); }
+        [data-theme="light"] .bg-glow--2 { background: radial-gradient(circle, rgba(42, 124, 245, 1) 0%, rgba(42, 124, 245, 0) 70%); }
+        [data-theme="light"] .bg-glow--3 { background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 70%); }
+        @media (hover: none) { .bg-glow { animation: none; } }
+        /* без постоянных тяжёлых слоёв */
+        .cert-card__chev, .access-slider__track, .pricing__card::before, .pricing__card::after, .faq-thumb, svg { will-change: auto !important; }
+        /* длинный список рисуется только там, где он на экране */
+        #app-list .app-item { content-visibility: auto; contain-intrinsic-size: auto 210px; }
+        /* «Как это работает?»: плашка всегда под подписями, подпись окрашивается к приходу плашки */
+        .faq-chips { isolation: isolate; }
+        .faq-thumb { z-index: -1; }
+        .faq-chips .faq-chip { z-index: auto; transition: color 0.25s ease 0.12s; }
     </style>
     <style id="app-detail-styles">
         /* ===== окно приложения: цветная карточка в стиле постеров (цвет берётся из иконки) ===== */
@@ -1749,8 +1802,8 @@
     if (btn) btn.addEventListener('click', () => window.i18n.toggle());
 })();
 </script>
-    <script src="Scripts/Script.js?v=55"></script>
-    <script src="Scripts/Repository.js?v=55"></script>
+    <script src="Scripts/Script.js?v=58"></script>
+    <script src="Scripts/Repository.js?v=58"></script>
     <script>
 (function () {
 
@@ -2259,11 +2312,16 @@
             anims = [
                 sectionEl.animate([{ height: from + 'px' }, { height: to + 'px' }], { duration: dur, easing: IOS }),
                 ghost.animate([{ opacity: 1, transform: 'translateX(0)' }, { opacity: 0, transform: 'translateX(' + (-dir * 22) + 'px)' }], { duration: 170, easing: 'cubic-bezier(0.25, 0, 0.5, 1)', fill: 'forwards' }),
-                liveEl.animate([{ opacity: 0, transform: 'translateX(' + (dir * 22) + 'px)' }, { opacity: 1, transform: 'translateX(0)' }], { duration: dur - 140, delay: 150, easing: IOS, fill: 'backwards' })
+                liveEl.animate([{ opacity: 0.35, transform: 'translateX(' + (dir * 22) + 'px)' }, { opacity: 1, transform: 'translateX(0)' }], { duration: dur - 140, delay: 120, easing: IOS, fill: 'backwards' })   // текст никогда не пропадает полностью
             ];
-            try { await Promise.all(anims.map(x => x.finished)); } catch (e) { return; }
-            if (token !== switchToken) return;
-            anims = []; ghost.remove(); sectionEl.style.height = ''; sectionEl.style.overflow = '';
+            const finish = () => {
+                if (token !== switchToken) return;
+                anims.forEach(x => { try { x.cancel(); } catch (e) {} }); anims = [];
+                ghost.remove(); sectionEl.style.height = ''; sectionEl.style.overflow = '';
+            };
+            const safety = setTimeout(finish, dur + 320);       // страховка: состояние очищается, даже если браузер не доиграл анимацию
+            try { await Promise.all(anims.map(x => x.finished)); } catch (e) { clearTimeout(safety); return; }
+            clearTimeout(safety); finish();
         }
         function setCat(i, scroll) {
             if (i === cat) { if (scroll) reveal(chips()[i]); return; }
@@ -2572,6 +2630,27 @@
     }
     refreshDays();
     document.addEventListener('iapps:lang', refreshDays);
+})();
+</script>
+    <script>
+(function () {
+    // Если все окна закрыты, а прокрутка страницы всё ещё заблокирована (гонка при быстром открытии и закрытии), блокировка снимается сама.
+    const sync = () => {
+        if (document.querySelector('.modal.active, .mobile-menu.active')) return;
+        const body = document.body;
+        if (body.classList.contains('modal-open')) {
+            const top = -(parseInt(body.style.top || '0', 10) || 0);
+            body.classList.remove('modal-open'); body.style.top = '';
+            window.scrollTo({ top, left: 0, behavior: 'instant' });
+        }
+        const ov = document.getElementById('overlay'); if (ov && ov.classList.contains('active')) ov.classList.remove('active');
+    };
+    let t = 0;
+    const later = () => { clearTimeout(t); t = setTimeout(sync, 450); };
+    const obs = new MutationObserver(later);
+    document.querySelectorAll('.modal, .mobile-menu').forEach(el => obs.observe(el, { attributes: true, attributeFilter: ['class'] }));
+    document.addEventListener('visibilitychange', sync);
+    window.addEventListener('pageshow', sync);
 })();
 </script>
 </body>
