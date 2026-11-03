@@ -8,7 +8,7 @@
     <title data-i18n="page.title">iApps - Сертификат разработчика Apple и приложения для iPhone</title>
     <link rel="icon" type="image/png" href="Images/Profile.PNG">
     <link rel="apple-touch-icon" href="Images/Profile.PNG">
-    <link rel="stylesheet" href="Styles/Style.css?v=65">
+    <link rel="stylesheet" href="Styles/Style.css?v=69">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
@@ -800,6 +800,103 @@
         .mobile-menu .mobile-menu__link:hover .mm-sub { color: var(--text-secondary); }
         .mobile-menu .mobile-menu__link:hover .mobile-menu__link-arrow { fill: var(--text-primary); }
     </style>
+    <style id="menu-glass">
+        /* ===== боковая панель: чистое прозрачное стекло, как на образце (без цветной заливки) =====
+           лёгкое матирование, яркая кромка сверху, цветная «дисперсия» по бокам, свет у краёв */
+        .mm-grabber { display: none !important; }
+        .mobile-menu { border-radius: 44px; border: 1px solid rgba(255, 255, 255, 0.26); background: rgba(255, 255, 255, 0.075);
+            box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.7), inset 0 -1px 0 rgba(255, 255, 255, 0.22),
+                inset 1.5px 0 0 rgba(255, 170, 90, 0.16), inset 3px 0 0 rgba(90, 150, 255, 0.1), inset -1.5px 0 0 rgba(90, 150, 255, 0.18), inset -3px 0 0 rgba(255, 170, 90, 0.1),
+                inset 0 0 30px rgba(255, 255, 255, 0.12), 0 24px 60px rgba(0, 0, 0, 0.35);
+            -webkit-backdrop-filter: none; backdrop-filter: none;
+            transition: transform 0.65s var(--ios), -webkit-backdrop-filter 0.4s ease, backdrop-filter 0.4s ease; }
+        /* матирование включается, когда панель доехала: пока она едет, размытие под ней дорого */
+        .mobile-menu.is-glass { -webkit-backdrop-filter: blur(12px) saturate(1.2) brightness(1.1); backdrop-filter: blur(12px) saturate(1.2) brightness(1.1); }
+        .mobile-menu::before { height: 300px; background: radial-gradient(120% 62% at 18% -8%, rgba(255, 255, 255, 0.3), transparent 56%); }
+        [data-theme="light"] .mobile-menu { background: rgba(255, 255, 255, 0.3); border-color: rgba(255, 255, 255, 0.8);
+            box-shadow: inset 0 1.5px 0 #ffffff, inset 0 -1px 0 rgba(255, 255, 255, 0.5),
+                inset 1.5px 0 0 rgba(255, 170, 90, 0.2), inset 3px 0 0 rgba(90, 150, 255, 0.12), inset -1.5px 0 0 rgba(90, 150, 255, 0.2), inset -3px 0 0 rgba(255, 170, 90, 0.12),
+                inset 0 0 30px rgba(255, 255, 255, 0.35), 0 24px 60px rgba(20, 70, 160, 0.2); }
+        [data-theme="light"] .mobile-menu.is-glass { -webkit-backdrop-filter: blur(14px) saturate(1.1) brightness(1.04); backdrop-filter: blur(14px) saturate(1.1) brightness(1.04); }
+        [data-theme="light"] .mobile-menu::before { background: radial-gradient(120% 62% at 18% -8%, rgba(255, 255, 255, 0.85), transparent 56%); }
+        .mobile-menu .mm-title, .mobile-menu .mobile-menu__name { text-shadow: 0 1px 8px rgba(0, 0, 0, 0.22); }
+        [data-theme="light"] .mobile-menu .mm-title, [data-theme="light"] .mobile-menu .mobile-menu__name { text-shadow: none; }
+        /* три ссылки всегда сверху, переключатели и главная кнопка внизу (и на телефоне тоже) */
+        .mobile-menu .mobile-menu__nav { margin-top: 0; }
+        .mobile-menu .mm-controls { margin-top: auto; }
+        @media (hover: none) {
+            .mobile-menu { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(255, 255, 255, 0.075);
+                box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.7), inset 0 -1px 0 rgba(255, 255, 255, 0.22), inset 1.5px 0 0 rgba(255, 170, 90, 0.16), inset 3px 0 0 rgba(90, 150, 255, 0.1), inset -1.5px 0 0 rgba(90, 150, 255, 0.18), inset -3px 0 0 rgba(255, 170, 90, 0.1), inset 0 0 30px rgba(255, 255, 255, 0.12), 0 14px 36px rgba(0, 0, 0, 0.32); }
+            [data-theme="light"] .mobile-menu { background: rgba(255, 255, 255, 0.3); box-shadow: inset 0 1.5px 0 #ffffff, inset 0 -1px 0 rgba(255, 255, 255, 0.5), inset 1.5px 0 0 rgba(255, 170, 90, 0.2), inset 3px 0 0 rgba(90, 150, 255, 0.12), inset -1.5px 0 0 rgba(90, 150, 255, 0.2), inset -3px 0 0 rgba(255, 170, 90, 0.12), inset 0 0 30px rgba(255, 255, 255, 0.35), 0 14px 36px rgba(20, 70, 160, 0.18); }
+            .mobile-menu.is-glass { -webkit-backdrop-filter: blur(12px) saturate(1.2) brightness(1.1); backdrop-filter: blur(12px) saturate(1.2) brightness(1.1); }
+            [data-theme="light"] .mobile-menu.is-glass { -webkit-backdrop-filter: blur(14px) saturate(1.1) brightness(1.04); backdrop-filter: blur(14px) saturate(1.1) brightness(1.04); }
+            .mobile-menu .mobile-menu__nav { margin-top: 0; }
+            .mobile-menu .mm-controls { margin-top: auto; }
+        }
+        /* выбор (тема, язык): стеклянная плашка вместо цветного градиента */
+        .mm-control__label { color: var(--text-secondary); }
+        .mm-glass { background: rgba(255, 255, 255, 0.2); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4), inset 0 1.5px 0 rgba(255, 255, 255, 0.75), inset 0 0 14px rgba(255, 255, 255, 0.14); }
+        .mm-glass__copy .mm-seg__btn { color: #ffffff; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.25); }
+        [data-theme="light"] .mm-glass { background: rgba(255, 255, 255, 0.88); box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.18), inset 0 1px 0 #fff, 0 3px 10px rgba(20, 70, 160, 0.12); }
+        [data-theme="light"] .mm-glass__copy .mm-seg__btn { color: var(--text-primary); text-shadow: none; }
+        /* «Получить доступ»: просто стекло с яркой кромкой, без цветного отсвета */
+        .mobile-menu .mm-cta, .mobile-menu .mm-cta:hover { background: rgba(255, 255, 255, 0.1) !important; border-color: rgba(255, 255, 255, 0.3) !important; box-shadow: inset 0 1.5px 0 rgba(255, 255, 255, 0.55), inset 0 0 18px rgba(255, 255, 255, 0.08) !important; }
+        .mobile-menu .mm-cta::before { display: none !important; }
+        @media (hover: hover) { .mobile-menu .mm-cta:hover { background: rgba(255, 255, 255, 0.17) !important; } }
+        [data-theme="light"] .mobile-menu .mm-cta, [data-theme="light"] .mobile-menu .mm-cta:hover { background: rgba(255, 255, 255, 0.55) !important; border-color: rgba(var(--accent-rgb), 0.16) !important; box-shadow: inset 0 1.5px 0 #ffffff, inset 0 0 18px rgba(255, 255, 255, 0.4) !important; }
+        @media (hover: hover) { [data-theme="light"] .mobile-menu .mm-cta:hover { background: rgba(255, 255, 255, 0.8) !important; } }
+    </style>
+    <style id="header-glass">
+        /* ===== шапка: стекло как на образце (прозрачное, светлеет к правому краю, тонкая светлая кромка, тонкие контурные значки) ===== */
+        .header__container {
+            background: linear-gradient(100deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.07) 55%, rgba(255, 255, 255, 0.15) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38), inset 0 -1px 0 rgba(160, 215, 255, 0.42), inset -1px 0 0 rgba(160, 215, 255, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.2);
+            -webkit-backdrop-filter: blur(12px) saturate(1.25) brightness(1.08); backdrop-filter: blur(12px) saturate(1.25) brightness(1.08); }
+        .header.is-scrolled .header__container { background: linear-gradient(100deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.1) 55%, rgba(255, 255, 255, 0.18) 100%); }
+        .header__container::before { background: radial-gradient(120% 170% at 12% -80%, rgba(255, 255, 255, 0.16), transparent 56%); }
+        .header__container::after { background: linear-gradient(135deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.07) 30%, rgba(160, 215, 255, 0.12) 65%, rgba(160, 215, 255, 0.5) 100%); }
+        [data-theme="light"] .header__container { background: linear-gradient(100deg, rgba(255, 255, 255, 0.36) 0%, rgba(255, 255, 255, 0.5) 55%, rgba(255, 255, 255, 0.66) 100%); border-color: rgba(255, 255, 255, 0.85);
+            box-shadow: inset 0 1px 0 #ffffff, inset 0 -1px 0 rgba(var(--accent-rgb), 0.22), inset -1px 0 0 rgba(var(--accent-rgb), 0.1), inset 0 0 20px rgba(255, 255, 255, 0.4), 0 10px 30px rgba(20, 70, 160, 0.12); }
+        [data-theme="light"] .header.is-scrolled .header__container { background: linear-gradient(100deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.62) 55%, rgba(255, 255, 255, 0.76) 100%); }
+        [data-theme="light"] .header__container::before { background: radial-gradient(120% 170% at 12% -80%, rgba(255, 255, 255, 0.9), transparent 56%); }
+        [data-theme="light"] .header__container::after { background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0) 30%, rgba(var(--accent-rgb), 0.04) 65%, rgba(var(--accent-rgb), 0.3) 100%); }
+        /* кнопки: круглые стеклянные, тонкая кромка со светлым низом */
+        .header .theme-toggle, .header .header__avatar--menu { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.26); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), inset 0 -1px 0 rgba(160, 215, 255, 0.3); }
+        @media (hover: hover) { .header .theme-toggle:hover, .header .header__avatar--menu:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.4); } }
+        [data-theme="light"] .header .theme-toggle, [data-theme="light"] .header .header__avatar--menu { background: rgba(255, 255, 255, 0.55); border-color: rgba(var(--accent-rgb), 0.18); box-shadow: inset 0 1px 0 #fff, inset 0 -1px 0 rgba(var(--accent-rgb), 0.14); }
+        @media (hover: hover) { [data-theme="light"] .header .theme-toggle:hover, [data-theme="light"] .header .header__avatar--menu:hover { background: #ffffff; border-color: rgba(var(--accent-rgb), 0.3); } }
+        /* тонкие контурные значки (рисуются маской, поэтому не конфликтуют с переключением значков в скрипте) */
+        .header .header__avatar--menu { position: relative; }
+        .header .theme-toggle > svg, .header .header__avatar--menu > svg { display: none; }
+        .header .theme-toggle::before, .header .header__avatar--menu::before { content: ''; position: absolute; inset: 0; margin: auto; width: 21px; height: 21px; background: var(--text-primary); opacity: 0.92; pointer-events: none; z-index: 1; border-radius: 0;
+            -webkit-mask: var(--ico) center / contain no-repeat; mask: var(--ico) center / contain no-repeat; transition: opacity 0.3s ease; }
+        .header .theme-toggle { --ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z'/%3E%3C/svg%3E"); }
+        [data-theme="light"] .header .theme-toggle { --ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7'/%3E%3C/svg%3E"); }
+        .header .theme-toggle.lang-toggle { --ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M3 12h18M12 3c2.6 2.7 3.9 5.7 3.9 9S14.6 18.3 12 21c-2.6-2.7-3.9-5.7-3.9-9S9.4 5.7 12 3z'/%3E%3C/svg%3E"); }
+        [data-theme="light"] .header .theme-toggle.lang-toggle { --ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M3 12h18M12 3c2.6 2.7 3.9 5.7 3.9 9S14.6 18.3 12 21c-2.6-2.7-3.9-5.7-3.9-9S9.4 5.7 12 3z'/%3E%3C/svg%3E"); }
+        .header .header__avatar--menu { --ico: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 7h16M4 12h16M4 17h16'/%3E%3C/svg%3E"); }
+        .header .theme-toggle.lang-toggle::before { width: 22px; height: 22px; }
+        @media (hover: hover) { .header .theme-toggle:hover::before, .header .header__avatar--menu:hover::before { opacity: 1; } }
+
+        /* ===== боковое меню, светлая тема: плитки значков «врезаны» внутрь ===== */
+        [data-theme="light"] .mobile-menu .mobile-menu__link .mobile-menu__link-icon, [data-theme="light"] .mobile-menu .mobile-menu__link:hover .mobile-menu__link-icon {
+            background: rgba(var(--accent-rgb), 0.07) !important; border: 0 !important;
+            box-shadow: inset 0 2px 5px rgba(20, 70, 160, 0.22), inset 1px 0 2px rgba(20, 70, 160, 0.08), inset 0 -1px 0 rgba(255, 255, 255, 0.95) !important; }
+        [data-theme="light"] .mobile-menu .mobile-menu__link:hover .mobile-menu__link-icon { background: rgba(var(--accent-rgb), 0.11) !important; }
+
+        /* ===== стеклянные переключатели: нажатие, перетаскивание, «живое» стекло ===== */
+        .mm-seg { cursor: grab; touch-action: pan-y; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 2px 5px rgba(0, 0, 0, 0.28), inset 0 -1px 0 rgba(255, 255, 255, 0.08); }
+        [data-theme="light"] .mm-seg { box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.14), inset 0 2px 5px rgba(20, 70, 160, 0.16), inset 0 -1px 0 #fff; }
+        .mm-seg.is-pressed { cursor: grabbing; }
+        .mm-glass { background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.12)); transition: background 0.35s ease, box-shadow 0.35s ease; }
+        .mm-seg.is-moving .mm-glass, .mm-seg.is-pressed .mm-glass { background: linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2));
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55), inset 0 1.5px 0 rgba(255, 255, 255, 0.85), inset 0 0 16px rgba(255, 255, 255, 0.22), 0 0 14px rgba(255, 255, 255, 0.16); }
+        [data-theme="light"] .mm-glass { background: linear-gradient(180deg, #ffffff, rgba(255, 255, 255, 0.82)); }
+        [data-theme="light"] .mm-seg.is-moving .mm-glass, [data-theme="light"] .mm-seg.is-pressed .mm-glass { background: #ffffff; box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.24), inset 0 1px 0 #fff, 0 4px 14px rgba(20, 70, 160, 0.2); }
+        .mm-seg__btn { transition: transform 0.4s var(--ios); }
+        .mm-seg.is-pressed .mm-seg__btn { transform: scale(0.97); }
+    </style>
     <style id="perf-fixes">
         /* ===== скорость и стабильность ===== */
         /* размытие фона на десятках повторяющихся элементов (каждая карточка списка, каждая категория, кнопки) тормозило прокрутку и открытие окон: оставлено только у шапки и боковой панели */
@@ -980,7 +1077,6 @@
     </header>
 
     <div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Меню" data-i18n-attr="aria-label:menu.title" tabindex="-1">
-        <span class="mm-grabber" aria-hidden="true"></span>
         <div class="mobile-menu__header mm-item" style="--i:0">
             <img class="mobile-menu__avatar" src="Images/Profile.PNG" alt="iApps">
             <div class="mobile-menu__info">
@@ -1947,8 +2043,8 @@
     if (btn) btn.addEventListener('click', () => window.i18n.toggle());
 })();
 </script>
-    <script src="Scripts/Script.js?v=65"></script>
-    <script src="Scripts/Repository.js?v=65"></script>
+    <script src="Scripts/Script.js?v=69"></script>
+    <script src="Scripts/Repository.js?v=69"></script>
     <script>
 (function () {
 
@@ -2827,7 +2923,7 @@
     const rows = [...nav.querySelectorAll('.mobile-menu__link')];
     const overlay = document.getElementById('overlay'), closeBtn = document.getElementById('closeMenu'), avatarBtn = document.getElementById('avatarBtn');
     const root = document.documentElement;
-    const LEAD = '0.4s cubic-bezier(0.3, 1.25, 0.5, 1)', TRAIL = '0.62s cubic-bezier(0.32, 0.72, 0, 1)';
+    const LEAD = '0.5s cubic-bezier(0.28, 1.5, 0.45, 1)', TRAIL = '0.82s cubic-bezier(0.32, 0.72, 0, 1)';
 
     /* ---------- «линза» скользит к строке, тянется как капля ---------- */
     let lensTop = null;
@@ -2865,25 +2961,57 @@
     const tr = (k, d) => (window.i18n && window.i18n.t ? (window.i18n.t(k) || d) : d);
     function makeSeg(el, defs, getIdx, pick) {
         el.innerHTML = '';
+        let dragEnd = 0;
         defs.forEach((d, i) => {
             const b = document.createElement('button'); b.type = 'button'; b.className = 'mm-seg__btn'; b.setAttribute('role', 'radio'); b.setAttribute('aria-label', d.label); b.innerHTML = d.html;
-            b.addEventListener('click', () => { if (i !== getIdx()) pick(i); });
+            b.addEventListener('click', () => { if (performance.now() - dragEnd < 300) return; if (i !== getIdx()) pick(i); });
             el.appendChild(b);
         });
         const g = document.createElement('span'); g.className = 'mm-glass'; g.setAttribute('aria-hidden', 'true');
         const cp = document.createElement('span'); cp.className = 'mm-glass__copy';
         defs.forEach((d) => { const s = document.createElement('span'); s.className = 'mm-seg__btn'; s.innerHTML = d.html; cp.appendChild(s); });
         g.appendChild(cp); el.appendChild(g);
+        let movingT = 0;
         const place = (animate) => {
             const btns = el.querySelectorAll('button'), idx = getIdx(), btn = btns[idx]; if (!btn) return;
             const L = btn.offsetLeft, R = Math.max(0, el.clientWidth - (btn.offsetLeft + btn.offsetWidth));
             cp.style.width = el.clientWidth + 'px';
             btns.forEach((x, k) => x.setAttribute('aria-checked', String(k === idx)));
             if (!animate || g._L === undefined) { g.style.transition = 'none'; cp.style.transition = 'none'; }
-            else { const right = L > g._L; g.style.transition = right ? 'left ' + TRAIL + ', right ' + LEAD : 'left ' + LEAD + ', right ' + TRAIL; cp.style.transition = 'left ' + (right ? TRAIL : LEAD); }
+            else {
+                const right = L > g._L; g.style.transition = right ? 'left ' + TRAIL + ', right ' + LEAD : 'left ' + LEAD + ', right ' + TRAIL; cp.style.transition = 'left ' + (right ? TRAIL : LEAD);
+                el.classList.add('is-moving'); clearTimeout(movingT); movingT = setTimeout(() => el.classList.remove('is-moving'), 900);   // пока стекло в движении, оно чуть ярче
+            }
             g.style.left = L + 'px'; g.style.right = R + 'px'; cp.style.left = (-L) + 'px'; g._L = L;
             if (!animate) { void g.offsetWidth; g.style.transition = ''; cp.style.transition = ''; }
         };
+        /* стекло можно «взять» и перетащить: оно следует за пальцем, а при отпускании оседает на ближайшем варианте */
+        let drag = null;
+        const nearest = (cx) => { const btns = [...el.querySelectorAll('button')]; let best = 0, bd = 1e9; btns.forEach((x, k) => { const d = Math.abs(cx - (x.offsetLeft + x.offsetWidth / 2)); if (d < bd) { bd = d; best = k; } }); return best; };
+        el.addEventListener('pointerdown', (e) => {
+            if (e.pointerType === 'mouse' && e.button !== 0) return;
+            drag = { id: e.pointerId, x: e.clientX, moved: false, cx: 0 };
+            el.classList.add('is-pressed');
+        }, { passive: true });
+        el.addEventListener('pointermove', (e) => {
+            if (!drag || e.pointerId !== drag.id) return;
+            if (!drag.moved) { if (Math.abs(e.clientX - drag.x) < 5) return; drag.moved = true; try { el.setPointerCapture(e.pointerId); } catch (er) {} }
+            const r = el.getBoundingClientRect(), bw = el.querySelector('button').offsetWidth;
+            const cx = Math.min(Math.max(e.clientX - r.left, 3 + bw / 2), el.clientWidth - 3 - bw / 2);
+            drag.cx = cx;
+            const L = cx - bw / 2, R = el.clientWidth - (cx + bw / 2);
+            g.style.transition = 'left 0.1s linear, right 0.1s linear'; cp.style.transition = 'left 0.1s linear';
+            g.style.left = L + 'px'; g.style.right = R + 'px'; cp.style.left = (-L) + 'px'; g._L = L;
+        });
+        const release = (e) => {
+            if (!drag || e.pointerId !== drag.id) return;
+            const d = drag; drag = null; el.classList.remove('is-pressed');
+            if (!d.moved) return;
+            dragEnd = performance.now();
+            const idx = nearest(d.cx);
+            if (idx !== getIdx()) pick(idx); else place(true);
+        };
+        el.addEventListener('pointerup', release); el.addEventListener('pointercancel', release);
         if (window.ResizeObserver) new ResizeObserver(() => place(false)).observe(el);
         return place;
     }
@@ -2901,9 +3029,14 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { placeTheme(false); placeLang(false); });
 
     /* ---------- открытие и закрытие: фокус, Tab не уходит из меню ---------- */
+    let glassT = 0, wasActive = false;
     new MutationObserver(() => {
-        if (panel.classList.contains('active')) { placeTheme(false); placeLang(false); rest(false); requestAnimationFrame(() => panel.focus({ preventScroll: true })); }
-        else { lens.classList.remove('is-on'); lensTop = null; if (document.activeElement && panel.contains(document.activeElement) && avatarBtn) avatarBtn.focus({ preventScroll: true }); }
+        const on = panel.classList.contains('active');
+        if (on === wasActive) return;          // реагируем только на открытие и закрытие, а не на любые смены класса (например, is-glass)
+        wasActive = on;
+        clearTimeout(glassT);
+        if (on) { placeTheme(false); placeLang(false); rest(false); requestAnimationFrame(() => panel.focus({ preventScroll: true })); glassT = setTimeout(() => panel.classList.add('is-glass'), 700); }
+        else { panel.classList.remove('is-glass'); lens.classList.remove('is-on'); lensTop = null; if (document.activeElement && panel.contains(document.activeElement) && avatarBtn) avatarBtn.focus({ preventScroll: true }); }
     }).observe(panel, { attributes: true, attributeFilter: ['class'] });
     panel.addEventListener('keydown', (e) => {
         if (e.key !== 'Tab') return;
