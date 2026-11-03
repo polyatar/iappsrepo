@@ -136,16 +136,10 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 const header = document.querySelector('.header');
 
+// стекло шапки рисует CSS; при прокрутке шапка лишь становится плотнее (класс is-scrolled)
 window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    if (currentScroll > 100) {
-        header.style.background = 'var(--bg-secondary)';
-        header.style.boxShadow = 'var(--shadow-md)';
-    } else {
-        header.style.background = 'var(--bg-glass)';
-        header.style.boxShadow = 'none';
-    }
-});
+    header.classList.toggle('is-scrolled', window.pageYOffset > 40);
+}, { passive: true });
 
 const searchClear = document.getElementById('searchClear');
 const searchField = document.getElementById('search');
