@@ -49,6 +49,8 @@ function openMobileMenu() {
 }
 
 function closeMobileMenu() {
+    // вызывается и при Esc, и при нажатии на подложку, даже когда меню закрыто: тогда страница не должна прыгать на старое положение
+    if (!mobileMenu.classList.contains('active')) return;
     mobileMenu.classList.remove('active');
     overlay.classList.remove('active');
     document.body.classList.remove('modal-open');
@@ -84,6 +86,7 @@ function openSettingsModal() {
 }
 
 function closeSettingsModal() {
+    if (!settingsModal.classList.contains('active')) return;   // окно фильтров не было открыто: ничего не трогаем
     settingsModal.classList.remove('active');
     if (!document.querySelector('.modal.active')) {
         document.body.classList.remove('modal-open');

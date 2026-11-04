@@ -174,7 +174,7 @@ function displayApps() {
     if (paginatedApps.length === 0) {
         appList.innerHTML = `
             <div style="grid-column: 1/-1; text-align: center; padding: 4rem 2rem; color: var(--text-muted);">
-                <p style="font-size: 3rem; margin-bottom: 1rem;">🔍</p>
+                <div class="empty-ico">${SEARCH_ICON}</div>
                 <p style="font-size: 1.25rem; margin-bottom: 0.5rem;">${T('empty.title', 'Ничего не найдено')}</p>
                 <p style="font-size: 0.875rem;">${T('empty.sub', 'Попробуйте изменить параметры поиска')}</p>
                 <button type="button" class="suggest-btn" id="suggestOpen">
@@ -304,10 +304,26 @@ function formatDate(dateStr) {
 }
 
 // все теги вида #Games #Social в названии приложения (у приложения может быть несколько категорий)
-const CATEGORY_EMOJI = {
-    Russia: '🇷🇺', Social: '💬', Music: '🎵', Video: '🎬', Design: '🎨', Network: '🌍', Study: '📚',
-    Office: '📋', Games: '🎮', Kids: '👶', Life: '💪', Money: '💰', Travel: '✈️', Themes: '🖼️', Other: '📦'
+const ICO = (inner) => '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + inner + '</svg>';
+const CATEGORY_ICON = {
+    Russia: ICO("<path d='M4 6.5h16v3H4z'/><path d='M5.5 9.5V17a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V9.5'/><path d='M10 13h4'/>"),
+    Social: ICO("<path d='M5.5 5h13A2.5 2.5 0 0 1 21 7.5v7a2.5 2.5 0 0 1-2.5 2.5H13l-4.5 3.5V17H5.5A2.5 2.5 0 0 1 3 14.5v-7A2.5 2.5 0 0 1 5.5 5z'/>"),
+    Music: ICO("<path d='M9 17.5V6l10-2v11.5'/><circle cx='6.5' cy='17.5' r='2.5'/><circle cx='16.5' cy='15.5' r='2.5'/>"),
+    Video: ICO("<rect x='3.5' y='5' width='17' height='14' rx='3'/><path d='m10.3 9.4 4.4 2.6-4.4 2.6V9.4z'/>"),
+    Design: ICO("<path d='M12 3.5a8.5 8.5 0 1 0 0 17c1.3 0 1.9-.9 1.9-1.8 0-1.5-1.3-1.7-1.3-2.9 0-.9.7-1.5 1.6-1.5H17a3.5 3.5 0 0 0 3.5-3.5C20.5 6.8 16.8 3.5 12 3.5z'/><path d='M7.8 11h.01M11 7.6h.01M15.4 8.6h.01' stroke-width='2.2'/>"),
+    Network: ICO("<circle cx='12' cy='12' r='9'/><path d='M3 12h18M12 3c2.6 2.7 3.9 5.7 3.9 9S14.6 18.3 12 21c-2.6-2.7-3.9-5.7-3.9-9S9.4 5.7 12 3z'/>"),
+    Study: ICO("<path d='M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5v-15z'/><path d='M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5v-15z'/>"),
+    Office: ICO("<rect x='4' y='7.5' width='16' height='12' rx='2.2'/><path d='M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M4 12.5h16'/>"),
+    Games: ICO("<path d='M7.5 8h9A4.5 4.5 0 0 1 21 12.5l-.6 3.4a2.2 2.2 0 0 1-3.8 1.1L15 15H9l-1.6 2a2.2 2.2 0 0 1-3.8-1.1L3 12.5A4.5 4.5 0 0 1 7.5 8z'/><path d='M8 10.5v3M6.5 12h3'/><path d='M15.4 11.6h.01M17.6 13.2h.01' stroke-width='2.2'/>"),
+    Kids: ICO("<circle cx='12' cy='12' r='8.5'/><path d='M8.6 14a4.2 4.2 0 0 0 6.8 0'/><path d='M9.2 9.8h.01M14.8 9.8h.01' stroke-width='2.2'/>"),
+    Life: ICO("<path d='M12 20s-7.2-4.5-7.2-10A4.1 4.1 0 0 1 12 7.6 4.1 4.1 0 0 1 19.2 10C19.2 15.5 12 20 12 20z'/><path d='M8.4 12.2h2l1.1-2.2 1.8 3.8 1-1.6h1.3'/>"),
+    Money: ICO("<path d='M4 8a2 2 0 0 1 2-2h11a1.5 1.5 0 0 1 1.5 1.5V9'/><path d='M4 8v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6.5a1.5 1.5 0 0 0-1.5-1.5H6A2 2 0 0 1 4 8z'/><path d='M16.2 14h.01' stroke-width='2.2'/>"),
+    Travel: ICO("<path d='M3.2 10.8 20.8 3.5l-7 17.3-2.7-7.2-7.9-2.8z'/><path d='m11.1 13.6 9.7-10.1'/>"),
+    Themes: ICO("<rect x='4' y='4.5' width='16' height='15' rx='2.5'/><path d='m4 15.5 4.2-4.2a1.5 1.5 0 0 1 2.1 0l5.2 5.2M13.6 14l1.4-1.4a1.5 1.5 0 0 1 2.1 0L20 15.5'/><path d='M9 8.8h.01' stroke-width='2.2'/>"),
+    Other: ICO("<circle cx='12' cy='12' r='9'/><path d='M8.2 12h.01M12 12h.01M15.8 12h.01' stroke-width='2.4'/>")
 };
+const TAG_ICON = ICO("<path d='M3.5 12.1V5.5a2 2 0 0 1 2-2h6.6a2 2 0 0 1 1.4.6l7.3 7.3a2 2 0 0 1 0 2.8l-6.7 6.7a2 2 0 0 1-2.8 0L4.1 13.5a2 2 0 0 1-.6-1.4z'/><path d='M8 8h.01' stroke-width='2.2'/>");
+const SEARCH_ICON = ICO("<circle cx='10.5' cy='10.5' r='6.5'/><path d='m15.5 15.5 5 5'/>");
 const CATEGORY_ALIASES = { networke: 'Network' };
 
 function getAppCategories(appName) {
@@ -318,13 +334,13 @@ function getAppCategories(appName) {
     while ((match = re.exec(appName)) !== null) {
         const raw = match[1];
         const known = CATEGORY_ALIASES[raw.toLowerCase()]
-            || Object.keys(CATEGORY_EMOJI).find(k => k.toLowerCase() === raw.toLowerCase());
+            || Object.keys(CATEGORY_ICON).find(k => k.toLowerCase() === raw.toLowerCase());
         const key = known || raw;
         if (seen.has(key)) continue;
         seen.add(key);
-        found.push({ key, name: T('cat.' + key, key), emoji: CATEGORY_EMOJI[key] || '🏷️' });
+        found.push({ key, name: T('cat.' + key, key), icon: CATEGORY_ICON[key] || TAG_ICON });
     }
-    if (!found.length) found.push({ key: 'Other', name: T('cat.Other', 'Other'), emoji: '📦' });
+    if (!found.length) found.push({ key: 'Other', name: T('cat.Other', 'Other'), icon: CATEGORY_ICON.Other });
     return found;
 }
 
@@ -337,7 +353,7 @@ const META_ICONS = {
 
 // ---- иконки на GitHub: файлы из релизов отдаются как application/octet-stream, и браузер часто не показывает их как картинки.
 // Если иконка не загрузилась, пробуем тот же адрес через прокси-сервис изображений, и только потом ставим заглушку.
-const ICON_PLACEHOLDER = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%232a7cf5' width='100' height='100' rx='20'/><text x='50' y='55' font-size='40' text-anchor='middle' fill='white'>📱</text></svg>";
+const ICON_PLACEHOLDER = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%232a7cf5' width='100' height='100' rx='20'/><rect x='33' y='22' width='34' height='56' rx='9' fill='none' stroke='white' stroke-width='4.5'/><path d='M44 32h12M45 68h10' stroke='white' stroke-width='4.5' stroke-linecap='round'/></svg>";
 function iconProxies(url) {
     const enc = encodeURIComponent(url);
     return ['https://wsrv.nl/?url=' + enc + '&w=256&h=256&fit=cover&output=png', 'https://images.weserv.nl/?url=' + enc + '&w=256&h=256&fit=cover&output=png'];
@@ -449,7 +465,7 @@ function renderAppModal(app) {
                 <img class="app-detail__icon" src="${app.appImage}" data-orig="${app.appImage}" alt="${cleanedAppName}" onerror="iconFallback(this)">
                 <div class="app-detail__info">
                     <h2 class="app-detail__name">${cleanedAppName}</h2>
-                    <div class="app-detail__categories">${categories.map(c => `<span class="app-detail__category">${c.emoji} ${c.name}</span>`).join('')}</div>
+                    <div class="app-detail__categories">${categories.map(c => `<span class="app-detail__category">${c.icon}<span>${c.name}</span></span>`).join('')}</div>
                 </div>
             </div>
             <div class="app-detail__meta">

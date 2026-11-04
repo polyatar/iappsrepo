@@ -8,7 +8,7 @@
     <title data-i18n="page.title">iApps - Сертификат разработчика Apple и приложения для iPhone</title>
     <link rel="icon" type="image/png" href="Images/Profile.PNG">
     <link rel="apple-touch-icon" href="Images/Profile.PNG">
-    <link rel="stylesheet" href="Styles/Style.css?v=77">
+    <link rel="stylesheet" href="Styles/Style.css?v=95">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
@@ -613,7 +613,7 @@
         .header__container::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none; background: radial-gradient(120% 170% at 12% -70%, rgba(255, 255, 255, 0.15), transparent 56%); }
         .header__container::after { content: ''; position: absolute; inset: 0; padding: 1px; border-radius: inherit; pointer-events: none; -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.05) 32%, rgba(255, 255, 255, 0.03) 68%, rgba(255, 255, 255, 0.26) 100%); }
         .header.is-scrolled .header__container { background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.035)), rgba(22, 22, 26, 0.72); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(255, 255, 255, 0.04), 0 14px 40px rgba(0, 0, 0, 0.36); }
-        .header__logo-icon--img { width: 36px; height: 36px; border-radius: 12px; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12); }
+        .header__logo-icon--img { width: 36px; height: 36px; }
         .header .header__logo-text { font-size: 0.95rem; font-weight: 700; letter-spacing: 0.1em; color: var(--text-primary); }
         .header .theme-toggle, .header .header__avatar--menu { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.07); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14); -webkit-backdrop-filter: none; backdrop-filter: none; transition: background 0.3s ease, border-color 0.3s ease; }
         .header .header__avatar--menu:hover { transform: none; }
@@ -980,15 +980,19 @@
         .header .lang-toggle[aria-expanded="true"]::after { transform: rotate(180deg); opacity: 1; }
         @media (max-width: 480px) { .header .theme-toggle.lang-toggle { padding: 0 0.55rem 0 0.6rem; gap: 0.3rem; } }
 
-        .lang-pop { position: fixed; z-index: 400; width: 236px; padding: 8px; border-radius: 28px; isolation: isolate; opacity: 0; transform: translateY(-8px) scale(0.96); pointer-events: none;
-            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4); transition: opacity 0.22s ease, transform 0.45s var(--ios); }
+        /* панель с размытием не двигается и не масштабируется (на телефоне это давало подтормаживание при закрытии): стекло и тень только плавно
+           проявляются и гаснут, а строки внутри чуть сдвигаются. Прозрачности у самой панели нет, поэтому размытие работает с первого кадра */
+        .lang-pop { position: fixed; z-index: 400; width: 236px; padding: 8px; border-radius: 28px; isolation: isolate; opacity: 1; visibility: hidden; transition: visibility 0s linear 0.24s; }
         .lang-pop[hidden] { display: none; }
-        .lang-pop.is-open { opacity: 1; transform: none; pointer-events: auto; }
+        .lang-pop.is-open { visibility: visible; transition: visibility 0s; }
+        .lang-pop .lang-opt { opacity: 0; transform: translateY(-5px); transition: opacity 0.14s ease, transform 0.2s var(--ios); }
+        .lang-pop.is-open .lang-opt { opacity: 1; transform: none; transition: opacity 0.3s ease calc(var(--i, 0) * 24ms + 40ms), transform 0.45s var(--ios) calc(var(--i, 0) * 24ms + 40ms); }
         /* стекло отдельным слоем: движение линзы не заставляет пересчитывать размытие */
-        .lang-pop::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+        .lang-pop::before { content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity 0.2s ease;
             background: linear-gradient(100deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.11) 60%, rgba(255, 255, 255, 0.17) 100%);
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 0 rgba(160, 215, 255, 0.42), inset -1px 0 0 rgba(160, 215, 255, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.05);
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 -1px 0 rgba(160, 215, 255, 0.42), inset -1px 0 0 rgba(160, 215, 255, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.05);
             -webkit-backdrop-filter: blur(16px) saturate(1.25) brightness(1.08); backdrop-filter: blur(16px) saturate(1.25) brightness(1.08); }
+        .lang-pop.is-open::before { opacity: 1; transition: opacity 0.22s ease; }
         .lang-lens { position: absolute; left: 8px; right: 8px; top: 8px; height: 46px; z-index: 0; border-radius: 20px; pointer-events: none; opacity: 0; transition: opacity 0.25s ease;
             background: rgba(255, 255, 255, 0.15); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.55), inset 0 0 14px rgba(255, 255, 255, 0.1); }
         .lang-lens.is-on { opacity: 1; }
@@ -997,14 +1001,84 @@
         .lang-opt.is-current .lang-opt__code { color: var(--text-primary); }
         .lang-opt:active { transform: scale(0.985); }
         .lang-opt:focus-visible { outline: 2px solid rgba(var(--accent-rgb), 0.85); outline-offset: -2px; }
-        [data-theme="light"] .lang-pop { box-shadow: 0 18px 44px rgba(20, 70, 160, 0.2); }
-        [data-theme="light"] .lang-pop::before { background: linear-gradient(100deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.64) 60%, rgba(255, 255, 255, 0.78)); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.85), inset 0 1px 0 #ffffff, inset 0 -1px 0 rgba(var(--accent-rgb), 0.22), inset -1px 0 0 rgba(var(--accent-rgb), 0.1); }
+        [data-theme="light"] .lang-pop::before { background: linear-gradient(100deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.64) 60%, rgba(255, 255, 255, 0.78)); box-shadow: 0 18px 44px rgba(20, 70, 160, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.85), inset 0 1px 0 #ffffff, inset 0 -1px 0 rgba(var(--accent-rgb), 0.22), inset -1px 0 0 rgba(var(--accent-rgb), 0.1); }
         [data-theme="light"] .lang-lens { background: linear-gradient(180deg, #ffffff, rgba(255, 255, 255, 0.82)); box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.16), 0 4px 12px rgba(20, 70, 160, 0.1); }
         [data-theme="light"] .lang-opt__code { color: rgba(10, 42, 85, 0.6); }
         [data-theme="light"] .lang-opt.is-current .lang-opt__code { color: var(--text-primary); }
-        @media (prefers-reduced-motion: reduce) { .lang-pop, .lang-lens { transition: none; } }
+        @media (prefers-reduced-motion: reduce) { .lang-pop, .lang-pop::before, .lang-lens, .lang-pop .lang-opt, .lang-pop.is-open .lang-opt { transition: none; } }
     </style>
-    <style id="perf-fixes">
+    <style id="header-compact">
+        /* ===== шапка при прокрутке вниз сжимается: общая панель исчезает, слева остаётся только лого в стекле, справа только кнопка меню ===== */
+        /* стекло панели вынесено в слой ::before (раньше оно было у самого контейнера), чтобы его можно было плавно погасить */
+        .header__container, .header__logo, .header .header__avatar--menu { isolation: isolate; }
+        .header__logo { position: relative; padding: 0; border-radius: 9999px; transition: padding 0.5s var(--ios); }
+        .header__container { background: none !important; border-color: transparent !important; box-shadow: none !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; transition: padding 0.5s var(--ios); }
+        .header__container::before, .header__logo::before, .header .header__avatar--menu::after {
+            content: ''; display: block; position: absolute; z-index: -1; width: auto; height: auto; margin: 0; transform: none; filter: none; border-radius: inherit; pointer-events: none;
+            background: radial-gradient(120% 170% at 12% -80%, rgba(255, 255, 255, 0.16), transparent 56%), linear-gradient(100deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.07) 55%, rgba(255, 255, 255, 0.15) 100%);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.38), inset 0 -1px 0 rgba(160, 215, 255, 0.42), inset -1px 0 0 rgba(160, 215, 255, 0.2), inset 0 0 20px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.2);
+            -webkit-backdrop-filter: blur(12px) saturate(1.25) brightness(1.08); backdrop-filter: blur(12px) saturate(1.25) brightness(1.08);
+            transition: opacity 0.5s var(--ios); }
+        .header__container::before { top: -1px; left: -1px; right: -1px; bottom: -1px; opacity: 1; }
+        .header__logo::before, .header .header__avatar--menu::after { top: 0; left: 0; right: 0; bottom: 0; opacity: 0; }
+        .header.is-scrolled .header__container::before { background: radial-gradient(120% 170% at 12% -80%, rgba(255, 255, 255, 0.16), transparent 56%), linear-gradient(100deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.1) 55%, rgba(255, 255, 255, 0.18) 100%); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.34), inset 0 -1px 0 rgba(255, 255, 255, 0.09), inset 0 0 22px rgba(255, 255, 255, 0.043), 0 14px 40px rgba(0, 0, 0, 0.3); }
+        .header__logo::before, .header .header__avatar--menu::after { background: radial-gradient(120% 170% at 12% -80%, rgba(255, 255, 255, 0.16), transparent 56%), linear-gradient(100deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.1) 55%, rgba(255, 255, 255, 0.18) 100%); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.34), inset 0 -1px 0 rgba(160, 215, 255, 0.3), inset 0 0 22px rgba(255, 255, 255, 0.043), 0 14px 40px rgba(0, 0, 0, 0.3); }
+        .header__container::after { transition: opacity 0.5s var(--ios); }
+        [data-theme="light"] .header__container::before, [data-theme="light"] .header__logo::before, [data-theme="light"] .header .header__avatar--menu::after {
+            background: radial-gradient(120% 170% at 12% -80%, rgba(255, 255, 255, 0.9), transparent 56%), linear-gradient(100deg, rgba(255, 255, 255, 0.36) 0%, rgba(255, 255, 255, 0.5) 55%, rgba(255, 255, 255, 0.66) 100%);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.85), inset 0 1px 0 #ffffff, inset 0 -1px 0 rgba(var(--accent-rgb), 0.22), inset -1px 0 0 rgba(var(--accent-rgb), 0.1), inset 0 0 20px rgba(255, 255, 255, 0.4), 0 10px 30px rgba(20, 70, 160, 0.12); }
+        [data-theme="light"] .header.is-scrolled .header__container::before, [data-theme="light"] .header__logo::before, [data-theme="light"] .header .header__avatar--menu::after {
+            background: radial-gradient(120% 170% at 12% -80%, rgba(255, 255, 255, 0.9), transparent 56%), linear-gradient(100deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.62) 55%, rgba(255, 255, 255, 0.76) 100%);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.85), inset 0 1px 0 #ffffff, inset 0 -1px 0 rgba(var(--accent-rgb), 0.1), inset 0 0 22px rgba(255, 255, 255, 0.4), 0 14px 40px rgba(20, 70, 160, 0.16); }
+
+        /* состояние «сжато» */
+        .header__actions { transition: gap 0.5s var(--ios); }
+        .header .header__actions .theme-toggle { max-width: 160px; transition: max-width 0.5s var(--ios), opacity 0.32s ease, transform 0.5s var(--ios), padding 0.5s var(--ios), border-width 0.5s ease, background 0.3s ease, border-color 0.3s ease, visibility 0s; }
+        .header .header__avatar--menu { transition: width 0.5s var(--ios), height 0.5s var(--ios), background 0.3s ease, border-color 0.3s ease; }
+        .header.is-compact .header__container { padding: 0 !important; pointer-events: none; }
+        .header.is-compact .header__container::before, .header.is-compact .header__container::after { opacity: 0; }
+        .header.is-compact .header__logo { padding: 6px 16px 6px 6px; pointer-events: auto; }
+        .header.is-compact .header__logo::before { opacity: 1; }
+        .header.is-compact .header__actions { gap: 0; }
+        .header.is-compact .header__actions .theme-toggle { max-width: 0 !important; min-width: 0 !important; opacity: 0; transform: scale(0.5); padding-left: 0 !important; padding-right: 0 !important; border-width: 0 !important; pointer-events: none; visibility: hidden;
+            transition: max-width 0.5s var(--ios), opacity 0.28s ease, transform 0.5s var(--ios), padding 0.5s var(--ios), border-width 0.5s ease, visibility 0s linear 0.5s; }
+        .header.is-compact .header__avatar--menu { width: 48px; height: 48px; pointer-events: auto; }
+        .header.is-compact .header__avatar--menu::after { opacity: 1; }
+        [dir="rtl"] .header.is-compact .header__logo { padding: 6px 6px 6px 16px; }
+        @media (prefers-reduced-motion: reduce) { .header__container, .header__logo, .header__actions, .header .header__actions .theme-toggle, .header .header__avatar--menu, .header__container::before, .header__logo::before, .header .header__avatar--menu::after, .header__container::after { transition: none !important; } }
+    </style>
+    <style id="logo-plain">
+        /* логотип в шапке без рамки, плитки и тени: просто лого */
+        .header .header__logo-icon, .header .header__logo-icon--img, .header .header__logo img { border: 0 !important; outline: 0 !important; box-shadow: none !important; background: none !important; border-radius: 0 !important; }
+    </style>
+    <style id="icons-pills">
+        /* ===== минималистичные значки вместо эмодзи + углублённые бейджи версии и размера на мини-карточках ===== */
+        .ico { width: 1.15em; height: 1.15em; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none; vertical-align: middle; }
+        .tab-ico, .title-ico, .cat-chip__emoji, .category-chip__ico, .cert-card__icon { display: inline-flex; align-items: center; justify-content: center; line-height: 1; }
+        .access-switch__btn .tab-ico .ico { width: 18px; height: 18px; }
+        .cat-chip__emoji .ico { width: 17px; height: 17px; }
+        .category-chip span:first-of-type.category-chip__ico { color: var(--text-secondary); font-size: 1.875rem; }
+        .category-chip span:first-of-type .ico { width: 1em; height: 1em; stroke-width: 1.5; }
+        .category-chip:has(input:checked) span:first-of-type.category-chip__ico, .chip input:checked + span { color: #fff; }
+        .modal__title, .settings-section__title, .info-item__title { display: flex; align-items: center; gap: 0.55rem; }
+        .title-ico .ico { width: 1.1em; height: 1.1em; opacity: 0.88; }
+        .app-detail__category .ico { width: 14px; height: 14px; }
+        .empty-ico { display: flex; justify-content: center; margin-bottom: 1rem; color: var(--text-muted); }
+        .empty-ico .ico { width: 3.4rem; height: 3.4rem; stroke-width: 1.2; }
+        .cert-card__icon .ico { width: 20px; height: 20px; }
+        @media (max-width: 480px) { .category-chip span:first-of-type.category-chip__ico { font-size: 1.5rem; } }
+        /* бейджи версии и размера: «утоплены» внутрь, как плитки значков в боковой панели */
+        .app-pill { border: 1px solid transparent; background: rgba(0, 0, 0, 0.24); box-shadow: inset 0 1.5px 3.5px rgba(0, 0, 0, 0.55), inset 1px 0 2px rgba(0, 0, 0, 0.2), inset 0 -1px 0 rgba(255, 255, 255, 0.12); }
+        [data-theme="light"] .app-pill { border-color: transparent; background: rgba(var(--accent-rgb), 0.07); box-shadow: inset 0 1.5px 3.5px rgba(20, 70, 160, 0.22), inset 1px 0 2px rgba(20, 70, 160, 0.08), inset 0 -1px 0 rgba(255, 255, 255, 0.95); }
+    </style>
+    <style id="light-menu-fix">
+        /* светлая тема: подложка под боковой панелью была тёмной (чёрная 32–40%), и полупрозрачное стекло панели серело, особенно над тёмными местами страницы.
+           Теперь подложка светлая, а стекло панели плотнее */
+        [data-theme="light"] .overlay { background: rgba(214, 228, 250, 0.38); }
+        @media (hover: none) { [data-theme="light"] .overlay { background: rgba(214, 228, 250, 0.5); } }
+        [data-theme="light"] .mobile-menu::after { background: rgba(255, 255, 255, 0.58); -webkit-backdrop-filter: blur(16px) saturate(1.1) brightness(1.1); backdrop-filter: blur(16px) saturate(1.1) brightness(1.1); }
+    </style>
+        <style id="perf-fixes">
         /* ===== скорость и стабильность ===== */
         /* размытие фона на десятках повторяющихся элементов (каждая карточка списка, каждая категория, кнопки) тормозило прокрутку и открытие окон: оставлено только у шапки и боковой панели */
         .app-item, .cat-chip, .cat-arrow, .search__input, .settings-btn, button, .btn, .modal__content--app { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
@@ -1092,7 +1166,7 @@
         html[dir="rtl"] .mobile-menu.active .mm-item { transform: none; }
         html[dir="rtl"] .mobile-menu .mobile-menu__nav .mobile-menu__link:hover { transform: none; }
     </style>
-    <style id="app-detail-styles">
+        <style id="app-detail-styles">
         /* ===== окно приложения: цветная карточка в стиле постеров (цвет берётся из иконки) ===== */
         @property --app-top { syntax: '<color>'; inherits: true; initial-value: #1d6fb8; }
         @property --app-bot { syntax: '<color>'; inherits: true; initial-value: #0a2a55; }
@@ -1300,10 +1374,10 @@
                 <div class="access-switch" id="accessSwitch" role="tablist" aria-label="Товар" data-i18n-attr="aria-label:aria.product">
                     <span class="access-switch__thumb" aria-hidden="true"></span>
                     <button type="button" class="access-switch__btn is-active" role="tab" id="tabRepo" aria-selected="true" aria-controls="panelRepo" data-index="0">
-                        <span>📦</span><span data-i18n="tab.repo">Репозиторий</span>
+                        <span class="tab-ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M12 3 20 7.2v9.6L12 21l-8-4.2V7.2L12 3z'/><path d='m4 7.2 8 4.3 8-4.3'/><path d='M12 11.5V21'/></svg></span><span data-i18n="tab.repo">Репозиторий</span>
                     </button>
                     <button type="button" class="access-switch__btn" role="tab" id="tabCert" aria-selected="false" aria-controls="panelCert" data-index="1">
-                        <span>🔐</span><span data-i18n="tab.cert">Сертификаты</span>
+                        <span class="tab-ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M12 3 19 6v5.5c0 4.2-2.8 7.4-7 9-4.2-1.6-7-4.8-7-9V6l7-3z'/><path d='m9 12 2.2 2.2L15 10.5'/></svg></span><span data-i18n="tab.cert">Сертификаты</span>
                     </button>
                 </div>
 
@@ -1620,7 +1694,7 @@
                                     </div>
                                     <div tabindex="0" class="pricing__item cert-card" data-product="Сертификат" data-duration="Год | Супер30 + JIT" data-duration-en="Year | Super30 + JIT" data-price="2000₽">
                                         <span class="cert-card__head">
-                                            <span class="cert-card__icon">⚡</span>
+                                            <span class="cert-card__icon"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M13 2.8 5 13.2h5.8L10 21.2l8-10.5h-5.8l.8-7.9z'/></svg></span>
                                             <span class="cert-card__name" data-i18n="cert.s30jit">Супер30 + JIT</span>
                                         </span>
                                         <span class="cert-card__priceRow">
@@ -1719,19 +1793,19 @@
                     <svg viewBox="0 0 24 24" width="16" height="16"><path d="M10.828 12l4.95 4.95-1.414 1.414L8 12l6.364-6.364 1.414 1.414z"/></svg>
                 </button>
                 <div class="category-bar__scroll" role="group" aria-label="Категории" data-i18n-attr="aria-label:aria.categories">
-                    <button type="button" class="cat-chip is-active" data-value="" aria-pressed="true"><span class="cat-chip__emoji">🌐</span><span data-i18n="common.all">Все</span></button>
-                    <button type="button" class="cat-chip" data-value="Russia" aria-pressed="false"><span class="cat-chip__emoji">🇷🇺</span><span data-i18n="cat.Russia">Удаленные из App Store</span></button>
-                    <button type="button" class="cat-chip" data-value="Social" aria-pressed="false"><span class="cat-chip__emoji">💬</span><span data-i18n="cat.Social">Соц.сети</span></button>
-                    <button type="button" class="cat-chip" data-value="Music" aria-pressed="false"><span class="cat-chip__emoji">🎵</span><span data-i18n="cat.Music">Музыка</span></button>
-                    <button type="button" class="cat-chip" data-value="Video" aria-pressed="false"><span class="cat-chip__emoji">🎬</span><span data-i18n="cat.Video">Видео</span></button>
-                    <button type="button" class="cat-chip" data-value="Design" aria-pressed="false"><span class="cat-chip__emoji">🎨</span><span data-i18n="cat.Design">Дизайн</span></button>
-                    <button type="button" class="cat-chip" data-value="Network" aria-pressed="false"><span class="cat-chip__emoji">🌍</span><span>VPN</span></button>
-                    <button type="button" class="cat-chip" data-value="Study" aria-pressed="false"><span class="cat-chip__emoji">📚</span><span data-i18n="cat.Study">Учёба</span></button>
-                    <button type="button" class="cat-chip" data-value="Office" aria-pressed="false"><span class="cat-chip__emoji">📋</span><span data-i18n="cat.Office">Офис</span></button>
-                    <button type="button" class="cat-chip" data-value="Games" aria-pressed="false"><span class="cat-chip__emoji">🎮</span><span data-i18n="cat.Games">Игры</span></button>
-                    <button type="button" class="cat-chip" data-value="Kids" aria-pressed="false"><span class="cat-chip__emoji">👶</span><span data-i18n="cat.Kids">Дети</span></button>
-                    <button type="button" class="cat-chip" data-value="Life" aria-pressed="false"><span class="cat-chip__emoji">💪</span><span data-i18n="cat.Life">Здоровье</span></button>
-                    <button type="button" class="cat-chip" data-value="Other" aria-pressed="false"><span class="cat-chip__emoji">📦</span><span data-i18n="cat.Other">Другое</span></button>
+                    <button type="button" class="cat-chip is-active" data-value="" aria-pressed="true"><span class="cat-chip__emoji"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x='4' y='4' width='6.5' height='6.5' rx='1.8'/><rect x='13.5' y='4' width='6.5' height='6.5' rx='1.8'/><rect x='4' y='13.5' width='6.5' height='6.5' rx='1.8'/><rect x='13.5' y='13.5' width='6.5' height='6.5' rx='1.8'/></svg></span><span data-i18n="common.all">Все</span></button>
+                    <button type="button" class="cat-chip" data-value="Russia" aria-pressed="false"><span class="cat-chip__emoji"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M4 6.5h16v3H4z'/><path d='M5.5 9.5V17a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V9.5'/><path d='M10 13h4'/></svg></span><span data-i18n="cat.Russia">Удаленные из App Store</span></button>
+                    <button type="button" class="cat-chip" data-value="Social" aria-pressed="false"><span class="cat-chip__emoji"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M5.5 5h13A2.5 2.5 0 0 1 21 7.5v7a2.5 2.5 0 0 1-2.5 2.5H13l-4.5 3.5V17H5.5A2.5 2.5 0 0 1 3 14.5v-7A2.5 2.5 0 0 1 5.5 5z'/></svg></span><span data-i18n="cat.Social">Соц.сети</span></button>
+                    <button type="button" class="cat-chip" data-value="Music" aria-pressed="false"><span class="cat-chip__emoji"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M9 17.5V6l10-2v11.5'/><circle cx='6.5' cy='17.5' r='2.5'/><circle cx='16.5' cy='15.5' r='2.5'/></svg></span><span data-i18n="cat.Music">Музыка</span></button>
+                    <button type="button" class="cat-chip" data-value="Video" aria-pressed="false"><span class="cat-chip__emoji"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x='3.5' y='5' width='17' height='14' rx='3'/><path d='m10.3 9.4 4.4 2.6-4.4 2.6V9.4z'/></svg></span><span data-i18n="cat.Video">Видео</span></button>
+                    <button type="button" class="cat-chip" data-value="Design" aria-pressed="false"><span class="cat-chip__emoji"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M12 3.5a8.5 8.5 0 1 0 0 17c1.3 0 1.9-.9 1.9-1.8 0-1.5-1.3-1.7-1.3-2.9 0-.9.7-1.5 1.6-1.5H17a3.5 3.5 0 0 0 3.5-3.5C20.5 6.8 16.8 3.5 12 3.5z'/><path d='M7.8 11h.01M11 7.6h.01M15.4 8.6h.01' stroke-width='2.2'/></svg></span><span data-i18n="cat.Design">Дизайн</span></button>
+                    <button type="button" class="cat-chip" data-value="Network" aria-pressed="false"><span class="cat-chip__emoji"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx='12' cy='12' r='9'/><path d='M3 12h18M12 3c2.6 2.7 3.9 5.7 3.9 9S14.6 18.3 12 21c-2.6-2.7-3.9-5.7-3.9-9S9.4 5.7 12 3z'/></svg></span><span>VPN</span></button>
+                    <button type="button" class="cat-chip" data-value="Study" aria-pressed="false"><span class="cat-chip__emoji"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5v-15z'/><path d='M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5v-15z'/></svg></span><span data-i18n="cat.Study">Учёба</span></button>
+                    <button type="button" class="cat-chip" data-value="Office" aria-pressed="false"><span class="cat-chip__emoji"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x='4' y='7.5' width='16' height='12' rx='2.2'/><path d='M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M4 12.5h16'/></svg></span><span data-i18n="cat.Office">Офис</span></button>
+                    <button type="button" class="cat-chip" data-value="Games" aria-pressed="false"><span class="cat-chip__emoji"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M7.5 8h9A4.5 4.5 0 0 1 21 12.5l-.6 3.4a2.2 2.2 0 0 1-3.8 1.1L15 15H9l-1.6 2a2.2 2.2 0 0 1-3.8-1.1L3 12.5A4.5 4.5 0 0 1 7.5 8z'/><path d='M8 10.5v3M6.5 12h3'/><path d='M15.4 11.6h.01M17.6 13.2h.01' stroke-width='2.2'/></svg></span><span data-i18n="cat.Games">Игры</span></button>
+                    <button type="button" class="cat-chip" data-value="Kids" aria-pressed="false"><span class="cat-chip__emoji"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx='12' cy='12' r='8.5'/><path d='M8.6 14a4.2 4.2 0 0 0 6.8 0'/><path d='M9.2 9.8h.01M14.8 9.8h.01' stroke-width='2.2'/></svg></span><span data-i18n="cat.Kids">Дети</span></button>
+                    <button type="button" class="cat-chip" data-value="Life" aria-pressed="false"><span class="cat-chip__emoji"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M12 20s-7.2-4.5-7.2-10A4.1 4.1 0 0 1 12 7.6 4.1 4.1 0 0 1 19.2 10C19.2 15.5 12 20 12 20z'/><path d='M8.4 12.2h2l1.1-2.2 1.8 3.8 1-1.6h1.3'/></svg></span><span data-i18n="cat.Life">Здоровье</span></button>
+                    <button type="button" class="cat-chip" data-value="Other" aria-pressed="false"><span class="cat-chip__emoji"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx='12' cy='12' r='9'/><path d='M8.2 12h.01M12 12h.01M15.8 12h.01' stroke-width='2.4'/></svg></span><span data-i18n="cat.Other">Другое</span></button>
                 </div>
                 <button type="button" class="cat-arrow cat-arrow--next" aria-label="Вперёд" data-i18n-attr="aria-label:aria.next" hidden>
                     <svg viewBox="0 0 24 24" width="16" height="16"><path d="M13.172 12l-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414z"/></svg>
@@ -1746,21 +1820,21 @@
         <div class="modal__backdrop" id="modalBackdrop"></div>
         <div class="modal__content">
             <div class="modal__header">
-                <h3 class="modal__title" data-i18n="filters.title">⚙️ Фильтры</h3>
+                <h3 class="modal__title"><span class="title-ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M4 7h8M17 7h3M4 12h3M12 12h8M4 17h9M18 17h2'/><circle cx='14.5' cy='7' r='2.2'/><circle cx='9.5' cy='12' r='2.2'/><circle cx='15.5' cy='17' r='2.2'/></svg></span><span data-i18n="filters.title">Фильтры</span></h3>
                 <button class="modal__close" id="closeSettings">
                     <svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 10.586l4.95-4.95 1.414 1.414-4.95 4.95 4.95 4.95-1.414 1.414-4.95-4.95-4.95 4.95-1.414-1.414 4.95-4.95-4.95-4.95L7.05 5.636z"/></svg>
                 </button>
             </div>
             <div class="modal__body">
                 <div class="settings-section">
-                    <h4 class="settings-section__title" data-i18n="sort.title">↕️ Сортировка</h4>
+                    <h4 class="settings-section__title"><span class="title-ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M8 4v16M8 4 5 7M8 4l3 3M16 20V4M16 20l-3-3M16 20l3-3'/></svg></span><span data-i18n="sort.title">Сортировка</span></h4>
                     <div class="settings-chips">
                         <label class="chip"><input type="radio" name="sortMode" value="time" checked><span data-i18n="sort.new">Новые</span></label>
                         <label class="chip"><input type="radio" name="sortMode" value="full"><span data-i18n="common.all">Все</span></label>
                     </div>
                 </div>
                 <div class="settings-section">
-                    <h4 class="settings-section__title" data-i18n="perpage.title">📊 Количество на странице</h4>
+                    <h4 class="settings-section__title"><span class="title-ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M5 20v-8M12 20V5M19 20v-5'/></svg></span><span data-i18n="perpage.title">Количество на странице</span></h4>
                     <div class="settings-chips">
                         <label class="chip"><input type="radio" name="itemsPerPage" value="20" checked><span>20</span></label>
                         <label class="chip"><input type="radio" name="itemsPerPage" value="50"><span>50</span></label>
@@ -1768,21 +1842,21 @@
                     </div>
                 </div>
                 <div class="settings-section">
-                    <h4 class="settings-section__title" data-i18n="category.title">📂 Категория</h4>
+                    <h4 class="settings-section__title"><span class="title-ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M3.5 7.5a2 2 0 0 1 2-2H10l2 2.2h6.5a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2V7.5z'/></svg></span><span data-i18n="category.title">Категория</span></h4>
                     <div class="category-grid">
-                        <label class="category-chip"><input type="radio" name="categoryApps" value="" checked><span>🌐</span><span data-i18n="common.all">Все</span></label>
-                        <label class="category-chip"><input type="radio" name="categoryApps" value="Russia"><span>🇷🇺</span><span data-i18n="cat.Russia">Удаленные из App Store</span></label>
-                        <label class="category-chip"><input type="radio" name="categoryApps" value="Social"><span>💬</span><span data-i18n="cat.Social">Соц.сети</span></label>
-                        <label class="category-chip"><input type="radio" name="categoryApps" value="Music"><span>🎵</span><span data-i18n="cat.Music">Музыка</span></label>
-                        <label class="category-chip"><input type="radio" name="categoryApps" value="Video"><span>🎬</span><span data-i18n="cat.Video">Видео</span></label>
-                        <label class="category-chip"><input type="radio" name="categoryApps" value="Design"><span>🎨</span><span data-i18n="cat.Design">Дизайн</span></label>
-                        <label class="category-chip"><input type="radio" name="categoryApps" value="Network"><span>🌍</span><span>VPN</span></label>
-                        <label class="category-chip"><input type="radio" name="categoryApps" value="Study"><span>📚</span><span data-i18n="cat.Study">Учёба</span></label>
-                        <label class="category-chip"><input type="radio" name="categoryApps" value="Office"><span>📋</span><span data-i18n="cat.Office">Офис</span></label>
-                        <label class="category-chip"><input type="radio" name="categoryApps" value="Games"><span>🎮</span><span data-i18n="cat.Games">Игры</span></label>
-                        <label class="category-chip"><input type="radio" name="categoryApps" value="Kids"><span>👶</span><span data-i18n="cat.Kids">Дети</span></label>
-                        <label class="category-chip"><input type="radio" name="categoryApps" value="Life"><span>💪</span><span data-i18n="cat.Life">Здоровье</span></label>
-                        <label class="category-chip"><input type="radio" name="categoryApps" value="Other"><span>📦</span><span data-i18n="cat.Other">Другое</span></label>
+                        <label class="category-chip"><input type="radio" name="categoryApps" value="" checked><span class="category-chip__ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x='4' y='4' width='6.5' height='6.5' rx='1.8'/><rect x='13.5' y='4' width='6.5' height='6.5' rx='1.8'/><rect x='4' y='13.5' width='6.5' height='6.5' rx='1.8'/><rect x='13.5' y='13.5' width='6.5' height='6.5' rx='1.8'/></svg></span><span data-i18n="common.all">Все</span></label>
+                        <label class="category-chip"><input type="radio" name="categoryApps" value="Russia"><span class="category-chip__ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M4 6.5h16v3H4z'/><path d='M5.5 9.5V17a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V9.5'/><path d='M10 13h4'/></svg></span><span data-i18n="cat.Russia">Удаленные из App Store</span></label>
+                        <label class="category-chip"><input type="radio" name="categoryApps" value="Social"><span class="category-chip__ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M5.5 5h13A2.5 2.5 0 0 1 21 7.5v7a2.5 2.5 0 0 1-2.5 2.5H13l-4.5 3.5V17H5.5A2.5 2.5 0 0 1 3 14.5v-7A2.5 2.5 0 0 1 5.5 5z'/></svg></span><span data-i18n="cat.Social">Соц.сети</span></label>
+                        <label class="category-chip"><input type="radio" name="categoryApps" value="Music"><span class="category-chip__ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M9 17.5V6l10-2v11.5'/><circle cx='6.5' cy='17.5' r='2.5'/><circle cx='16.5' cy='15.5' r='2.5'/></svg></span><span data-i18n="cat.Music">Музыка</span></label>
+                        <label class="category-chip"><input type="radio" name="categoryApps" value="Video"><span class="category-chip__ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x='3.5' y='5' width='17' height='14' rx='3'/><path d='m10.3 9.4 4.4 2.6-4.4 2.6V9.4z'/></svg></span><span data-i18n="cat.Video">Видео</span></label>
+                        <label class="category-chip"><input type="radio" name="categoryApps" value="Design"><span class="category-chip__ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M12 3.5a8.5 8.5 0 1 0 0 17c1.3 0 1.9-.9 1.9-1.8 0-1.5-1.3-1.7-1.3-2.9 0-.9.7-1.5 1.6-1.5H17a3.5 3.5 0 0 0 3.5-3.5C20.5 6.8 16.8 3.5 12 3.5z'/><path d='M7.8 11h.01M11 7.6h.01M15.4 8.6h.01' stroke-width='2.2'/></svg></span><span data-i18n="cat.Design">Дизайн</span></label>
+                        <label class="category-chip"><input type="radio" name="categoryApps" value="Network"><span class="category-chip__ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx='12' cy='12' r='9'/><path d='M3 12h18M12 3c2.6 2.7 3.9 5.7 3.9 9S14.6 18.3 12 21c-2.6-2.7-3.9-5.7-3.9-9S9.4 5.7 12 3z'/></svg></span><span>VPN</span></label>
+                        <label class="category-chip"><input type="radio" name="categoryApps" value="Study"><span class="category-chip__ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5v-15z'/><path d='M20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5v-15z'/></svg></span><span data-i18n="cat.Study">Учёба</span></label>
+                        <label class="category-chip"><input type="radio" name="categoryApps" value="Office"><span class="category-chip__ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x='4' y='7.5' width='16' height='12' rx='2.2'/><path d='M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M4 12.5h16'/></svg></span><span data-i18n="cat.Office">Офис</span></label>
+                        <label class="category-chip"><input type="radio" name="categoryApps" value="Games"><span class="category-chip__ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M7.5 8h9A4.5 4.5 0 0 1 21 12.5l-.6 3.4a2.2 2.2 0 0 1-3.8 1.1L15 15H9l-1.6 2a2.2 2.2 0 0 1-3.8-1.1L3 12.5A4.5 4.5 0 0 1 7.5 8z'/><path d='M8 10.5v3M6.5 12h3'/><path d='M15.4 11.6h.01M17.6 13.2h.01' stroke-width='2.2'/></svg></span><span data-i18n="cat.Games">Игры</span></label>
+                        <label class="category-chip"><input type="radio" name="categoryApps" value="Kids"><span class="category-chip__ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx='12' cy='12' r='8.5'/><path d='M8.6 14a4.2 4.2 0 0 0 6.8 0'/><path d='M9.2 9.8h.01M14.8 9.8h.01' stroke-width='2.2'/></svg></span><span data-i18n="cat.Kids">Дети</span></label>
+                        <label class="category-chip"><input type="radio" name="categoryApps" value="Life"><span class="category-chip__ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M12 20s-7.2-4.5-7.2-10A4.1 4.1 0 0 1 12 7.6 4.1 4.1 0 0 1 19.2 10C19.2 15.5 12 20 12 20z'/><path d='M8.4 12.2h2l1.1-2.2 1.8 3.8 1-1.6h1.3'/></svg></span><span data-i18n="cat.Life">Здоровье</span></label>
+                        <label class="category-chip"><input type="radio" name="categoryApps" value="Other"><span class="category-chip__ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx='12' cy='12' r='9'/><path d='M8.2 12h.01M12 12h.01M15.8 12h.01' stroke-width='2.4'/></svg></span><span data-i18n="cat.Other">Другое</span></label>
                     </div>
                 </div>
                 <button class="btn btn--reset" id="resetFilters">
@@ -1804,11 +1878,11 @@
             </div>
             <div class="modal__body">
                 <div class="info-item">
-                    <h4 class="info-item__title" data-i18n="info.certTitle">🔐 Сертификат разработчика</h4>
+                    <h4 class="info-item__title"><span class="title-ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M12 3 19 6v5.5c0 4.2-2.8 7.4-7 9-4.2-1.6-7-4.8-7-9V6l7-3z'/><path d='m9 12 2.2 2.2L15 10.5'/></svg></span><span data-i18n="info.certTitle">Сертификат разработчика</span></h4>
                     <p class="info-item__text" data-i18n="info.certText">Нужен для возможности установки сторонних приложений на iPhone и iPad. Действует до одного года максимум. Для использования и установки не требуется ПК.</p>
                 </div>
                 <div class="info-item">
-                    <h4 class="info-item__title" data-i18n="info.repoTitle">📦 Репозиторий</h4>
+                    <h4 class="info-item__title"><span class="title-ico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d='M12 3 20 7.2v9.6L12 21l-8-4.2V7.2L12 3z'/><path d='m4 7.2 8 4.3 8-4.3'/><path d='M12 11.5V21'/></svg></span><span data-i18n="info.repoTitle">Репозиторий</span></h4>
                     <p class="info-item__text" data-i18n="info.repoText">Наш каталог взломанных приложений (взломы, моды, банки, удаленные приложения и многие другие). Для использования нужен сертификат.</p>
                 </div>
             </div>
@@ -1976,16 +2050,16 @@
   "cat.Money": "Финансы",
   "cat.Travel": "Путешествия",
   "cat.Themes": "Темы",
-  "filters.title": "⚙️ Фильтры",
-  "sort.title": "↕️ Сортировка",
+  "filters.title": "Фильтры",
+  "sort.title": "Сортировка",
   "sort.new": "Новые",
-  "perpage.title": "📊 Количество на странице",
-  "category.title": "📂 Категория",
+  "perpage.title": "Количество на странице",
+  "category.title": "Категория",
   "filters.reset": "Сбросить фильтры",
   "info.title": "О товарах",
-  "info.certTitle": "🔐 Сертификат разработчика",
+  "info.certTitle": "Сертификат разработчика",
   "info.certText": "Нужен для возможности установки сторонних приложений на iPhone и iPad. Действует до одного года максимум. Для использования и установки не требуется ПК.",
-  "info.repoTitle": "📦 Репозиторий",
+  "info.repoTitle": "Репозиторий",
   "info.repoText": "Наш каталог взломанных приложений (взломы, моды, банки, удаленные приложения и многие другие). Для использования нужен сертификат.",
   "modal.appDefault": "Приложение",
   "footer.rights": "Все права защищены.",
@@ -2101,16 +2175,16 @@
   "cat.Money": "Finance",
   "cat.Travel": "Travel",
   "cat.Themes": "Themes",
-  "filters.title": "⚙️ Filters",
-  "sort.title": "↕️ Sorting",
+  "filters.title": "Filters",
+  "sort.title": "Sorting",
   "sort.new": "Newest",
-  "perpage.title": "📊 Items per page",
-  "category.title": "📂 Category",
+  "perpage.title": "Items per page",
+  "category.title": "Category",
   "filters.reset": "Reset filters",
   "info.title": "About the products",
-  "info.certTitle": "🔐 Developer certificate",
+  "info.certTitle": "Developer certificate",
   "info.certText": "Required to install third-party apps on iPhone and iPad. Valid for up to one year. No PC is needed to use or install it.",
-  "info.repoTitle": "📦 Repository",
+  "info.repoTitle": "Repository",
   "info.repoText": "Our catalog of cracked apps (cracks, mods, banking apps, removed apps and many more). A certificate is required to use it.",
   "modal.appDefault": "App",
   "footer.rights": "All rights reserved.",
@@ -2226,16 +2300,16 @@
  "cat.Money": "Фінанси",
  "cat.Travel": "Подорожі",
  "cat.Themes": "Теми",
- "filters.title": "⚙️ Фільтри",
- "sort.title": "↕️ Сортування",
+ "filters.title": "Фільтри",
+ "sort.title": "Сортування",
  "sort.new": "Нові",
- "perpage.title": "📊 Кількість на сторінці",
- "category.title": "📂 Категорія",
+ "perpage.title": "Кількість на сторінці",
+ "category.title": "Категорія",
  "filters.reset": "Скинути фільтри",
  "info.title": "Про товари",
- "info.certTitle": "🔐 Сертифікат розробника",
+ "info.certTitle": "Сертифікат розробника",
  "info.certText": "Потрібен для встановлення сторонніх застосунків на iPhone і iPad. Діє до одного року максимум. Для використання та встановлення ПК не потрібен.",
- "info.repoTitle": "📦 Репозиторій",
+ "info.repoTitle": "Репозиторій",
  "info.repoText": "Наш каталог зламаних застосунків (злами, моди, банки, видалені застосунки та багато інших). Для використання потрібен сертифікат.",
  "modal.appDefault": "Застосунок",
  "footer.rights": "Усі права захищено.",
@@ -2351,16 +2425,16 @@
  "cat.Money": "Finanzas",
  "cat.Travel": "Viajes",
  "cat.Themes": "Temas",
- "filters.title": "⚙️ Filtros",
- "sort.title": "↕️ Orden",
+ "filters.title": "Filtros",
+ "sort.title": "Orden",
  "sort.new": "Más recientes",
- "perpage.title": "📊 Resultados por página",
- "category.title": "📂 Categoría",
+ "perpage.title": "Resultados por página",
+ "category.title": "Categoría",
  "filters.reset": "Restablecer filtros",
  "info.title": "Sobre los productos",
- "info.certTitle": "🔐 Certificado de desarrollador",
+ "info.certTitle": "Certificado de desarrollador",
  "info.certText": "Necesario para instalar apps de terceros en iPhone y iPad. Válido hasta un año como máximo. No se necesita PC para usarlo ni instalarlo.",
- "info.repoTitle": "📦 Repositorio",
+ "info.repoTitle": "Repositorio",
  "info.repoText": "Nuestro catálogo de apps crackeadas (cracks, mods, apps bancarias, apps eliminadas y muchas más). Se necesita un certificado para usarlo.",
  "modal.appDefault": "Aplicación",
  "footer.rights": "Todos los derechos reservados.",
@@ -2476,16 +2550,16 @@
  "cat.Money": "金融",
  "cat.Travel": "旅行",
  "cat.Themes": "主题",
- "filters.title": "⚙️ 筛选",
- "sort.title": "↕️ 排序",
+ "filters.title": "筛选",
+ "sort.title": "排序",
  "sort.new": "最新",
- "perpage.title": "📊 每页数量",
- "category.title": "📂 分类",
+ "perpage.title": "每页数量",
+ "category.title": "分类",
  "filters.reset": "重置筛选",
  "info.title": "商品说明",
- "info.certTitle": "🔐 开发者证书",
+ "info.certTitle": "开发者证书",
  "info.certText": "用于在 iPhone 和 iPad 上安装第三方应用。有效期最长一年。使用和安装无需电脑。",
- "info.repoTitle": "📦 软件源",
+ "info.repoTitle": "软件源",
  "info.repoText": "我们的破解应用目录（破解版、模组、银行类应用、已下架应用等众多应用）。使用需要证书。",
  "modal.appDefault": "应用",
  "footer.rights": "保留所有权利。",
@@ -2601,16 +2675,16 @@
  "cat.Money": "المالية",
  "cat.Travel": "السفر",
  "cat.Themes": "السمات",
- "filters.title": "⚙️ المرشحات",
- "sort.title": "↕️ الترتيب",
+ "filters.title": "المرشحات",
+ "sort.title": "الترتيب",
  "sort.new": "الأحدث",
- "perpage.title": "📊 عدد العناصر في الصفحة",
- "category.title": "📂 الفئة",
+ "perpage.title": "عدد العناصر في الصفحة",
+ "category.title": "الفئة",
  "filters.reset": "إعادة ضبط المرشحات",
  "info.title": "عن المنتجات",
- "info.certTitle": "🔐 شهادة المطوّر",
+ "info.certTitle": "شهادة المطوّر",
  "info.certText": "مطلوبة لتثبيت تطبيقات الجهات الخارجية على iPhone وiPad. صالحة لمدة سنة كحد أقصى. لا حاجة إلى كمبيوتر للاستخدام أو التثبيت.",
- "info.repoTitle": "📦 المستودع",
+ "info.repoTitle": "المستودع",
  "info.repoText": "كتالوجنا للتطبيقات المعدّلة (تعديلات، وتطبيقات البنوك، والتطبيقات المحذوفة وغيرها الكثير). يتطلب الاستخدام وجود شهادة.",
  "modal.appDefault": "تطبيق",
  "footer.rights": "جميع الحقوق محفوظة.",
@@ -2692,8 +2766,6 @@
         if (!META[l]) return;
         lang = l;
         try { localStorage.setItem('lang', l); } catch (e) {}
-        // на время смены языка переходы отключены: сотни элементов не анимируются разом, пока меняются размеры и направление
-        const rt = document.documentElement; rt.classList.add('theme-switching'); clearTimeout(window.__langQuiet); window.__langQuiet = setTimeout(() => rt.classList.remove('theme-switching'), 600);
         apply();
         document.dispatchEvent(new CustomEvent('iapps:lang', { detail: { lang: l } }));
     }
@@ -2704,8 +2776,8 @@
     apply();
 })();
 </script>
-    <script src="Scripts/Script.js?v=77"></script>
-    <script src="Scripts/Repository.js?v=77"></script>
+    <script src="Scripts/Script.js?v=95"></script>
+    <script src="Scripts/Repository.js?v=95"></script>
     <script>
 (function () {
 
@@ -3473,7 +3545,7 @@
         let donate = 'не указан';
         if (state.donate >= 0 && state.donate < 3) donate = RU.donates[state.donate];
         if (state.donate === 3) { const n = $('sgDonateOther').value.replace(/\D/g, ''); if (!n) return fail('eDonate', $('sgDonateOther')); donate = n + ' ₽'; }
-        return '\uD83D\uDCF2 Заявка на приложение (с сайта iApps)\n\n\uD83D\uDD39 Приложение: ' + app + '\n\uD83D\uDD39 Что нужно сделать: ' + task + '\n\uD83D\uDD39 Донат: ' + donate;
+        return 'Заявка на приложение (с сайта iApps)\n\n• Приложение: ' + app + '\n• Что нужно сделать: ' + task + '\n• Донат: ' + donate;
     }
     // Telegram открывается с готовым текстом (отправляет сам пользователь: сайту нельзя писать в Telegram от своего имени без сервера)
     $('sgSend').addEventListener('click', () => {
@@ -3704,7 +3776,7 @@
             const b = document.createElement('button'); b.type = 'button'; b.className = 'lang-opt'; b.setAttribute('role', 'option'); b.dataset.lang = l.code; b.lang = l.code;
             const n = document.createElement('span'); n.className = 'lang-opt__name'; n.textContent = l.name; n.lang = l.code; n.dir = l.dir;
             const c = document.createElement('span'); c.className = 'lang-opt__code'; c.textContent = l.short === '中文' ? 'ZH' : l.short; c.dir = 'ltr';
-            b.appendChild(n); b.appendChild(c);
+            b.appendChild(n); b.appendChild(c); b.style.setProperty('--i', String(window.i18n.langs.indexOf(l)));
             b.addEventListener('click', () => choose(l.code, b));
             b.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { clearTimeout(leaveT); moveLens(b); } });
             b.addEventListener('pointerdown', () => moveLens(b), { passive: true });
@@ -3754,9 +3826,13 @@
         if (refocus) btn.focus({ preventScroll: true });
     }
     function choose(code, opt) {
-        if (code !== window.i18n.lang) window.i18n.set(code);
-        mark(); moveLens(opt, true);
-        clearTimeout(closeT); closeT = setTimeout(() => closePop(true), 460);
+        // линза едет к выбору, панель закрывается, и только когда её анимация уже идёт (на видеокарте), страница меняет язык:
+        // тяжёлая перерисовка текста раньше блокировала закрытие и выглядела как лаг
+        opts.forEach((o) => { o.classList.toggle('is-current', o === opt); o.setAttribute('aria-selected', String(o === opt)); });
+        moveLens(opt, true);
+        clearTimeout(closeT);
+        closePop(true);                                                   // закрытие начинается сразу, без паузы
+        if (code !== window.i18n.lang) setTimeout(() => window.i18n.set(code), 260);   // язык меняется, когда панель уже почти ушла
     }
     btn.addEventListener('click', (e) => { e.stopPropagation(); if (isOpen) closePop(false); else openPop(); });
     document.addEventListener('pointerdown', (e) => { if (isOpen && !pop.contains(e.target) && !btn.contains(e.target)) closePop(false); }, true);
@@ -3771,7 +3847,42 @@
     btn.addEventListener('keydown', (e) => { if ((e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') && !isOpen) { e.preventDefault(); openPop(); requestAnimationFrame(() => { const c = current(); if (c) c.focus({ preventScroll: true }); }); } });
     window.addEventListener('resize', () => { if (isOpen) place(); });
     window.addEventListener('scroll', () => { if (isOpen) place(); }, { passive: true });
+    document.addEventListener('iapps:header', (e) => { if (e.detail && e.detail.compact) closePop(false); });
     document.addEventListener('iapps:lang', () => { mark(); if (isOpen) place(); });
+})();
+</script>
+    <script>
+(function () {
+    const header = document.querySelector('.header');
+    if (!header) return;
+    /* вниз: шапка сжимается; вверх (или у самого верха): снова разворачивается, чтобы кнопки темы и языка были под рукой */
+    let lastY = window.scrollY, acc = 0, compact = false, ticking = false, wasLocked = false;
+    function setCompact(c) {
+        if (c === compact) return;
+        compact = c; header.classList.toggle('is-compact', c);
+        document.dispatchEvent(new CustomEvent('iapps:header', { detail: { compact: c } }));
+    }
+    function update() {
+        ticking = false;
+        const locked = document.body.classList.contains('modal-open');
+        const y = Math.max(0, window.scrollY);
+        if (locked) { wasLocked = true; return; }          // пока открыто окно, страница «заморожена»: положение не считаем
+        if (wasLocked) { wasLocked = false; lastY = y; acc = 0; return; }
+        const dy = y - lastY; lastY = y;
+        if (y < 30) { acc = 0; setCompact(false); return; }
+        acc = (dy > 0) === (acc > 0) || acc === 0 ? acc + dy : dy;
+        if (acc > 28) setCompact(true); else if (acc < -28) setCompact(false);
+    }
+    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+})();
+</script>
+    <script>
+(function () {
+    /* Esc и нажатие на подложку вызывали закрытие обоих окон сразу, и закрывалось «лишнее», которое возвращало страницу на старое положение
+       (последнее место, где открывали фильтры): страницу кидало вниз. Теперь каждая функция работает, только если её окно открыто */
+    const menu = document.getElementById('mobileMenu'), settings = document.getElementById('settingsModal');
+    if (typeof window.closeMobileMenu === 'function' && menu) { const o = window.closeMobileMenu; window.closeMobileMenu = function () { if (menu.classList.contains('active')) return o.apply(this, arguments); }; }
+    if (typeof window.closeSettingsModal === 'function' && settings) { const o = window.closeSettingsModal; window.closeSettingsModal = function () { if (settings.classList.contains('active')) return o.apply(this, arguments); }; }
 })();
 </script>
 </body>
